@@ -6,8 +6,11 @@ import { AppProvider } from "@/context/AppContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Enquiry Pro",
+  title: "CRM System",
   description: "Modern Enquiry Management System",
+  icons: {
+    icon: '/logo.png',
+  },
 };
 
 export default function RootLayout({ children }) {

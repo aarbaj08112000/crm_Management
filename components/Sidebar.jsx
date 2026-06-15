@@ -4,10 +4,10 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { 
-  LayoutDashboard, 
-  UserPlus, 
-  ListOrdered, 
+import {
+  LayoutDashboard,
+  UserPlus,
+  ListOrdered,
   Settings,
   LogOut,
   ChevronRight,
@@ -15,7 +15,8 @@ import {
   ClipboardList,
   BarChart3,
   Users,
-  Settings2
+  Settings2,
+  MessageSquare
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -31,6 +32,12 @@ const navigation = [
     items: [
       { name: 'Add Enquiry', href: '/add', icon: UserPlus },
       { name: 'Enquiry List', href: '/list', icon: ListOrdered },
+    ]
+  },
+  {
+    group: 'COMMUNICATION',
+    items: [
+      { name: 'WhatsApp Chat', href: '/whatsapp', icon: MessageSquare },
     ]
   }
 ];
@@ -55,7 +62,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }) {
   return (
     <>
       {/* Desktop Sidebar */}
-      <div 
+      <div
         className={cn(
           "hidden md:flex flex-col h-screen bg-[#0f172a] text-slate-300 border-r border-slate-800 fixed top-0 left-0 z-40 shadow-2xl transition-all duration-300 ease-in-out",
           isCollapsed ? "w-20" : "w-64"
@@ -63,17 +70,29 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }) {
       >
         {/* Logo Section */}
         <div className={cn(
-          "flex items-center gap-3 px-6 py-6 mb-2 transition-all duration-300",
-          isCollapsed && "justify-center px-0"
+          "flex items-center justify-center px-4 py-6 mb-2 transition-all duration-300",
+          isCollapsed && "px-2 py-4"
         )}>
-          <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0">
-            <ClipboardList className="w-6 h-6 text-white" />
-          </div>
-          {!isCollapsed && (
-            <span className="text-lg font-black tracking-wider text-white whitespace-nowrap uppercase animate-in fade-in duration-300">
-              Enquiry Pro
-            </span>
-          )}
+          {isCollapsed ?
+            <img
+              src="/logo.png"
+              alt="CRM Logo"
+              className={cn(
+                "object-contain select-none transition-all duration-300",
+                isCollapsed ? "w-10 h-10" : "w-[130px] max-h-[70px]"
+              )}
+            />
+            :
+            <img
+              src="/crm_logo-bg.png"
+              alt="CRM Logo"
+              className={cn(
+                "object-contain select-none transition-all duration-300",
+                isCollapsed ? "w-10 h-10" : "w-[120px] max-h-[70px]"
+              )}
+            />
+          }
+
         </div>
 
         {/* Navigation Items */}
@@ -95,8 +114,8 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }) {
                       href={item.href}
                       className={cn(
                         "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative",
-                        isActive 
-                          ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" 
+                        isActive
+                          ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
                           : "hover:bg-slate-800 hover:text-white",
                         isCollapsed && "justify-center px-0"
                       )}
