@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { pool } from '@/lib/db';
 import { jwtVerify } from 'jose';
+import { logActivity } from '@/lib/activity';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
 export const dynamic = 'force-dynamic';
@@ -129,6 +130,14 @@ export async function POST(req) {
       msg_sent || 'No',
       status || 'Pending'
     ]);
+
+    await logActivity({
+      req,
+      action: 'Create Enquiry',
+      module: 'Enquiry',
+      recordId: result.insertId,
+      description: `Created new enquiry for ${name || 'Unknown'}`
+    });
 
     return NextResponse.json({ id: result.insertId, message: 'Enquiry created successfully' });
   } catch (error) {

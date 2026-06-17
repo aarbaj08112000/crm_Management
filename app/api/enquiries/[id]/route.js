@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { pool } from '@/lib/db';
+import { logActivity } from '@/lib/activity';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,6 +29,14 @@ export async function PATCH(req, { params }) {
     const sql = `UPDATE enquiries SET ${setClause} WHERE enquiry_id = ?`;
     await pool.query(sql, values);
 
+    await logActivity({
+      req,
+      action: 'Update Enquiry',
+      module: 'Enquiry',
+      recordId: id,
+      description: `Updated enquiry fields: ${keys.join(', ')}`
+    });
+
     return NextResponse.json({ message: 'Enquiry updated successfully' });
   } catch (error) {
     console.error('PATCH Error:', error);
@@ -39,6 +48,15 @@ export async function DELETE(req, { params }) {
   try {
     const { id } = await params;
     await pool.query('DELETE FROM enquiries WHERE enquiry_id = ?', [id]);
+    
+    await logActivity({
+      req,
+      action: 'Delete Enquiry',
+      module: 'Enquiry',
+      recordId: id,
+      description: `Deleted enquiry #${id}`
+    });
+
     return NextResponse.json({ message: 'Enquiry deleted successfully' });
   } catch (error) {
     console.error('DELETE Error:', error);

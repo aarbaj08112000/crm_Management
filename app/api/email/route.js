@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { logActivity } from '@/lib/activity';
 
 export async function POST(req) {
   try {
@@ -41,6 +42,13 @@ export async function POST(req) {
     }
 
     const info = await transporter.sendMail(mailOptions);
+
+    await logActivity({
+      req,
+      action: 'Send Email',
+      module: 'Email',
+      description: `Sent email to ${to} with subject "${subject}"`
+    });
 
     return NextResponse.json({ message: 'Email sent successfully', info });
   } catch (error) {

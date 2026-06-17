@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { SignJWT } from 'jose';
 import bcrypt from 'bcryptjs';
+import { logActivity } from '@/lib/activity';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
 
@@ -29,11 +30,17 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
-    // Create JWT
     const token = await new SignJWT({ userId: user.user_id, email: user.email, name: user.user_name, role: user.role })
       .setProtectedHeader({ alg: 'HS256' })
       .setExpirationTime('24h')
       .sign(JWT_SECRET);
+
+    await logActivity({
+      userId: user.user_id,
+      action: 'Login',
+      module: 'Auth',
+      description: `User ${user.user_name} logged in.`
+    });
 
     const response = NextResponse.json({ message: 'Login successful', user: { id: user.user_id, name: user.user_name, role: user.role } });
     

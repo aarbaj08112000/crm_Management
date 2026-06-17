@@ -17,7 +17,8 @@ import {
   MoreVertical,
   UserPlus,
   Check,
-  CheckCircle2
+  CheckCircle2,
+  Plus
 } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { Card, CardContent } from '@/components/Card';
@@ -26,6 +27,7 @@ import EmailModal from '@/components/EmailModal';
 import EditModal from '@/components/EditModal';
 import AssignModal from '@/components/AssignModal';
 import StatusModal from '@/components/StatusModal';
+import WhatsAppModal from '@/components/WhatsAppModal';
 
 const statusColors = {
   'Pending': 'text-amber-600 border-amber-200',
@@ -70,6 +72,7 @@ export default function ListPage() {
   const [assignedTo, setAssignedTo] = useState('');
   const [showAssignModal, setShowAssignModal] = useState(false);
   const [showStatusModal, setShowStatusModal] = useState(false);
+  const [showWaModal, setShowWaModal] = useState(false);
   const { showToast, showLoader } = useApp();
   const [openActionId, setOpenActionId] = useState(null);
   const [openStatusId, setOpenStatusId] = useState(null);
@@ -206,10 +209,13 @@ export default function ListPage() {
     }
   };
 
-  const openWhatsApp = (mobile, name) => {
-    const text = `Hello ${name}, this is a follow up regarding your enquiry.`;
-    const url = `https://wa.me/91${mobile}?text=${encodeURIComponent(text)}`;
-    window.open(url, '_blank');
+  const handleAddWhatsappNumber = (enquiry) => {
+    setSelectedEnquiry(enquiry);
+    setShowWaModal(true);
+  };
+
+  const redirectToWhatsAppModule = (enquiry) => {
+    window.location.href = `/whatsapp?phone=${enquiry.whatsapp_number}&name=${encodeURIComponent(enquiry.name)}`;
   };
 
   return (
@@ -418,12 +424,21 @@ export default function ListPage() {
                               >
                                 <Mail className="w-4 h-4" /> Send Email
                               </button>
-                              <button
-                                onClick={() => openWhatsApp(enquiry.mobile_number, enquiry.name)}
-                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
-                              >
-                                <MessageSquare className="w-4 h-4" /> WhatsApp
-                              </button>
+                              {!enquiry.whatsapp_number ? (
+                                <button
+                                  onClick={() => handleAddWhatsappNumber(enquiry)}
+                                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                                >
+                                  <Plus className="w-4 h-4" /> Add WA Number
+                                </button>
+                              ) : (
+                                <button
+                                  onClick={() => redirectToWhatsAppModule(enquiry)}
+                                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                                >
+                                  <MessageSquare className="w-4 h-4" /> WhatsApp
+                                </button>
+                              )}
                               <div className="border-t border-slate-50 my-1"></div>
                               {currentUser?.role === 'admin' && (
                                 <button
@@ -502,6 +517,15 @@ export default function ListPage() {
           enquiry={selectedEnquiry}
           onClose={() => { setShowAssignModal(false); setSelectedEnquiry(null); }}
           onAssigned={fetchEnquiries}
+        />
+      )}
+
+      {/* WhatsApp Modal */}
+      {showWaModal && selectedEnquiry && (
+        <WhatsAppModal
+          enquiry={selectedEnquiry}
+          onClose={() => { setShowWaModal(false); setSelectedEnquiry(null); }}
+          onSaved={fetchEnquiries}
         />
       )}
 

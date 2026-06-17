@@ -1,18 +1,39 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
+import { jwtVerify } from 'jose';
+
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
 
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+export async function GET(req) {
   try {
-    const contacts = await query(`
-      SELECT c.id, c.name, c.phone, c.created_at,
+    const token = req.cookies.get('token')?.value;
+    if (!token) return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+
+    const { payload } = await jwtVerify(token, JWT_SECRET);
+    const userId = payload.userId;
+    const role = (payload.role || '').toString().toLowerCase();
+
+    // Base query for whatsapp contacts
+    let sql = `
+      SELECT DISTINCT c.id, c.name, c.phone, c.created_at,
              (SELECT message FROM whatsapp_messages m WHERE m.contact_id = c.id ORDER BY timestamp DESC LIMIT 1) as last_message,
              (SELECT sender FROM whatsapp_messages m WHERE m.contact_id = c.id ORDER BY timestamp DESC LIMIT 1) as last_sender,
              (SELECT timestamp FROM whatsapp_messages m WHERE m.contact_id = c.id ORDER BY timestamp DESC LIMIT 1) as last_timestamp
       FROM whatsapp_contacts c
-      ORDER BY last_timestamp DESC
-    `);
+    `;
+    const params = [];
+
+    if (role !== 'admin') {
+      // Force filter contacts: Only show contacts whose phone exists in the user's assigned enquiries
+      sql += ` INNER JOIN enquiries e ON e.mobile_number = c.phone WHERE e.assigned_to = ? `;
+      params.push(userId);
+    }
+
+    sql += ` ORDER BY last_timestamp DESC`;
+
+    const contacts = await query(sql, params);
     
     // Process formatting
     const formatted = contacts.map(c => ({

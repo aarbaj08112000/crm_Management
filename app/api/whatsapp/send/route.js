@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { logActivity } from '@/lib/activity';
 
 const BASE_URL = `https://graph.facebook.com/${process.env.WHATSAPP_VERSION}/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`;
 const ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN;
@@ -57,6 +58,13 @@ export async function POST(request) {
         { status: response.status }
       );
     }
+
+    await logActivity({
+      req: request,
+      action: 'Send WhatsApp Message',
+      module: 'WhatsApp',
+      description: `Sent ${type} message to ${to}`
+    });
 
     return NextResponse.json({
       success: true,

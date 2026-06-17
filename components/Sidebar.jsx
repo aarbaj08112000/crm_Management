@@ -39,10 +39,16 @@ const navigation = [
     items: [
       { name: 'WhatsApp Chat', href: '/whatsapp', icon: MessageSquare },
     ]
+  },
+  {
+    group: 'SYSTEM',
+    items: [
+      { name: 'Users', href: '/users', icon: Users },
+    ]
   }
 ];
 
-export default function Sidebar({ isCollapsed, setIsCollapsed }) {
+export default function Sidebar({ isCollapsed, setIsCollapsed, user }) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -55,6 +61,14 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }) {
       console.error('Logout failed', err);
     }
   };
+
+  // Filter navigation based on role
+  const filteredNavigation = navigation.filter(group => {
+    if (group.group === 'SYSTEM' && user?.role !== 'admin') {
+      return false;
+    }
+    return true;
+  });
 
   // Hide sidebar on login page
   if (pathname === '/login') return null;
@@ -96,8 +110,8 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }) {
         </div>
 
         {/* Navigation Items */}
-        <div className="flex-1 overflow-y-auto px-4 custom-scrollbar">
-          {navigation.map((group, groupIdx) => (
+        <nav className="flex-1 overflow-y-auto custom-scrollbar px-3 py-6 space-y-8">
+          {filteredNavigation.map((group, groupIdx) => (
             <div key={group.group} className={cn("mb-6", groupIdx === 0 && "mt-2")}>
               {!isCollapsed && (
                 <h3 className="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-3">
@@ -139,14 +153,14 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }) {
               </div>
             </div>
           ))}
-        </div>
+        </nav>
 
         {/* Logout Section */}
         <div className="p-4 border-t border-slate-800/50">
           <button
             onClick={handleLogout}
             className={cn(
-              "w-full flex items-center gap-3 px-4 py-4 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-xl transition-all group font-bold text-sm",
+              "w-full flex items-center gap-3 px-4 py-4 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-xl transition-all group font-bold text-sm cursor-pointer",
               isCollapsed && "justify-center px-0"
             )}
             title={isCollapsed ? "Logout" : ""}
@@ -159,7 +173,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }) {
 
       {/* Mobile Bottom Navigation */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-[#0f172a] border-t border-slate-800 flex items-center justify-around px-4 z-50">
-        {navigation[1].items.map((item) => { // Using management items for mobile bar
+        {filteredNavigation.find(g => g.group === 'MANAGEMENT')?.items.map((item) => { // Using management items for mobile bar
           const Icon = item.icon;
           const isActive = pathname === item.href;
           return (
@@ -168,8 +182,8 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }) {
             </Link>
           );
         })}
-        <button onClick={handleLogout}>
-          <LogOut className="w-6 h-6 text-slate-500" />
+        <button onClick={handleLogout} className="cursor-pointer p-2 text-slate-500 hover:text-rose-400 transition-colors">
+          <LogOut className="w-6 h-6" />
         </button>
       </div>
     </>
