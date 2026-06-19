@@ -13,6 +13,7 @@
     "aws-ssl-profiles": "^1.1.2",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
+    "emoji-picker-react": "^4.19.1",
     "jose": "^6.2.3",
     "lucide-react": "^0.454.0",
     "mysql2": "^3.11.4",

@@ -17,37 +17,38 @@ export async function GET(req) {
 
     // Base query for whatsapp contacts
     let sql = `
-      SELECT DISTINCT c.id, c.name, c.phone, c.created_at,
+      SELECT DISTINCT c.id, c.name, c.phone, c.created_at, u.user_name as added_by_name,
              (SELECT message FROM whatsapp_messages m WHERE m.contact_id = c.id ORDER BY timestamp DESC LIMIT 1) as last_message,
              (SELECT sender FROM whatsapp_messages m WHERE m.contact_id = c.id ORDER BY timestamp DESC LIMIT 1) as last_sender,
              (SELECT timestamp FROM whatsapp_messages m WHERE m.contact_id = c.id ORDER BY timestamp DESC LIMIT 1) as last_timestamp
       FROM whatsapp_contacts c
+      LEFT JOIN user_master u ON c.added_by = u.user_id
     `;
     const params = [];
 
     if (role !== 'admin') {
-      // Force filter contacts: Only show contacts whose phone exists in the user's assigned enquiries
-      sql += ` INNER JOIN enquiries e ON e.mobile_number = c.phone WHERE e.assigned_to = ? `;
-      params.push(userId);
+      // Force filter contacts: Only show contacts whose phone exists in the user's assigned enquiries or added by the user
+      sql += ` LEFT JOIN enquiries e ON e.mobile_number = c.phone WHERE e.assigned_to = ? OR c.added_by = ? `;
+      params.push(userId, userId);
     }
 
     sql += ` ORDER BY last_timestamp DESC`;
 
     const contacts = await query(sql, params);
-    
-    // Process formatting
+
     const formatted = contacts.map(c => ({
       id: c.id,
       name: c.name || `+${c.phone}`,
       phone: c.phone,
+      addedByName: c.added_by_name,
       initials: (c.name || `+${c.phone}`).substring(0, 2).toUpperCase(),
       lastMessage: c.last_message || 'No messages yet',
       lastSender: c.last_sender || null,
-      timestamp: c.last_timestamp 
-        ? formatTime(c.last_timestamp) 
+      timestamp: c.last_timestamp
+        ? formatTime(c.last_timestamp)
         : formatTime(c.created_at)
     }));
-    
+
     return NextResponse.json({ contacts: formatted });
   } catch (err) {
     console.error(err);
@@ -57,6 +58,15 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
+    const token = req.cookies.get('token')?.value;
+    let userId = null;
+    if (token) {
+      try {
+        const { payload } = await jwtVerify(token, JWT_SECRET);
+        userId = payload.userId;
+      } catch (err) { }
+    }
+
     const { name, phone } = await req.json();
     if (!phone) return NextResponse.json({ error: 'Phone required' }, { status: 400 });
 
@@ -69,9 +79,10 @@ export async function POST(req) {
     if (check.length > 0) {
       newContactId = check[0].id;
     } else {
-      const result = await query('INSERT INTO whatsapp_contacts (name, phone) VALUES (?, ?)', [
+      const result = await query('INSERT INTO whatsapp_contacts (name, phone, added_by) VALUES (?, ?, ?)', [
         name || null,
-        formattedPhone
+        formattedPhone,
+        userId
       ]);
       newContactId = result.insertId;
     }

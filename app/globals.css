@@ -25,6 +25,12 @@ body {
     from { opacity: 0; }
     to { opacity: 1; }
   }
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+  select {
+    cursor: pointer;
+  }
   @keyframes slide-in-from-left {
     from { transform: translateX(-0.5rem); }
     to { transform: translateX(0); }

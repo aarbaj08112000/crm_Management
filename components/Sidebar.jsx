@@ -16,7 +16,8 @@ import {
   BarChart3,
   Users,
   Settings2,
-  MessageSquare
+  MessageSquare,
+  Mail
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -38,6 +39,7 @@ const navigation = [
     group: 'COMMUNICATION',
     items: [
       { name: 'WhatsApp Chat', href: '/whatsapp', icon: MessageSquare },
+      { name: 'Email Logs', href: '/email-logs', icon: Mail },
     ]
   },
   {

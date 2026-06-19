@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { logActivity } from '@/lib/activity';
+import { query } from '@/lib/db';
+import { jwtVerify } from 'jose';
+
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
 
 export async function POST(req) {
   try {
@@ -10,6 +14,17 @@ export async function POST(req) {
     const text = formData.get('text');
     const html = formData.get('html');
     const attachment = formData.get('attachment');
+
+    let userId = null;
+    const token = req.cookies.get('token')?.value;
+    if (token) {
+      try {
+        const { payload } = await jwtVerify(token, JWT_SECRET);
+        userId = payload.userId;
+      } catch (e) {
+        console.error('Token verification failed inside email endpoint:', e);
+      }
+    }
 
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
@@ -49,6 +64,17 @@ export async function POST(req) {
       module: 'Email',
       description: `Sent email to ${to} with subject "${subject}"`
     });
+
+    if (userId) {
+      try {
+        await query(
+          'INSERT INTO email_logs (user_id, recipient_email, subject, body, sent_at) VALUES (?, ?, ?, ?, NOW())',
+          [userId, to, subject, text || html || '']
+        );
+      } catch (dbErr) {
+        console.error('Failed to insert email log:', dbErr);
+      }
+    }
 
     return NextResponse.json({ message: 'Email sent successfully', info });
   } catch (error) {

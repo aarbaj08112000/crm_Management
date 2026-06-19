@@ -2,9 +2,10 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { 
-  Search, Paperclip, Smile, Send, MoreVertical, Plus,
+  Search, Paperclip, Smile, Send, MoreVertical, Plus, CheckCheck,
   Phone, Mail, MapPin, Briefcase, Tag, Target, User, Users, Trash2, Download, FileText
 } from 'lucide-react';
+import EmojiPicker from 'emoji-picker-react';
 
 export default function WhatsAppMessenger() {
   const [activeTab, setActiveTab] = useState('Conversations');
@@ -30,12 +31,26 @@ export default function WhatsAppMessenger() {
 
   // Chat/Input state
   const [messageText, setMessageText] = useState('');
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   // Real conversations state
   const [conversations, setConversations] = useState([]);
   const [activeChatId, setActiveChatId] = useState(null);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
+  const emojiPickerRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target)) {
+        setShowEmojiPicker(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [emojiPickerRef]);
 
   const activeContact = conversations.find(c => c.id === activeChatId);
 
@@ -309,53 +324,43 @@ export default function WhatsAppMessenger() {
     <div className="flex bg-gray-50 h-[calc(100vh-64px)] font-sans border-t border-gray-200">
       
       {/* LEFT PANEL */}
-      <div className="w-[320px] lg:w-[350px] bg-white border-r flex flex-col flex-shrink-0">
+      <div className="w-[320px] lg:w-[350px] bg-white border-r border-slate-200 flex flex-col flex-shrink-0">
         
-        <div className="p-4 border-b flex justify-between items-center bg-gray-50">
+        <div className="p-4 border-b flex justify-between items-center bg-white">
           <div>
-            <label className="text-[10px] text-gray-500 font-medium mb-1 block uppercase tracking-wider">Active Agent</label>
-            <select className="bg-transparent text-sm font-semibold text-gray-800 outline-none w-full appearance-none pr-4 focus:ring-0">
+            <label className="text-[10px] text-slate-400 font-bold mb-1 block uppercase tracking-wider">Active Agent</label>
+            <select className="bg-transparent text-[13px] font-bold text-slate-700 outline-none w-full appearance-none pr-4 focus:ring-0 cursor-pointer ">
               <option>Meta USA Agent (+1 415 200 6153)</option>
             </select>
           </div>
           <button 
              onClick={() => setShowNewChatModal(true)}
-             className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full shadow-sm transition-colors"
+             className="bg-emerald-500 hover:bg-emerald-600 text-white p-2.5 rounded-xl shadow-lg shadow-emerald-500/30 transition-all hover:-translate-y-0.5"
              title="New Conversation"
           >
              <Plus className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="flex border-b text-sm font-medium text-gray-600">
-          <button 
-            className={`flex-1 py-3 text-center border-b-2 transition-colors ${activeTab === 'Conversations' ? 'border-blue-600 text-blue-600 bg-blue-50/30' : 'border-transparent hover:bg-gray-50'}`}
-            onClick={() => setActiveTab('Conversations')}
-          >
-            Conversations ({conversations.length})
-          </button>
-          <button 
-            className={`flex-1 py-3 text-center border-b-2 transition-colors ${activeTab === 'Contacts' ? 'border-blue-600 text-blue-600 bg-blue-50/30' : 'border-transparent hover:bg-gray-50'}`}
-            onClick={() => setActiveTab('Contacts')}
-          >
-            Contacts (862)
-          </button>
+        <div className="px-5 py-4 border-b bg-slate-50/50 flex items-center justify-between">
+          <h3 className="text-sm font-bold text-slate-800">Recent Conversations</h3>
+          <span className="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-full">{conversations.length}</span>
         </div>
 
-        <div className="p-3 border-b">
-          <div className="relative">
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-2.5" />
+        <div className="p-4 border-b bg-white">
+          <div className="relative group">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3 transition-colors group-focus-within:text-emerald-500" />
             <input 
               type="text" 
               placeholder="Search conversations..." 
-              className="w-full pl-9 pr-3 py-2 border rounded bg-gray-50 text-sm focus:outline-none focus:border-blue-400 transition-colors"
+              className="w-full pl-10 pr-4 py-2.5 bg-slate-100 border-transparent rounded-xl text-sm focus:outline-none focus:bg-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all text-slate-700 placeholder:text-slate-400 font-medium"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto custom-scrollbar bg-slate-50">
           {conversations
             .filter(c => 
               !searchQuery || 
@@ -376,23 +381,24 @@ export default function WhatsAppMessenger() {
               <div 
                 key={chat.id} 
                 onClick={() => setActiveChatId(chat.id)}
-                className={`flex p-4 border-b border-gray-100 cursor-pointer transition-all ${chat.id === activeChatId ? 'bg-blue-50 border-l-4 border-l-blue-600' : 'hover:bg-gray-50 border-l-4 border-l-transparent'}`}
+                className={`flex p-4 border-b border-slate-100 cursor-pointer transition-all relative ${chat.id === activeChatId ? 'bg-white shadow-[inset_4px_0_0_0_#10b981]' : 'hover:bg-white/60'}`}
               >
-                <div className="relative flex-shrink-0 mr-3">
-                  <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-sm font-bold text-indigo-700 shadow-inner">
+                <div className="relative flex-shrink-0 mr-4">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-sm font-bold shadow-sm ${chat.id === activeChatId ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-600'}`}>
                     {chat.initials}
                   </div>
                   {hasUnread && chat.id !== activeChatId && (
-                    <span className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
+                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-rose-500 rounded-full border-2 border-white shadow-sm" />
                   )}
                 </div>
                 <div className="flex-1 min-w-0 flex flex-col justify-center">
-                  <div className="flex justify-between items-baseline mb-1">
-                    <h4 className="text-[14px] font-semibold text-gray-900 truncate pr-2">{chat.name}</h4>
-                    <span className="text-[11px] text-gray-400 whitespace-nowrap">{displayTime || 'New'}</span>
+                  <div className="flex justify-between items-center mb-1">
+                    <h4 className={`text-[14px] truncate pr-2 ${chat.id === activeChatId ? 'text-emerald-950 font-bold' : 'text-slate-800 font-semibold'}`}>{chat.name}</h4>
+                    <span className={`text-[10px] whitespace-nowrap font-medium ${hasUnread && chat.id !== activeChatId ? 'text-rose-500' : 'text-slate-400'}`}>{displayTime || 'New'}</span>
                   </div>
-                  <p className={`text-xs truncate ${hasUnread && chat.id !== activeChatId ? 'text-gray-800 font-semibold' : 'text-gray-500'}`}>
-                    {displaySender === 'agent' ? '✓ ' : ''}{displayText}
+                  <p className={`text-[13px] truncate flex items-center gap-1 ${hasUnread && chat.id !== activeChatId ? 'text-slate-800 font-bold' : 'text-slate-500 font-medium'}`}>
+                    {displaySender === 'agent' ? <CheckCheck className="w-4 h-4 text-emerald-500 flex-shrink-0" /> : ''}
+                    <span className="truncate">{displayText}</span>
                   </p>
                 </div>
               </div>
@@ -405,38 +411,35 @@ export default function WhatsAppMessenger() {
       {/* MIDDLE PANEL (CHAT AREA) */}
       <div className="flex-1 flex flex-col bg-[#efeae2] min-w-[400px] relative" style={{ backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")', backgroundSize: 'contain', backgroundRepeat: 'repeat' }}>
         {/* Chat Header */}
-        <div className="bg-white px-6 py-3 flex items-center justify-between border-b shadow-sm z-10 sticky top-0">
+        <div className="bg-white/80 backdrop-blur-md px-6 py-4 flex items-center justify-between border-b border-slate-200 z-10 sticky top-0 shadow-sm">
           {activeContact ? (
             <div className="flex items-center">
-              <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold mr-4 shrink-0 shadow-sm">
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-100 to-teal-100 flex items-center justify-center text-emerald-700 font-bold mr-4 shrink-0 shadow-sm border border-emerald-200/50">
                 {activeContact.initials}
               </div>
               <div>
-                <h2 className="text-md font-semibold text-gray-800 leading-tight">{activeContact.name}</h2>
-                <span className="text-[11px] text-green-600 font-medium">WhatsApp Phone: +{activeContact.phone}</span>
+                <h2 className="text-[15px] font-bold text-slate-800 leading-tight">{activeContact.name}</h2>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span className="text-[12px] text-slate-500 font-medium">+{activeContact.phone}</span>
+                  {activeContact.addedByName && (
+                    <span className="text-[9px] bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider shadow-sm border border-indigo-100">By {activeContact.addedByName}</span>
+                  )}
+                </div>
               </div>
             </div>
           ) : (
-             <div className="flex items-center text-gray-500 text-sm font-medium">
-               Please select a conversation
+             <div className="flex items-center text-slate-400 text-sm font-semibold">
+               No conversation selected
              </div>
           )}
           
-          <div className="flex items-center gap-2">
-            <button 
-              onClick={() => { setSimulateText(''); setShowSimulateModal(true); }}
-              disabled={!activeContact}
-              className="bg-yellow-400 hover:bg-yellow-500 disabled:opacity-40 text-yellow-900 px-3 py-1.5 rounded text-xs font-bold transition-colors shadow-sm"
-              title="Simulate an incoming reply from the customer (dev only)"
-            >
-              + Test Reply
-            </button>
+          <div className="flex items-center gap-3">
             <button 
               onClick={() => setShowTemplateModal(true)}
               disabled={!activeContact}
-              className="bg-[#00C96F] hover:bg-[#00B463] disabled:opacity-50 text-white px-4 py-1.5 rounded text-sm font-medium transition-colors shadow-sm"
+              className="bg-emerald-500 hover:bg-emerald-600 hover:-translate-y-0.5 disabled:opacity-50 text-white px-5 py-2 rounded-xl text-sm font-bold transition-all shadow-lg shadow-emerald-500/30"
             >
-              Choose Template
+              Templates
             </button>
           </div>
         </div>
@@ -460,13 +463,13 @@ export default function WhatsAppMessenger() {
               <div key={msg.id} className={`flex ${isAgent ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[290px] sm:max-w-md relative group`}>
                   {!isAgent && (
-                    <span className="text-[10px] text-gray-500 mb-1 block font-medium pl-1">{activeContact.name}</span>
+                    <span className="text-[10px] text-slate-400 mb-1 block font-bold pl-2">{activeContact.name}</span>
                   )}
-                  <div className={`rounded-xl shadow-sm relative ${
+                  <div className={`shadow-sm relative ${
                     isAgent 
-                      ? 'bg-[#dcf8c6] rounded-tr-none' 
-                      : 'bg-white rounded-tl-none border border-gray-100'
-                  } ${isMedia ? 'p-1' : 'p-2.5'}`}>
+                      ? 'bg-emerald-500 text-white rounded-2xl rounded-tr-sm' 
+                      : 'bg-white text-slate-800 rounded-2xl rounded-tl-sm border border-slate-100'
+                  } ${isMedia ? 'p-1.5' : 'p-3.5'}`}>
                     
                     {msg.media_type === 'image' && msg.media_url ? (
                       <div className="relative">
@@ -525,7 +528,7 @@ export default function WhatsAppMessenger() {
                         {msg.timestamp}
                       </span>
                       {isAgent && (
-                        <span className={`text-[10px] ${isMedia && !hasTextContent ? 'text-white drop-shadow-md z-10' : 'text-blue-400'}`}>✓✓</span>
+                        <CheckCheck className={`w-4 h-4 ${isMedia && !hasTextContent ? 'text-white drop-shadow-md z-10' : 'text-blue-500'}`} />
                       )}
                     </div>
                   </div>
@@ -541,10 +544,26 @@ export default function WhatsAppMessenger() {
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="bg-[#f0f0f0] px-4 py-2 flex items-center gap-3 z-10 sticky bottom-0">
-          <button className="text-gray-500 hover:text-gray-700 transition-colors p-2">
-            <Smile className="w-6 h-6" />
-          </button>
+        <div className="bg-white/80 backdrop-blur-md px-4 py-3 flex items-center gap-3 z-10 sticky bottom-0 border-t border-slate-200">
+          <div className="relative" ref={emojiPickerRef}>
+            <button 
+               onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+               className="text-slate-400 hover:text-emerald-500 transition-colors p-2 cursor-pointer bg-slate-50 rounded-full hover:bg-emerald-50"
+               title="Emoji picker"
+            >
+              <Smile className="w-5 h-5" />
+            </button>
+            
+            {showEmojiPicker && (
+              <div className="absolute bottom-12 left-0 shadow-2xl rounded-2xl overflow-hidden z-50 animate-in fade-in zoom-in-95 border border-slate-100">
+                <EmojiPicker 
+                  onEmojiClick={(emojiData) => setMessageText(prev => prev + emojiData.emoji)} 
+                  width={350}
+                  height={400}
+                />
+              </div>
+            )}
+          </div>
           
           <input 
              type="file" 
@@ -556,17 +575,17 @@ export default function WhatsAppMessenger() {
           <button 
              onClick={() => fileInputRef.current?.click()}
              disabled={!activeContact || sendingMessage}
-             className="text-gray-500 hover:text-gray-700 transition-colors p-2 disabled:opacity-50"
+             className="text-slate-400 hover:text-emerald-500 transition-colors p-2 disabled:opacity-50 bg-slate-50 rounded-full hover:bg-emerald-50"
              title="Attach Photo or Document"
           >
             <Paperclip className="w-5 h-5" />
           </button>
 
-          <div className="flex-1 bg-white rounded-xl px-4 shadow-sm border border-gray-200">
+          <div className="flex-1 bg-slate-100 rounded-full px-5 shadow-inner border border-transparent focus-within:border-emerald-300 focus-within:bg-white transition-all">
              <input 
                type="text"
-               placeholder="Type a message..." 
-               className="w-full outline-none text-[15px] bg-transparent py-2.5"
+               placeholder="Write a message..." 
+               className="w-full outline-none text-[14px] bg-transparent py-3 font-medium text-slate-700 placeholder:text-slate-400"
                value={messageText}
                onChange={(e) => setMessageText(e.target.value)}
                onKeyDown={(e) => {
@@ -578,9 +597,9 @@ export default function WhatsAppMessenger() {
           <button 
              onClick={handleSendTextMessage}
              disabled={!activeContact || !messageText.trim() || sendingMessage}
-             className="bg-[#00a884] text-white p-3 rounded-full hover:bg-[#008f6f] disabled:opacity-50 transition-colors shadow-sm focus:outline-none flex-shrink-0"
+             className="bg-emerald-500 text-white p-3.5 rounded-full hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/40 disabled:opacity-50 transition-all focus:outline-none flex-shrink-0 cursor-pointer disabled:hover:shadow-none hover:-translate-y-0.5"
           >
-            <Send className="w-5 h-5 ml-0.5" />
+            <Send className="w-4 h-4 ml-0.5" />
           </button>
         </div>
       </div>
@@ -674,7 +693,7 @@ export default function WhatsAppMessenger() {
         
         {activeContact && (
           <div className="p-4 border-t bg-gray-50">
-            <button className="w-full py-2 bg-white border border-gray-200 text-gray-600 rounded text-sm font-medium hover:bg-gray-100 transition-colors shadow-sm">
+            <button className="w-full py-2 bg-white border border-gray-200 text-gray-600 rounded text-sm font-medium hover:bg-gray-100 transition-colors shadow-sm cursor-pointer ">
               More Details
             </button>
           </div>
@@ -718,7 +737,7 @@ export default function WhatsAppMessenger() {
               <button 
                 onClick={handleAddNewChat}
                 disabled={!newChatPhone}
-                className="px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-sm disabled:opacity-50 transition-colors"
+                className="px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-sm disabled:opacity-50 transition-colors cursor-pointer "
                >
                  Start Chat
                </button>
@@ -753,7 +772,7 @@ export default function WhatsAppMessenger() {
                   <button 
                     onClick={fetchTemplates}
                     disabled={loadingTemplates}
-                    className="bg-gray-100 border text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 disabled:opacity-50 transition-colors"
+                    className="bg-gray-100 border text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 disabled:opacity-50 transition-colors cursor-pointer "
                   >
                     {loadingTemplates ? '...' : 'Fetch'}
                   </button>
@@ -765,7 +784,7 @@ export default function WhatsAppMessenger() {
                 <select 
                   value={selectedTemplate}
                   onChange={(e) => setSelectedTemplate(e.target.value)}
-                  className="w-full border py-2.5 rounded-lg px-3 text-sm focus:border-green-500 outline-none bg-white cursor-pointer"
+                  className="w-full border py-2.5 rounded-lg px-3 text-sm focus:border-green-500 outline-none bg-white cursor-pointer "
                 >
                   <option value="">-- Choose a Standard Template --</option>
                   <option value="hello_world">hello_world (Meta Default)</option>
@@ -789,7 +808,7 @@ export default function WhatsAppMessenger() {
               </button>
               <button 
                 onClick={handleSendTemplateMessage}
-                className="px-6 py-2 text-sm font-medium text-white bg-[#00C96F] rounded-lg hover:bg-[#00B463] shadow-sm disabled:opacity-50 transition-colors flex items-center gap-2"
+                className="px-6 py-2 text-sm font-medium text-white bg-[#00C96F] rounded-lg hover:bg-[#00B463] shadow-sm disabled:opacity-50 transition-colors flex items-center gap-2 cursor-pointer "
                 disabled={!selectedTemplate || sendingMessage}
               >
                 {sendingMessage ? 'Sending...' : 'Send Now'}
@@ -868,7 +887,7 @@ export default function WhatsAppMessenger() {
               <div className="flex justify-center gap-3">
                 <button 
                   onClick={confirmDeleteMessage}
-                  className="px-8 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors shadow-sm"
+                  className="px-8 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors shadow-sm cursor-pointer "
                 >
                   Delete
                 </button>
