@@ -183,6 +183,7 @@ export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
                   <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Group <span className="text-rose-500">*</span></label>
                   <select className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})}>
                     <option value="user">User</option>
+                    <option value="sales">Sales</option>
                     <option value="manager">Manager</option>
                     <option value="admin">Admin</option>
                   </select>

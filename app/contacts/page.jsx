@@ -10,19 +10,25 @@ export default function ContactsPage() {
     const [loading, setLoading] = useState(true);
     const [actionLoading, setActionLoading] = useState(null); // id of the contact being converted
     const [error, setError] = useState('');
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalContacts, setTotalContacts] = useState(0);
 
     useEffect(() => {
-        fetchContacts();
-    }, []);
+        fetchContacts(page);
+    }, [page]);
 
-    const fetchContacts = async () => {
+    const fetchContacts = async (currentPage) => {
+        setLoading(true);
         try {
-            const response = await fetch('/api/contacts');
+            const response = await fetch(`/api/contacts?page=${currentPage}&limit=50`);
             const data = await response.json();
             if (!response.ok || !data.success) {
                 throw new Error(data.error || 'Failed to fetch contacts');
             }
             setContacts(data.data);
+            setTotalPages(data.totalPages || 1);
+            setTotalContacts(data.total || 0);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -98,8 +104,9 @@ export default function ContactsPage() {
                         </h1>
                         <p className="text-gray-500 mt-1">Manage AI-scraped leads and convert them into your main CRM pipeline.</p>
                     </div>
-                    <div className="bg-indigo-50 px-4 py-2 rounded-lg border border-indigo-100">
-                        <span className="text-indigo-700 font-semibold">{contacts.filter(c => !c.is_lead).length} Pending</span>
+                    <div className="bg-indigo-50 px-4 py-2 rounded-lg border border-indigo-100 flex flex-col items-end">
+                        <span className="text-indigo-700 font-semibold">{totalContacts} Total Contacts</span>
+                        <span className="text-indigo-500 text-xs text-right">Page {page} of {totalPages}</span>
                     </div>
                 </div>
 
@@ -216,6 +223,29 @@ export default function ContactsPage() {
                         ))
                     )}
                 </div>
+
+                {/* Pagination Controls */}
+                {totalPages > 1 && (
+                    <div className="flex items-center justify-center gap-4 mt-8 py-4">
+                        <button
+                            onClick={() => setPage(p => Math.max(1, p - 1))}
+                            disabled={page === 1 || loading}
+                            className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        >
+                            Previous
+                        </button>
+                        <span className="text-sm text-gray-600 font-medium">
+                            Page {page} of {totalPages}
+                        </span>
+                        <button
+                            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                            disabled={page === totalPages || loading}
+                            className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        >
+                            Next
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );
