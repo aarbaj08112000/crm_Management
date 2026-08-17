@@ -17,7 +17,8 @@ import {
   Users,
   Settings2,
   MessageSquare,
-  Mail
+  Mail,
+  Bot
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -46,6 +47,8 @@ const navigation = [
     group: 'SYSTEM',
     items: [
       { name: 'Users', href: '/users', icon: Users },
+      { name: 'AI Lead Scraper', href: '/scrape', icon: Bot },
+      { name: 'Contacts', href: '/contacts', icon: ClipboardList },
     ]
   }
 ];
@@ -65,12 +68,18 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, user }) {
   };
 
   // Filter navigation based on role
-  const filteredNavigation = navigation.filter(group => {
+  const filteredNavigation = navigation.map(group => {
     if (group.group === 'SYSTEM' && user?.role !== 'admin') {
-      return false;
+      if (user?.role === 'sales' || user?.role === 'manager') {
+        return {
+          ...group,
+          items: group.items.filter(item => item.name === 'Contacts')
+        };
+      }
+      return null;
     }
-    return true;
-  });
+    return group;
+  }).filter(Boolean);
 
   // Hide sidebar on login page
   if (pathname === '/login') return null;

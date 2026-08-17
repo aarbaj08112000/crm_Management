@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
+    "apify-client": "^2.24.0",
     "aws-ssl-profiles": "^1.1.2",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
