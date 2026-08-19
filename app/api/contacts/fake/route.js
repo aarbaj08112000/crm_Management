@@ -23,3 +23,7 @@ export async function POST(req) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
+
+export async function GET() {
+  return NextResponse.json({ message: 'This is a POST-only endpoint used for marking contacts as fake.' }, { status: 405 });
+}
