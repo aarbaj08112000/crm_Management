@@ -1,5 +1,8 @@
 import { pool } from '@/lib/db';
 import { NextResponse } from 'next/server';
+import { jwtVerify } from 'jose';
+
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
 
 export async function POST(req) {
   try {
@@ -7,6 +10,17 @@ export async function POST(req) {
 
     if (!contactId) {
       return NextResponse.json({ error: 'Contact ID is required' }, { status: 400 });
+    }
+
+    let userId = null;
+    const token = req.cookies.get('token')?.value;
+    if (token) {
+      try {
+        const { payload } = await jwtVerify(token, JWT_SECRET);
+        userId = payload.userId;
+      } catch (err) {
+        console.error('JWT Verification failed:', err);
+      }
     }
 
     const connection = await pool.getConnection();
@@ -29,8 +43,8 @@ export async function POST(req) {
 
       // Insert into enquiries table
       await connection.execute(
-        `INSERT INTO enquiries (name, mobile_number, email, address, comment, type, msg_sent, status)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO enquiries (name, mobile_number, email, address, comment, type, msg_sent, status, assigned_to)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           contact.title || 'Unknown',
           contact.phone || '',
@@ -39,7 +53,8 @@ export async function POST(req) {
           `Scraped from Apify: ${contact.website || ''}`,
           'Other', // Default or prompt user
           'No',
-          'Pending'
+          'Pending',
+          userId
         ]
       );
 
@@ -59,3 +74,4 @@ export async function POST(req) {
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
+

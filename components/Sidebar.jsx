@@ -53,7 +53,9 @@ const navigation = [
   }
 ];
 
-export default function Sidebar({ isCollapsed, setIsCollapsed, user }) {
+import * as Icons from 'lucide-react';
+
+export default function Sidebar({ isCollapsed, setIsCollapsed, user, permissions = [] }) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -67,19 +69,38 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, user }) {
     }
   };
 
-  // Filter navigation based on role
-  const filteredNavigation = navigation.map(group => {
-    if (group.group === 'SYSTEM' && user?.role !== 'admin') {
-      if (user?.role === 'sales' || user?.role === 'manager') {
-        return {
-          ...group,
-          items: group.items.filter(item => item.name === 'Contacts')
-        };
+  // Filter navigation based on dynamic permissions from DB
+  let filteredNavigation = [];
+  
+  if (permissions && permissions.length > 0) {
+    // If permissions array exists, group them
+    const grouped = {};
+    permissions.forEach(p => {
+      if (!p.can_view) return;
+      if (!grouped[p.menu_group]) {
+        grouped[p.menu_group] = { group: p.menu_group, items: [] };
       }
-      return null;
-    }
-    return group;
-  }).filter(Boolean);
+      const IconComponent = Icons[p.menu_icon] || Icons.Circle;
+      grouped[p.menu_group].items.push({
+        name: p.menu_name,
+        href: p.menu_path,
+        icon: IconComponent,
+        sequence: p.sequence
+      });
+    });
+
+    filteredNavigation = Object.values(grouped).map(group => {
+      // Sort items by sequence
+      group.items.sort((a, b) => a.sequence - b.sequence);
+      return group;
+    });
+  } else if (user?.role === 'admin') {
+    // Fallback for admin if permissions failed to load
+    filteredNavigation = navigation;
+  } else {
+    // If a user has no permissions, they see nothing
+    filteredNavigation = [];
+  }
 
   // Hide sidebar on login page
   if (pathname === '/login') return null;

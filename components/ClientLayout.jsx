@@ -10,13 +10,13 @@ export default function ClientLayout({ children }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [user, setUser] = useState(null);
+  const [permissions, setPermissions] = useState([]);
   const pathname = usePathname();
   const isLoginPage = pathname === '/login';
 
   useEffect(() => {
     setMounted(true);
     
-    // Fetch current user session
     async function fetchMe() {
       if (isLoginPage) return; // Don't fetch session on login page
       try {
@@ -24,6 +24,9 @@ export default function ClientLayout({ children }) {
         if (response.ok) {
           const data = await response.json();
           setUser(data.user);
+          if (data.permissions) {
+            setPermissions(data.permissions);
+          }
         }
       } catch (err) {
         console.error('Failed to fetch user session:', err);
@@ -44,7 +47,7 @@ export default function ClientLayout({ children }) {
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} user={user} />
+      <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} user={user} permissions={permissions} />
       
       <div className={cn(
         "flex-1 flex flex-col min-w-0 transition-all duration-300",
