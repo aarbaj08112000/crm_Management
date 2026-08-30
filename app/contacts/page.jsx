@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { ClipboardList, MessageCircle, UserPlus, Loader2, MapPin, Globe, Mail, Phone, CalendarDays } from 'lucide-react';
+import { ClipboardList, MessageCircle, UserPlus, Loader2, MapPin, Globe, Mail, Phone, CalendarDays, PhoneCall } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
+import { useCalling } from '@/context/CallingContext';
 
 export default function ContactsPage() {
     const { showToast } = useApp();
+    const { makeCall } = useCalling();
     const [contacts, setContacts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [actionLoading, setActionLoading] = useState(null); // id of the contact being converted
@@ -179,6 +181,15 @@ export default function ContactsPage() {
                                                 </button>
                                             )}
                                             
+                                            <button 
+                                                onClick={() => makeCall(contact.phone, 'CONTACT', contact.id)}
+                                                disabled={!contact.phone}
+                                                className="flex-1 flex items-center justify-center gap-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed py-2 rounded-xl font-medium transition-colors text-sm"
+                                            >
+                                                <PhoneCall className="w-4 h-4" />
+                                                Call
+                                            </button>
+
                                             <button 
                                                 onClick={() => handleWhatsApp(contact.phone)}
                                                 disabled={!contact.phone}

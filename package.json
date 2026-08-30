@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "twilio:create-app": "node scripts/create-twilio-twiml-app.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
+    "@twilio/voice-sdk": "^2.18.3",
     "apify-client": "^2.24.0",
     "aws-ssl-profiles": "^1.1.2",
     "bcryptjs": "^3.0.3",
@@ -24,6 +26,7 @@
     "react-dom": "^19.0.0-rc-66855b96-20241106",
     "react-hook-form": "^7.53.2",
     "tailwind-merge": "^2.5.4",
+    "twilio": "^5.13.1",
     "xlsx": "^0.18.5",
     "zod": "^3.23.8"
   },

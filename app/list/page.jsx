@@ -18,9 +18,11 @@ import {
   UserPlus,
   Check,
   CheckCircle2,
-  Plus
+  Plus,
+  PhoneCall
 } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
+import { useCalling } from '@/context/CallingContext';
 import { Card, CardContent } from '@/components/Card';
 import { cn } from '@/lib/utils';
 import EmailModal from '@/components/EmailModal';
@@ -76,6 +78,7 @@ export default function ListPage() {
   const { showToast, showLoader } = useApp();
   const [openActionId, setOpenActionId] = useState(null);
   const [openStatusId, setOpenStatusId] = useState(null);
+  const { makeCall } = useCalling();
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -361,7 +364,7 @@ export default function ListPage() {
                         >
                           {enquiry.status}
                         </button>
-                        
+
                         {openStatusId === enquiry.enquiry_id && (
                           <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-100 rounded-xl shadow-xl z-[60] overflow-hidden animate-in zoom-in-95 duration-200">
                             {['Pending', 'In Progress', 'Converted', 'Rejected'].map((s) => (
@@ -439,6 +442,13 @@ export default function ListPage() {
                                   <MessageSquare className="w-4 h-4" /> WhatsApp
                                 </button>
                               )}
+                              <button
+                                onClick={() => makeCall(enquiry.mobile_number, 'LEAD', enquiry.enquiry_id)}
+                                disabled={!enquiry.mobile_number}
+                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-indigo-700 hover:bg-indigo-50 transition-colors disabled:opacity-50"
+                              >
+                                <PhoneCall className="w-4 h-4" /> Call Lead
+                              </button>
                               <div className="border-t border-slate-50 my-1"></div>
                               {currentUser?.role === 'admin' && (
                                 <button
