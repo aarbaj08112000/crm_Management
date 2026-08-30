@@ -15,6 +15,7 @@ export default function ScrapePage() {
     const [generateMessage, setGenerateMessage] = useState('');
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState('');
+    const [contactTag, setContactTag] = useState('');
 
     React.useEffect(() => {
         fetch('/api/users')
@@ -78,7 +79,7 @@ export default function ScrapePage() {
             const response = await fetch('/api/contacts/bulk', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ results, assignedTo: selectedUser })
+                body: JSON.stringify({ results, assignedTo: selectedUser, tag: contactTag })
             });
             const data = await response.json();
             if (!response.ok || !data.success) {
@@ -164,16 +165,25 @@ export default function ScrapePage() {
                                         <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
                                             {results.length} items found
                                         </span>
-                                        <select 
-                                            value={selectedUser} 
-                                            onChange={(e) => setSelectedUser(e.target.value)}
-                                            className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                                        >
-                                            <option value="">-- Assign to --</option>
-                                            {users.map(u => (
-                                                <option key={u.user_id} value={u.user_id}>{u.user_name || u.name}</option>
-                                            ))}
-                                        </select>
+                                        <div className="flex items-center gap-2">
+                                            <input
+                                                type="text"
+                                                value={contactTag}
+                                                onChange={(e) => setContactTag(e.target.value)}
+                                                placeholder="Tag (e.g. Inventory)"
+                                                className="border border-gray-300 rounded-lg px-3 py-2 w-40 text-sm text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                                            />
+                                            <select 
+                                                value={selectedUser} 
+                                                onChange={(e) => setSelectedUser(e.target.value)}
+                                                className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                                            >
+                                                <option value="">-- Assign to --</option>
+                                                {users.map(u => (
+                                                    <option key={u.user_id} value={u.user_id}>{u.user_name || u.name}</option>
+                                                ))}
+                                            </select>
+                                        </div>
                                         <button 
                                             onClick={handleGenerateContacts}
                                             disabled={generating || !selectedUser}

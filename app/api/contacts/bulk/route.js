@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req) {
   try {
-    const { results, assignedTo } = await req.json();
+    const { results, assignedTo, tag } = await req.json();
 
     if (!Array.isArray(results) || results.length === 0) {
       return NextResponse.json({ error: 'Invalid or empty results array' }, { status: 400 });
@@ -31,17 +31,19 @@ export async function POST(req) {
 
         const phoneVal = phoneUnformatted || phone || null;
         const userId = assignedTo || null;
+        const tagVal = tag || null;
         
         await connection.execute(
-          `INSERT INTO ai_contacts (place_id, cid, title, phone, email, website, address, user_id) 
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+          `INSERT INTO ai_contacts (place_id, cid, title, phone, email, website, address, user_id, tag) 
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
            ON DUPLICATE KEY UPDATE 
              title = VALUES(title), 
              phone = VALUES(phone), 
              email = VALUES(email), 
              website = VALUES(website), 
              address = VALUES(address),
-             user_id = VALUES(user_id)`,
+             user_id = VALUES(user_id),
+             tag = VALUES(tag)`,
           [
             placeId,
             cid || null,
@@ -50,7 +52,8 @@ export async function POST(req) {
             email || null,
             website || null,
             address || null,
-            userId
+            userId,
+            tagVal
           ]
         );
         insertedCount++;

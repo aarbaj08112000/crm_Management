@@ -126,7 +126,12 @@ export default function ContactsPage() {
                         </div>
                     ) : (
                         contacts.map((contact) => (
-                            <div key={contact.id} className={`bg-white rounded-2xl border ${contact.is_lead ? 'border-green-200 bg-green-50/30' : 'border-gray-100'} p-5 shadow-sm hover:shadow-md transition-shadow`}>
+                            <div key={contact.id} className={`relative bg-white rounded-2xl border ${contact.is_lead ? 'border-green-200 bg-green-50/30' : 'border-gray-100'} p-5 shadow-sm hover:shadow-md transition-shadow pt-8`}>
+                                {contact.tag && (
+                                    <div className="absolute top-0 left-0 bg-blue-100 text-blue-700 text-[10px] px-3 py-1 font-bold uppercase tracking-widest rounded-br-lg rounded-tl-2xl border-r border-b border-blue-200">
+                                        {contact.tag}
+                                    </div>
+                                )}
                                 <div className="flex justify-between items-start mb-4">
                                     <h3 className="font-bold text-gray-900 text-lg leading-tight line-clamp-2" title={contact.title}>
                                         {contact.title || 'Unnamed Contact'}
