@@ -24,12 +24,13 @@ import {
 import { useApp } from '@/context/AppContext';
 import { useCalling } from '@/context/CallingContext';
 import { Card, CardContent } from '@/components/Card';
-import { cn } from '@/lib/utils';
+import { cn, formatLeadCode } from '@/lib/utils';
 import EmailModal from '@/components/EmailModal';
 import EditModal from '@/components/EditModal';
 import AssignModal from '@/components/AssignModal';
 import StatusModal from '@/components/StatusModal';
 import WhatsAppModal from '@/components/WhatsAppModal';
+import EmailThreadModal from '@/components/EmailThreadModal';
 
 const statusColors = {
   'Pending': 'text-amber-600 border-amber-200',
@@ -75,7 +76,8 @@ export default function ListPage() {
   const [showAssignModal, setShowAssignModal] = useState(false);
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [showWaModal, setShowWaModal] = useState(false);
-  const { showToast, showLoader } = useApp();
+  const [showEmailThreadModal, setShowEmailThreadModal] = useState(false);
+  const { showToast, showLoader, companySettings } = useApp();
   const [openActionId, setOpenActionId] = useState(null);
   const [openStatusId, setOpenStatusId] = useState(null);
   const { makeCall } = useCalling();
@@ -290,7 +292,7 @@ export default function ListPage() {
           <table className="w-full text-left border-collapse relative text-sm">
             <thead className="bg-slate-50 border-b border-slate-200 sticky top-0 z-10">
               <tr>
-                <th className="px-4 py-4 font-semibold text-slate-700">#</th>
+                <th className="px-4 py-4 font-semibold text-slate-700">Lead Code</th>
                 <th className="px-4 py-4 font-semibold text-slate-700">Enquiry Info</th>
                 <th className="px-4 py-4 font-semibold text-slate-700">Email</th>
                 <th className="px-4 py-4 font-semibold text-slate-700">Type</th>
@@ -316,8 +318,8 @@ export default function ListPage() {
               ) : (
                 enquiries.map((enquiry, index) => (
                   <tr key={enquiry.enquiry_id} className="hover:bg-blue-50/30 transition-colors group">
-                    <td className="px-4 py-3 text-slate-400 text-xs font-mono">
-                      {(page - 1) * 10 + index + 1}
+                    <td className="px-4 py-3 text-blue-600 text-[13px] font-black tracking-wider font-mono">
+                      {formatLeadCode(enquiry.enquiry_id, enquiry.added_date, companySettings)}
                     </td>
                     <td className="px-4 py-3">
                       <div className="font-semibold text-slate-900 text-sm">{enquiry.name}</div>
@@ -426,6 +428,12 @@ export default function ListPage() {
                                 className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
                               >
                                 <Mail className="w-4 h-4" /> Send Email
+                              </button>
+                              <button
+                                onClick={() => { setSelectedEnquiry(enquiry); setShowEmailThreadModal(true); }}
+                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-purple-50 hover:text-purple-600 transition-colors"
+                              >
+                                <Mail className="w-4 h-4" /> View Email Thread
                               </button>
                               {!enquiry.whatsapp_number ? (
                                 <button
@@ -536,6 +544,16 @@ export default function ListPage() {
           enquiry={selectedEnquiry}
           onClose={() => { setShowWaModal(false); setSelectedEnquiry(null); }}
           onSaved={fetchEnquiries}
+        />
+      )}
+
+      {/* Email Thread Modal */}
+      {showEmailThreadModal && selectedEnquiry && (
+        <EmailThreadModal
+          enquiryId={selectedEnquiry.enquiry_id}
+          enquiryName={selectedEnquiry.name}
+          enquiryEmail={selectedEnquiry.email}
+          onClose={() => { setShowEmailThreadModal(false); setSelectedEnquiry(null); }}
         />
       )}
 

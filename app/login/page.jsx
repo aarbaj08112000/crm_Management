@@ -29,7 +29,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showForgotModal, setShowForgotModal] = useState(false);
   const router = useRouter();
-  const { showLoader, showToast } = useApp();
+  const { showLoader, showToast, companySettings } = useApp();
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(loginSchema),
@@ -63,6 +63,8 @@ export default function LoginPage() {
     }
   };
 
+  const projectName = companySettings?.project_name || 'EnquiryPro';
+
   return (
     <div className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden bg-slate-950">
       {/* Background Image with Overlay */}
@@ -78,7 +80,7 @@ export default function LoginPage() {
             <ShieldCheck className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-5xl font-black tracking-tighter text-white">
-            Enquiry<span className="text-blue-500">Pro</span>
+            {projectName}
           </h1>
           <p className="text-slate-400 font-medium">Secure Admin Portal Access</p>
         </div>

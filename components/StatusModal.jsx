@@ -53,30 +53,36 @@ export default function StatusModal({ enquiry, onClose, onUpdated }) {
   ];
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300">
-      <div className="bg-white rounded-[3rem] shadow-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-300">
+    <div className="fixed inset-0 z-[100] flex justify-end overflow-hidden">
+      {/* Backdrop */}
+      <div 
+        className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity animate-in fade-in duration-300"
+        onClick={onClose}
+      />
+      
+      {/* Side Panel */}
+      <div className="relative w-full max-w-lg bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out z-10">
         {/* Header */}
-        <div className="p-10 pb-6 flex items-center justify-between relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50/50 rounded-full blur-3xl -mr-16 -mt-16" />
-          <div className="flex items-center gap-5 relative z-10">
-            <div className="w-16 h-16 bg-[#141726] rounded-[1.5rem] flex items-center justify-center shadow-2xl shadow-blue-900/20">
-              <MessageCircle className="w-8 h-8 text-white" />
+        <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 flex-shrink-0">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#5145f6] to-[#4338ca] rounded-2xl flex items-center justify-center shadow-xl shadow-blue-600/20">
+              <MessageCircle className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h3 className="text-[1.75rem] font-[900] text-[#1e293b] tracking-tight leading-none">Message Status</h3>
-              <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] mt-3">Track communication</p>
+              <h3 className="text-2xl font-black text-slate-800 tracking-tight">Message Status</h3>
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">TRACK COMMUNICATION</p>
             </div>
           </div>
           <button 
-            onClick={onClose} 
-            className="w-12 h-12 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-slate-100 text-slate-300 hover:text-slate-600 hover:rotate-90 transition-all duration-300 active:scale-95 relative z-10"
+            onClick={onClose}
+            className="p-3 hover:bg-slate-100 rounded-xl transition-all group"
           >
-            <X className="w-6 h-6" />
+            <X className="w-6 h-6 text-slate-400 group-hover:rotate-90 transition-transform duration-300" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="px-10 pb-10 space-y-8">
+        <div className="flex-1 overflow-y-auto custom-scrollbar p-8">
           <div className="space-y-6">
             <label className="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em] block text-center">SELECT OUTREACH CHANNEL</label>
             
@@ -106,19 +112,24 @@ export default function StatusModal({ enquiry, onClose, onUpdated }) {
               ))}
             </div>
           </div>
+        </div>
 
-          {/* Action Button */}
+        {/* Footer Action */}
+        <div className="p-8 bg-slate-50 border-t border-slate-100 flex gap-4">
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex-1 py-4 bg-white text-slate-600 font-bold rounded-2xl border border-slate-200 hover:bg-slate-50 transition-all text-xs uppercase tracking-widest"
+          >
+            CANCEL
+          </button>
           <button
             onClick={handleUpdate}
             disabled={loading}
-            className="w-full py-6 bg-[#5145f6] text-white font-[900] rounded-[2rem] shadow-2xl shadow-blue-600/40 hover:bg-[#4338ca] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 flex items-center justify-center gap-4 group disabled:opacity-70 disabled:hover:translate-y-0"
+            className="flex-[2] py-4 bg-[#1e293b] text-white font-black rounded-2xl shadow-xl hover:bg-blue-600 transition-all flex items-center justify-center gap-3 disabled:opacity-70 text-xs uppercase tracking-widest"
           >
-            {loading ? (
-              <Loader2 className="w-6 h-6 animate-spin" />
-            ) : (
-              <Check className="w-7 h-7 group-hover:scale-110 transition-transform" />
-            )}
-            <span className="text-sm uppercase tracking-[0.2em]">{loading ? 'Processing...' : 'Save Updates'}</span>
+            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+            {loading ? 'PROCESSING...' : 'SAVE UPDATES'}
           </button>
         </div>
       </div>

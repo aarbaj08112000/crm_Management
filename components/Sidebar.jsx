@@ -49,6 +49,7 @@ const navigation = [
       { name: 'Users', href: '/users', icon: Users },
       { name: 'AI Lead Scraper', href: '/scrape', icon: Bot },
       { name: 'Contacts', href: '/contacts', icon: ClipboardList },
+      { name: 'Company Settings', href: '/settings', icon: Settings },
     ]
   }
 ];

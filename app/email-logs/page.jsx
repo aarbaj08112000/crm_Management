@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Mail, RefreshCw, Send, Clock, Search, Filter } from 'lucide-react';
+import { Mail, RefreshCw, Send, Clock, Search, Filter, Inbox } from 'lucide-react';
 import { Card, CardContent } from '@/components/Card';
-import { cn } from '@/lib/utils';
+import { cn, formatLeadCode } from '@/lib/utils';
+import { useApp } from '@/context/AppContext';
 import EmailLogDetail from '@/components/EmailLogDetail';
 
 export default function EmailLogs() {
@@ -11,6 +12,7 @@ export default function EmailLogs() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [selectedLog, setSelectedLog] = useState(null);
+  const { companySettings } = useApp();
 
   const fetchLogs = async () => {
     setLoading(true);
@@ -104,6 +106,7 @@ export default function EmailLogs() {
           <table className="w-full text-left border-collapse relative text-sm">
             <thead className="bg-slate-50 border-b border-slate-200 sticky top-0 z-10">
               <tr>
+                <th className="px-4 py-4 font-semibold text-slate-700">Lead Code</th>
                 <th className="px-4 py-4 font-semibold text-slate-700">Status</th>
                 <th className="px-4 py-4 font-semibold text-slate-700">Recipient</th>
                 <th className="px-4 py-4 font-semibold text-slate-700">Subject</th>
@@ -114,13 +117,13 @@ export default function EmailLogs() {
             <tbody className="divide-y divide-slate-100">
               {loading && logs.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-12 text-center text-slate-400">
+                  <td colSpan={6} className="px-6 py-12 text-center text-slate-400">
                     Loading email outbox logs...
                   </td>
                 </tr>
               ) : filteredLogs.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-12 text-center text-slate-500">
+                  <td colSpan={6} className="px-6 py-12 text-center text-slate-500">
                     No email records found.
                   </td>
                 </tr>
@@ -131,11 +134,21 @@ export default function EmailLogs() {
                     className="hover:bg-blue-50/30 transition-colors cursor-pointer group"
                     onClick={() => setSelectedLog(log)}
                   >
+                    <td className="px-4 py-3 text-blue-600 text-[13px] font-black tracking-wider font-mono">
+                      {log.enquiry_id ? formatLeadCode(log.enquiry_id, log.added_date, companySettings) : '-'}
+                    </td>
                     <td className="px-4 py-3">
-                      <span className="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1 rounded-full text-[10px] w-max border border-emerald-100 shadow-sm uppercase tracking-wider">
-                        <Send className="w-3 h-3" />
-                        Sent
-                      </span>
+                      {log.direction === 'received' ? (
+                        <span className="flex items-center gap-1.5 bg-blue-50 text-blue-700 font-bold px-2.5 py-1 rounded-full text-[10px] w-max border border-blue-100 shadow-sm uppercase tracking-wider">
+                          <Inbox className="w-3 h-3" />
+                          Received
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1 rounded-full text-[10px] w-max border border-emerald-100 shadow-sm uppercase tracking-wider">
+                          <Send className="w-3 h-3" />
+                          Sent
+                        </span>
+                      )}
                     </td>
                     <td className="px-4 py-3 max-w-[200px] truncate">
                       <div className="font-semibold text-slate-900 text-sm">{log.recipient_email}</div>

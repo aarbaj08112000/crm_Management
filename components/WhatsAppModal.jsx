@@ -50,28 +50,33 @@ export default function WhatsAppModal({ enquiry, onClose, onSaved }) {
   if (!enquiry) return null;
 
   return (
-    <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
-      <div className="bg-white max-w-md w-full rounded-2xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-[100] flex justify-end overflow-hidden">
+      <div 
+        className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity animate-in fade-in duration-300"
+        onClick={onClose}
+      />
+      
+      <div className="relative w-full max-w-lg bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out z-10">
         
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
-              <MessageSquare className="w-5 h-5" />
+        <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 flex-shrink-0">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#5145f6] to-[#4338ca] rounded-2xl flex items-center justify-center shadow-xl shadow-blue-600/20">
+              <MessageSquare className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-slate-800">WhatsApp Number</h2>
-              <p className="text-xs text-slate-500 font-medium">Add or update for {enquiry.name}</p>
+              <h3 className="text-2xl font-black text-slate-800 tracking-tight">WhatsApp Number</h3>
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">UPDATE CONTACT INFO</p>
             </div>
           </div>
           <button 
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
+            className="p-3 hover:bg-slate-100 rounded-xl transition-all group"
           >
-            <X className="w-5 h-5" />
+            <X className="w-6 h-6 text-slate-400 group-hover:rotate-90 transition-transform duration-300" />
           </button>
         </div>
 
-        <div className="p-6 space-y-4">
+        <div className="flex-1 overflow-y-auto p-6 space-y-4">
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-2">
               Number starting with Country Code
@@ -90,20 +95,22 @@ export default function WhatsAppModal({ enquiry, onClose, onSaved }) {
           </div>
         </div>
 
-        <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/50 flex justify-end gap-3">
+        {/* Footer */}
+        <div className="p-8 bg-slate-50 border-t border-slate-100 flex gap-4">
           <button
+            type="button"
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-white hover:shadow-sm border border-slate-200 transition-all"
+            className="flex-1 py-4 bg-white text-slate-600 font-bold rounded-2xl border border-slate-200 hover:bg-slate-50 transition-all text-xs uppercase tracking-widest"
           >
-            Cancel
+            CANCEL
           </button>
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-emerald-500 hover:bg-emerald-600 shadow-lg shadow-emerald-500/25 transition-all flex items-center gap-2 disabled:opacity-70"
+            className="flex-[2] py-4 bg-[#1e293b] text-white font-black rounded-2xl shadow-xl hover:bg-blue-600 transition-all flex items-center justify-center gap-3 disabled:opacity-70 text-xs uppercase tracking-widest"
           >
             {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-            {saving ? 'Saving...' : 'Save Number'}
+            {saving ? 'SAVING...' : 'SAVE NUMBER'}
           </button>
         </div>
 

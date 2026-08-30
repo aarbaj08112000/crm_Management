@@ -8,11 +8,22 @@ export default function ScrapePage() {
     const [results, setResults] = useState(null);
     const [error, setError] = useState('');
     const [inputParams, setInputParams] = useState(
-        '{\n  "searchStringsArray": [\n    "industrial manufacturing companies in Pune",\n    "manufacturing plants in Pune"\n  ],\n  "maxCrawledPlacesPerSearch": 20,\n  "language": "en",\n  "countryCode": "in"\n}'
+        '{\n  "searchStringsArray": [\n    "industrial manufacturing companies in Pune",\n    "manufacturing plants in Pune"\n  ],\n  "maxCrawledPlacesPerSearch": 20,\n  "language": "en",\n  "countryCode": "in",\n  "pageLength": 1\n}'
     );
     const [copied, setCopied] = useState(false);
     const [generating, setGenerating] = useState(false);
     const [generateMessage, setGenerateMessage] = useState('');
+    const [users, setUsers] = useState([]);
+    const [selectedUser, setSelectedUser] = useState('');
+
+    React.useEffect(() => {
+        fetch('/api/users')
+            .then(res => res.json())
+            .then(data => {
+                setUsers(Array.isArray(data) ? data : (data.users || []));
+            })
+            .catch(console.error);
+    }, []);
 
     const handleScrape = async () => {
         setLoading(true);
@@ -67,7 +78,7 @@ export default function ScrapePage() {
             const response = await fetch('/api/contacts/bulk', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(results)
+                body: JSON.stringify({ results, assignedTo: selectedUser })
             });
             const data = await response.json();
             if (!response.ok || !data.success) {
@@ -153,9 +164,19 @@ export default function ScrapePage() {
                                         <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
                                             {results.length} items found
                                         </span>
+                                        <select 
+                                            value={selectedUser} 
+                                            onChange={(e) => setSelectedUser(e.target.value)}
+                                            className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                                        >
+                                            <option value="">-- Assign to --</option>
+                                            {users.map(u => (
+                                                <option key={u.user_id} value={u.user_id}>{u.user_name || u.name}</option>
+                                            ))}
+                                        </select>
                                         <button 
                                             onClick={handleGenerateContacts}
-                                            disabled={generating}
+                                            disabled={generating || !selectedUser}
                                             className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-70"
                                         >
                                             {generating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Bot className="w-4 h-4" />}

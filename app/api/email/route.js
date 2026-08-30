@@ -14,6 +14,7 @@ export async function POST(req) {
     const text = formData.get('text');
     const html = formData.get('html');
     const attachment = formData.get('attachment');
+    const enquiryId = formData.get('enquiryId');
 
     let userId = null;
     const token = req.cookies.get('token')?.value;
@@ -68,8 +69,8 @@ export async function POST(req) {
     if (userId) {
       try {
         await query(
-          'INSERT INTO email_logs (user_id, recipient_email, subject, body, sent_at) VALUES (?, ?, ?, ?, NOW())',
-          [userId, to, subject, text || html || '']
+          'INSERT INTO email_logs (user_id, recipient_email, subject, body, sent_at, direction, enquiry_id) VALUES (?, ?, ?, ?, NOW(), ?, ?)',
+          [userId, to, subject, text || html || '', 'sent', enquiryId || null]
         );
       } catch (dbErr) {
         console.error('Failed to insert email log:', dbErr);

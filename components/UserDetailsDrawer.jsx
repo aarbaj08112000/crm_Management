@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { X, UserCircle2, Activity, ListOrdered, Mail, MessageSquare, Pencil } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, formatLeadCode } from '@/lib/utils';
 import { useApp } from '@/context/AppContext';
 
 export default function UserDetailsDrawer({ isOpen, onClose, userId, onEdit }) {
-  const { showToast } = useApp();
+  const { showToast, companySettings } = useApp();
   const [data, setData] = useState({ user: null, enquiries: [], activities: [] });
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('summary');
@@ -187,7 +187,10 @@ export default function UserDetailsDrawer({ isOpen, onClose, userId, onEdit }) {
                       {data.enquiries.map(enq => (
                         <div key={enq.enquiry_id} className="p-4 bg-white rounded-xl shadow-sm border border-slate-100 hover:border-blue-200 transition-colors">
                           <div className="flex justify-between items-start mb-2">
-                            <span className="font-bold text-slate-800">{enq.name}</span>
+                            <div>
+                              <p className="text-xs font-black text-blue-600 font-mono tracking-widest">{formatLeadCode(enq.enquiry_id, enq.added_date, companySettings)}</p>
+                              <span className="font-bold text-slate-800">{enq.name}</span>
+                            </div>
                             <span className={cn("text-[9px] font-bold px-2 py-0.5 rounded-md border uppercase tracking-wider", enq.status === 'Converted' ? 'text-emerald-600 bg-emerald-50 border-emerald-200' : 'text-amber-600 bg-amber-50 border-amber-200')}>
                               {enq.status}
                             </span>
