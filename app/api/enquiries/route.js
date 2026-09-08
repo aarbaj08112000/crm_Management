@@ -115,9 +115,21 @@ export async function POST(req) {
     const data = await req.json();
     const { name, contact_person, mobile, email, address, comment, type, msg_sent, status } = data;
 
+    // Get user info from token
+    const token = req.cookies.get('token')?.value;
+    let userId = null;
+    if (token) {
+      try {
+        const { payload } = await jwtVerify(token, JWT_SECRET);
+        userId = payload.userId;
+      } catch (e) {
+        console.error('Token verification failed in POST:', e);
+      }
+    }
+
     const sql = `
-      INSERT INTO enquiries (name, contact_person, mobile_number, email, address, comment, type, msg_sent, status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO enquiries (name, contact_person, mobile_number, email, address, comment, type, msg_sent, status, added_by, assigned_to)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const [result] = await pool.query(sql, [
       name || '',
@@ -128,7 +140,9 @@ export async function POST(req) {
       comment || '',
       type || 'Other',
       msg_sent || 'No',
-      status || 'Pending'
+      status || 'Pending',
+      userId,
+      userId
     ]);
 
     await logActivity({

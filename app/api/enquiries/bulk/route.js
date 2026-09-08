@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 import { pool } from '@/lib/db';
+import { jwtVerify } from 'jose';
+
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
 
 export async function POST(req) {
   try {
@@ -8,12 +11,24 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Invalid data format' }, { status: 400 });
     }
 
+    // Get user info from token
+    const token = req.cookies.get('token')?.value;
+    let userId = null;
+    if (token) {
+      try {
+        const { payload } = await jwtVerify(token, JWT_SECRET);
+        userId = payload.userId;
+      } catch (e) {
+        console.error('Token verification failed in bulk POST:', e);
+      }
+    }
+
     const connection = await pool.getConnection();
     try {
       await connection.beginTransaction();
 
       const sql = `
-        INSERT INTO enquiries (name, contact_person, mobile_number, email, address, comment, type, msg_sent, status)
+        INSERT INTO enquiries (name, contact_person, mobile_number, email, address, comment, type, msg_sent, status, added_by, assigned_to)
         VALUES ?
       `;
       
@@ -26,7 +41,9 @@ export async function POST(req) {
         item.comment || '',
         item.type || 'Other',
         (item.msg_sent === true || item.msg_sent === 'Yes') ? 'Yes' : 'No',
-        item.status || 'Pending'
+        item.status || 'Pending',
+        userId,
+        userId
       ]);
 
       await connection.query(sql, [values]);
