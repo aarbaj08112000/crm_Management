@@ -17,3 +17,6 @@ VALUES
 
 -- 3. Add user_id to AI Contacts to track which sales rep it belongs to
 ALTER TABLE `ai_contacts` ADD COLUMN `user_id` INT NULL;
+
+-- 4. Add tag column to AI Contacts to allow tagging contacts from scraper
+ALTER TABLE `ai_contacts` ADD COLUMN `tag` VARCHAR(255) NULL;
