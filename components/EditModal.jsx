@@ -8,11 +8,14 @@ import * as z from 'zod';
 import { X, Save, Loader2, User, Phone, Mail, MapPin, MessageSquare, Briefcase, FileText } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { cn } from '@/lib/utils';
+import { Controller } from 'react-hook-form';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
   contact_person: z.string().optional(),
-  mobile_number: z.string().length(10, 'Mobile must be 10 digits'),
+  mobile_number: z.string().min(10, 'Invalid number'),
   email: z.string().email('Invalid email').or(z.literal('')).optional(),
   address: z.string().optional(),
   comment: z.string().optional(),
@@ -23,7 +26,7 @@ export default function EditModal({ enquiry, onClose, onSaved }) {
   const [loading, setLoading] = useState(false);
   const { showToast, showLoader } = useApp();
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, control, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       name: enquiry.name,
@@ -117,13 +120,30 @@ export default function EditModal({ enquiry, onClose, onSaved }) {
                 {/* Mobile */}
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Mobile</label>
-                  <input
-                    {...register('mobile_number')}
-                    className={cn(
-                      "w-full px-5 py-3.5 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-[#5145f6] outline-none transition-all font-bold text-slate-800",
-                      errors.mobile_number && "border-rose-200 bg-rose-50"
-                    )}
-                  />
+                  <div className="react-tel-input-wrapper">
+                    <Controller
+                      name="mobile_number"
+                      control={control}
+                      render={({ field }) => (
+                        <PhoneInput
+                          country={'in'}
+                          value={field.value}
+                          onChange={field.onChange}
+                          inputProps={{
+                            required: true,
+                            className: cn(
+                              "w-full pl-12 pr-5 py-3.5 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-[#5145f6] outline-none transition-all font-bold text-slate-800",
+                              errors.mobile_number && "border-rose-200 bg-rose-50"
+                            )
+                          }}
+                          containerClass="!w-full"
+                          buttonClass="!border-slate-50 !bg-slate-50 !rounded-l-2xl hover:!bg-slate-100"
+                          dropdownClass="!w-64"
+                        />
+                      )}
+                    />
+                  </div>
+                  {errors.mobile_number && <p className="text-xs text-rose-500 font-bold ml-1">{errors.mobile_number.message}</p>}
                 </div>
 
                 {/* Email */}

@@ -5,8 +5,11 @@ export async function POST(request) {
   try {
     const formData = await request.formData();
     const callSid = formData.get('CallSid');
-    const callStatus = formData.get('CallStatus');
-    const duration = formData.get('CallDuration') || 0;
+    let callStatus = formData.get('DialCallStatus');
+    if (!callStatus) {
+      callStatus = formData.get('CallStatus');
+    }
+    const duration = formData.get('DialCallDuration') || formData.get('CallDuration') || 0;
 
     if (!callSid) {
       return new NextResponse('Missing CallSid', { status: 400 });

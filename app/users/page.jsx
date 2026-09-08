@@ -155,7 +155,8 @@ export default function UsersPage() {
                   <h3 className="font-bold text-slate-800 text-lg group-hover:text-blue-600 transition-colors">
                     {user.name || 'Unnamed Agent'}
                   </h3>
-                  <p className="text-sm text-slate-500 truncate mb-3">{user.email || 'No email'}</p>
+                  <p className="text-sm text-slate-500 truncate mb-1">{user.email || 'No email'}</p>
+                  <p className="text-sm text-slate-500 truncate mb-3 font-medium">{user.mobile ? `+${user.mobile}` : 'No phone number'}</p>
                 </div>
                 
                 <div className="pt-4 border-t border-slate-100 flex items-center justify-between">

@@ -4,7 +4,7 @@ import { logActivity } from '@/lib/activity';
 
 export async function GET() {
   try {
-    const [rows] = await pool.query('SELECT user_id, user_name as name, email, role, status, image FROM user_master');
+    const [rows] = await pool.query('SELECT user_id, user_name as name, email, mobile, role, status, image FROM user_master');
     return NextResponse.json({ users: rows });
   } catch (err) {
     console.error('Fetch users error:', err);
@@ -16,10 +16,17 @@ export async function POST(req) {
   try {
     const body = await req.json();
     const { name, email, mobile, password, role, image, status } = body;
+    let roleId = null;
+    if (role) {
+      const [roles] = await pool.query('SELECT id FROM roles WHERE LOWER(name) = LOWER(?)', [role]);
+      if (roles.length > 0) {
+        roleId = roles[0].id;
+      }
+    }
 
     const [result] = await pool.query(
-      'INSERT INTO user_master (user_name, email, mobile, password, role, status, image) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [name, email, mobile, password, role || 'user', status !== undefined ? status : 1, image || null]
+      'INSERT INTO user_master (user_name, email, mobile, password, role, role_id, status, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [name, email, mobile, password, role || 'user', roleId, status !== undefined ? status : 1, image || null]
     );
 
     await logActivity({

@@ -119,7 +119,7 @@ export default function UserDetailsDrawer({ isOpen, onClose, userId, onEdit }) {
                     </div>
                     <div className="border-b border-slate-100 pb-3">
                       <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Phone Number</label>
-                      <p className="text-sm font-medium text-slate-700 mt-1">{data.user.mobile ? `+91 ${data.user.mobile}` : '-'}</p>
+                      <p className="text-sm font-medium text-slate-700 mt-1">{data.user.mobile ? `+${data.user.mobile}` : '-'}</p>
                     </div>
                     <div className="border-b border-slate-100 pb-3">
                       <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Group</label>

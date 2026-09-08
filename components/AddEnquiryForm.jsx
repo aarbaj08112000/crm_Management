@@ -8,11 +8,14 @@ import { useState } from 'react';
 import { Loader2, User, Phone, Mail, MapPin, MessageSquare, Briefcase, Plus, Send, CheckCircle2 } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { cn } from '@/lib/utils';
+import { Controller } from 'react-hook-form';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
   contact_person: z.string().optional(),
-  mobile: z.string().length(10, 'Mobile number must be 10 digits'),
+  mobile: z.string().min(10, 'Invalid number'),
   email: z.string().email('Enter a valid email').or(z.literal('')).optional(),
   address: z.string().optional(),
   comment: z.string().optional(),
@@ -25,7 +28,7 @@ export default function AddEnquiryForm() {
   const [loading, setLoading] = useState(false);
   const { showLoader, showToast } = useApp();
 
-  const { register, handleSubmit, reset, formState: { errors }, watch } = useForm({
+  const { register, control, handleSubmit, reset, formState: { errors }, watch } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       type: 'Other',
@@ -105,17 +108,30 @@ export default function AddEnquiryForm() {
           {/* Mobile */}
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-700 ml-1">Mobile Number <span className="text-rose-500">*</span></label>
-            <div className="relative group">
-              <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-emerald-500 transition-colors" />
-              <input
-                {...register('mobile')}
-                className={cn(
-                  "w-full pl-11 pr-4 py-3 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-blue-600 outline-none transition-all text-sm font-medium text-slate-800 shadow-sm",
-                  errors.mobile && "border-rose-200 bg-rose-50"
+            <div className="react-tel-input-wrapper relative group">
+              <Controller
+                name="mobile"
+                control={control}
+                render={({ field }) => (
+                  <PhoneInput
+                    country={'in'}
+                    value={field.value}
+                    onChange={field.onChange}
+                    inputProps={{
+                      required: true,
+                      className: cn(
+                        "w-full pl-12 pr-4 py-3 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-blue-600 outline-none transition-all text-sm font-medium text-slate-800 shadow-sm",
+                        errors.mobile && "border-rose-200 bg-rose-50"
+                      )
+                    }}
+                    containerClass="!w-full"
+                    buttonClass="!border-slate-50 !bg-slate-50 !rounded-l-2xl hover:!bg-slate-100"
+                    dropdownClass="!w-64"
+                  />
                 )}
-                placeholder="10 digit number"
               />
             </div>
+            {errors.mobile && <p className="text-xs text-rose-500 font-bold ml-1">{errors.mobile.message}</p>}
           </div>
 
           {/* Email */}

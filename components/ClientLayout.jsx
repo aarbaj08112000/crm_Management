@@ -7,35 +7,19 @@ import Header from "@/components/Header";
 import { cn } from '@/lib/utils';
 import { CallingProvider } from '@/context/CallingContext';
 import CallDialer from '@/components/calling/CallDialer';
+import { useApp } from '@/context/AppContext';
  
 export default function ClientLayout({ children }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [user, setUser] = useState(null);
-  const [permissions, setPermissions] = useState([]);
+  
+  const { user, permissions } = useApp();
   const pathname = usePathname();
   const isLoginPage = pathname === '/login';
 
   useEffect(() => {
     setMounted(true);
-    
-    async function fetchMe() {
-      if (isLoginPage) return; // Don't fetch session on login page
-      try {
-        const response = await fetch('/api/auth/me');
-        if (response.ok) {
-          const data = await response.json();
-          setUser(data.user);
-          if (data.permissions) {
-            setPermissions(data.permissions);
-          }
-        }
-      } catch (err) {
-        console.error('Failed to fetch user session:', err);
-      }
-    }
-    fetchMe();
-  }, [isLoginPage]);
+  }, []);
 
   if (!mounted) return null;
 

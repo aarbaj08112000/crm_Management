@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { X, Upload, Save, Loader2, Image as ImageIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useApp } from '@/context/AppContext';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
   const { showToast } = useApp();
@@ -163,11 +165,20 @@ export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
 
               <div>
                 <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Phone Number</label>
-                <div className="flex border border-slate-200 rounded-lg overflow-hidden focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500">
-                  <div className="bg-slate-50 px-3 py-2.5 border-r border-slate-200 text-sm flex items-center gap-2 select-none">
-                    🇮🇳 +91
-                  </div>
-                  <input type="text" placeholder="Enter Mobile" className="flex-1 px-4 py-2.5 bg-white outline-none text-sm" value={formData.mobile} onChange={e => setFormData({...formData, mobile: e.target.value})} />
+                <div className="react-tel-input-wrapper">
+                  <PhoneInput
+                    country={'in'}
+                    value={formData.mobile}
+                    onChange={phone => setFormData({...formData, mobile: phone})}
+                    inputProps={{
+                      name: 'phone',
+                      required: false,
+                      className: 'w-full pl-12 pr-4 py-2.5 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm'
+                    }}
+                    containerClass="!w-full"
+                    buttonClass="!border-slate-200 !bg-slate-50 !rounded-l-lg hover:!bg-slate-100"
+                    dropdownClass="!w-64"
+                  />
                 </div>
               </div>
 

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+export const dynamic = 'force-dynamic';
 import { pool } from '@/lib/db';
 import twilio from 'twilio';
 
@@ -62,7 +63,7 @@ export async function GET(request) {
 
     const voiceGrant = new VoiceGrant({
       outgoingApplicationSid: outgoingApplicationSid,
-      incomingAllow: false, // Only outbound for now
+      incomingAllow: true, // Required for device.register() to succeed without throwing 53000 error
     });
 
     const token = new AccessToken(

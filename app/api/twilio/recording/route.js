@@ -9,22 +9,30 @@ export async function POST(request) {
     const recordingUrl = formData.get('RecordingUrl');
     const recordingDuration = formData.get('RecordingDuration') || 0;
 
-    if (!callSid || !recordingSid) {
+    const parentCallSid = request.nextUrl.searchParams.get('parentCallSid');
+    const targetSid = parentCallSid || callSid;
+
+    if (!targetSid || !recordingSid) {
       return new NextResponse('Missing parameters', { status: 400 });
     }
+
+    // Twilio webhook doesn't include the file extension, append .mp3 for direct browser playback
+    const finalRecordingUrl = recordingUrl.endsWith('.mp3') || recordingUrl.endsWith('.wav') 
+      ? recordingUrl 
+      : `${recordingUrl}.mp3`;
 
     // Update the call_logs table
     await pool.query(
       `UPDATE call_logs 
        SET recording_sid = ?, recording_url = ?, recording_duration = ? 
        WHERE twilio_call_sid = ? OR parent_call_sid = ?`,
-      [recordingSid, recordingUrl, recordingDuration, callSid, callSid]
+      [recordingSid, finalRecordingUrl, recordingDuration, targetSid, targetSid]
     );
 
     // Get the log ID for the events table
     const [logs] = await pool.query(
       `SELECT id FROM call_logs WHERE twilio_call_sid = ? OR parent_call_sid = ? LIMIT 1`,
-      [callSid, callSid]
+      [targetSid, targetSid]
     );
 
     if (logs.length > 0) {

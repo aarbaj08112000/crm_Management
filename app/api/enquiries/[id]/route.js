@@ -4,6 +4,18 @@ import { logActivity } from '@/lib/activity';
 
 export const dynamic = 'force-dynamic';
 
+export async function GET(req, { params }) {
+  try {
+    const { id } = await params;
+    const [enquiries] = await pool.query('SELECT * FROM enquiries WHERE enquiry_id = ?', [id]);
+    if (enquiries.length === 0) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    return NextResponse.json(enquiries[0]);
+  } catch (error) {
+    console.error('GET Error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
 export async function PATCH(req, { params }) {
   try {
     const { id } = await params;

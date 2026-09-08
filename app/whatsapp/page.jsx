@@ -6,6 +6,8 @@ import {
   Phone, Mail, MapPin, Briefcase, Tag, Target, User, Users, Trash2, Download, FileText
 } from 'lucide-react';
 import EmojiPicker from 'emoji-picker-react';
+import UserDetailsDrawer from '@/components/UserDetailsDrawer';
+import LeadDetailsDrawer from '@/components/LeadDetailsDrawer';
 
 export default function WhatsAppMessenger() {
   const [activeTab, setActiveTab] = useState('Conversations');
@@ -21,6 +23,12 @@ export default function WhatsAppMessenger() {
   // New Chat state
   const [newChatPhone, setNewChatPhone] = useState('');
   const [newChatName, setNewChatName] = useState('');
+  const [newChatEnquiryId, setNewChatEnquiryId] = useState('');
+
+  const [viewingUserId, setViewingUserId] = useState(null);
+  const [isUserDrawerOpen, setIsUserDrawerOpen] = useState(false);
+  const [viewingEnquiry, setViewingEnquiry] = useState(null);
+  const [isLeadDrawerOpen, setIsLeadDrawerOpen] = useState(false);
 
   // Template state
   const [wabaId, setWabaId] = useState('');
@@ -160,6 +168,26 @@ export default function WhatsAppMessenger() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [activeContact?.messages]);
 
+  const handleViewLead = async (rawId) => {
+    if (!rawId) return;
+    
+    // Legacy support: extract numeric ID if string is a Lead Code (e.g., 'CR/LD/2026/08/00020')
+    const numericId = String(rawId).includes('/') 
+        ? String(rawId).split('/').pop().replace(/^0+/, '') 
+        : rawId;
+        
+    try {
+      const res = await fetch(`/api/enquiries/${numericId}`);
+      if (res.ok) {
+        const data = await res.json();
+        setViewingEnquiry(data);
+        setIsLeadDrawerOpen(true);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const handleAddNewChat = async () => {
     if (!newChatPhone) return;
     
@@ -167,7 +195,7 @@ export default function WhatsAppMessenger() {
       const res = await fetch('/api/whatsapp/contacts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: newChatName, phone: newChatPhone })
+        body: JSON.stringify({ name: newChatName, phone: newChatPhone, enquiry_id: newChatEnquiryId })
       });
       const data = await res.json();
       
@@ -177,6 +205,7 @@ export default function WhatsAppMessenger() {
         setShowNewChatModal(false);
         setNewChatPhone('');
         setNewChatName('');
+        setNewChatEnquiryId('');
       } else {
         alert(data.error || 'Failed to add contact');
       }
@@ -419,10 +448,25 @@ export default function WhatsAppMessenger() {
               </div>
               <div>
                 <h2 className="text-[15px] font-bold text-slate-800 leading-tight">{activeContact.name}</h2>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <span className="text-[12px] text-slate-500 font-medium">+{activeContact.phone}</span>
-                  {activeContact.addedByName && (
-                    <span className="text-[9px] bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider shadow-sm border border-indigo-100">By {activeContact.addedByName}</span>
+                <div className="flex flex-col mt-0.5">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[12px] text-slate-500 font-medium">+{activeContact.phone}</span>
+                    {activeContact.addedByName && (
+                      <button 
+                        onClick={() => { setViewingUserId(activeContact.addedById); setIsUserDrawerOpen(true); }}
+                        className="text-[9px] bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider shadow-sm border border-indigo-100 hover:bg-indigo-100 transition-colors cursor-pointer"
+                      >
+                        By {activeContact.addedByName}
+                      </button>
+                    )}
+                  </div>
+                  {activeContact.enquiry_id && (
+                    <button 
+                      onClick={() => handleViewLead(activeContact.rawEnquiryId || activeContact.enquiry_id)}
+                      className="text-[12px] font-bold text-indigo-600 mt-0.5 text-left hover:underline transition-all cursor-pointer w-fit"
+                    >
+                      {activeContact.enquiry_id}
+                    </button>
                   )}
                 </div>
               </div>
@@ -731,6 +775,16 @@ export default function WhatsAppMessenger() {
                   className="w-full border rounded-lg px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
                 />
               </div>
+              <div className="space-y-1 pt-2">
+                <label className="text-sm font-medium text-gray-700">Lead Code (Optional)</label>
+                <input 
+                  type="text" 
+                  value={newChatEnquiryId}
+                  onChange={(e) => setNewChatEnquiryId(e.target.value)}
+                  placeholder="e.g. CR/LD/2026/08/00021"
+                  className="w-full border rounded-lg px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                />
+              </div>
             </div>
             <div className="px-6 py-4 bg-gray-50 border-t flex justify-end gap-3">
               <button onClick={() => setShowNewChatModal(false)} className="px-4 py-2 text-sm font-medium text-gray-600 bg-white border rounded-lg hover:bg-gray-100">Cancel</button>
@@ -902,6 +956,18 @@ export default function WhatsAppMessenger() {
           </div>
         </div>
       )}
+      {/* Drawers */}
+      <UserDetailsDrawer 
+        isOpen={isUserDrawerOpen}
+        userId={viewingUserId}
+        onClose={() => { setIsUserDrawerOpen(false); setViewingUserId(null); }}
+        onEdit={(usr) => {}} // Readonly here
+      />
+
+      <LeadDetailsDrawer 
+        enquiry={viewingEnquiry}
+        onClose={() => { setIsLeadDrawerOpen(false); setViewingEnquiry(null); }}
+      />
 
     </div>
   );

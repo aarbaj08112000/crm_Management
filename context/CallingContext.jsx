@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
-import { Device } from '@twilio/voice-sdk';
+import { VonageClient } from '@vonage/client-sdk';
 import { useApp } from '@/context/AppContext';
 
 const CallingContext = createContext();
@@ -24,44 +24,59 @@ export function CallingProvider({ children, user }) {
   const timerRef = useRef(null);
 
   useEffect(() => {
+    // Suppress known Vonage SDK bug with missing leg statuses that triggers Next.js Console Error overlay
+    const originalConsoleError = console.error;
+    console.error = (...args) => {
+      const msg = args.join(' ');
+      if (typeof msg === 'string' && msg.includes('LegStatus.')) {
+        // Silently ignore this specific Vonage SDK bug log
+        return;
+      }
+      originalConsoleError.apply(console, args);
+    };
+
+    return () => {
+      console.error = originalConsoleError;
+    };
+  }, []);
+
+  useEffect(() => {
     // Only initialize if we have a user and they are probably permitted (we verify again on server)
-    if (!user || user.role === 'user') return; // Wait, we should fetch permission or let server decide.
-    // For now we don't init device on load, we init when user tries to open dialer to save resources/tokens.
+    if (!user || user.role === 'user') return; 
   }, [user]);
 
   const initDevice = async () => {
-    if (device) return true;
+    if (device && device.sessionId) return device;
     try {
       const currentUserId = user.userId || user.user_id || user.id;
-      const res = await fetch(`/api/twilio/token?userId=${currentUserId}`);
+      const res = await fetch(`/api/vonage/token?userId=${currentUserId}&t=${Date.now()}`, { cache: 'no-store' });
       const data = await res.json();
       if (!res.ok || !data.success) {
         showToast(data.error || 'Failed to initialize calling', 'error');
-        return false;
+        return null;
       }
 
-      const newDevice = new Device(data.token, {
-        codecPreferences: ['opus', 'pcmu'],
-        fakeLocalDTMF: true,
-        enableRingingState: true
+      const newDevice = new VonageClient({ debug: true });
+
+      // Listen for call state changes
+      newDevice.on('callHangup', (callId, callQuality) => {
+        setCallState('idle');
+        setActiveCall(null);
+        stopTimer();
+        setDialerVisible(false);
       });
 
-      newDevice.on('registered', () => {
-        console.log('Twilio.Device Ready');
+      newDevice.on('callError', (error) => {
+        console.error('Vonage Call Error:', error);
+        showToast('Calling error: ' + (error.message || String(error)), 'error');
       });
 
-      newDevice.on('error', (twilioError) => {
-        console.error('Twilio.Device Error: ', twilioError.message);
-        showToast('Calling error: ' + twilioError.message, 'error');
-      });
-
-      newDevice.register();
+      await newDevice.createSession(data.token);
       setDevice(newDevice);
-      return true;
+      return newDevice;
     } catch (e) {
-      console.error(e);
-      showToast('Error connecting to calling service', 'error');
-      return false;
+      console.error('Error connecting to calling service:', e);
+      return null;
     }
   };
 
@@ -75,58 +90,32 @@ export function CallingProvider({ children, user }) {
     setDialerMinimized(false);
     setCurrentNumber(number);
 
-    const ready = await initDevice();
-    if (!ready) return;
+    const activeDevice = await initDevice();
+    if (!activeDevice) return;
 
     try {
-      // Device might take a moment to register, ideally wait for 'registered' event.
-      // But we can usually call immediately if token is valid.
-      
-      const call = await device.connect({
-        params: {
-          To: number,
-        }
-      });
+      const callId = await activeDevice.serverCall({ to: String(number) });
 
-      setActiveCall(call);
-      setCallState('ringing');
+      setActiveCall(callId);
+      setCallState('connected');
+      startTimer();
       
-      call.on('accept', () => {
-        setCallState('connected');
-        startTimer();
-      });
-
-      call.on('disconnect', () => {
-        setCallState('idle');
-        setActiveCall(null);
-        stopTimer();
-      });
-      
-      call.on('error', (err) => {
-        showToast('Call error: ' + err.message, 'error');
-        setCallState('idle');
-        setActiveCall(null);
-        stopTimer();
-      });
-
       // Need to update the CRM context on the server log
-      call.on('accept', async () => {
-        // Wait briefly for the webhook to create the log, then update it.
-        setTimeout(async () => {
-           try {
-              await fetch('/api/twilio/update-log', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  callSid: call.parameters.CallSid,
-                  sourceType,
-                  sourceId,
-                  userId: user.userId || user.user_id || user.id
-                })
-              });
-           } catch(e) {}
-        }, 3000);
-      });
+      try {
+        await fetch('/api/vonage/update-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            callSid: callId,
+            sourceType,
+            sourceId,
+            toNumber: number,
+            userId: user.userId || user.user_id || user.id
+          })
+        });
+      } catch(e) {
+        console.error('Failed to create call log:', e);
+      }
 
     } catch (e) {
       console.error('Error making call', e);
@@ -136,18 +125,30 @@ export function CallingProvider({ children, user }) {
   };
 
   const hangUp = () => {
-    if (device) {
-      device.disconnectAll();
+    if (device && activeCall) {
+      device.hangup(activeCall).catch(e => console.error("Hangup error:", e));
     }
     setCallState('idle');
     setActiveCall(null);
     stopTimer();
   };
 
+  const acceptCall = () => {
+    // Implement inbound answer logic for Vonage if needed
+  };
+
+  const rejectCall = () => {
+    // Implement inbound reject logic for Vonage if needed
+  };
+
   const toggleMute = () => {
-    if (activeCall) {
+    if (device && activeCall) {
       const muted = !isMuted;
-      activeCall.mute(muted);
+      if (muted) {
+        device.mute(activeCall);
+      } else {
+        device.unmute(activeCall);
+      }
       setIsMuted(muted);
     }
   };
@@ -185,6 +186,7 @@ export function CallingProvider({ children, user }) {
       setDialerVisible,
       setDialerMinimized,
       setCurrentNumber,
+      setCallState,
       makeCall,
       hangUp,
       toggleMute

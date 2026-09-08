@@ -77,7 +77,7 @@ export default function MyProfileDrawer({ isOpen, onClose, userId, onEdit }) {
               {/* Details list */}
               <div className="bg-slate-50 rounded-2xl divide-y divide-slate-100 overflow-hidden border border-slate-100">
                 <Row label="Email" value={user.email} />
-                <Row label="Mobile" value={user.mobile ? `+91 ${user.mobile}` : '-'} />
+                <Row label="Mobile" value={user.mobile ? `+${user.mobile}` : '-'} />
                 <Row label="Role / Group">
                   <span className="text-sm font-bold text-rose-500 capitalize">{user.role || 'User'}</span>
                 </Row>

@@ -31,16 +31,23 @@ export async function PATCH(req, { params }) {
     const { id } = await params;
     const body = await req.json();
     const { name, email, mobile, role, status, image, password } = body;
+    let roleId = null;
+    if (role) {
+      const [roles] = await pool.query('SELECT id FROM roles WHERE LOWER(name) = LOWER(?)', [role]);
+      if (roles.length > 0) {
+        roleId = roles[0].id;
+      }
+    }
 
     if (password && password.trim() !== '') {
       await pool.query(
-        'UPDATE user_master SET user_name = ?, email = ?, mobile = ?, role = ?, status = ?, image = ?, password = ? WHERE user_id = ?',
-        [name, email, mobile, role, status, image || null, password, id]
+        'UPDATE user_master SET user_name = ?, email = ?, mobile = ?, role = ?, role_id = ?, status = ?, image = ?, password = ? WHERE user_id = ?',
+        [name, email, mobile, role, roleId, status, image || null, password, id]
       );
     } else {
       await pool.query(
-        'UPDATE user_master SET user_name = ?, email = ?, mobile = ?, role = ?, status = ?, image = ? WHERE user_id = ?',
-        [name, email, mobile, role, status, image || null, id]
+        'UPDATE user_master SET user_name = ?, email = ?, mobile = ?, role = ?, role_id = ?, status = ?, image = ? WHERE user_id = ?',
+        [name, email, mobile, role, roleId, status, image || null, id]
       );
     }
 

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { jwtVerify } from 'jose';
+import { formatLeadCode } from '@/lib/utils';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
 
@@ -17,12 +18,14 @@ export async function GET(req) {
 
     // Base query for whatsapp contacts
     let sql = `
-      SELECT DISTINCT c.id, c.name, c.phone, c.created_at, u.user_name as added_by_name,
+      SELECT DISTINCT c.id, c.name, c.phone, c.created_at, c.enquiry_id, c.added_by, u.user_name as added_by_name,
+             enq.added_date as enquiry_date,
              (SELECT message FROM whatsapp_messages m WHERE m.contact_id = c.id ORDER BY timestamp DESC LIMIT 1) as last_message,
              (SELECT sender FROM whatsapp_messages m WHERE m.contact_id = c.id ORDER BY timestamp DESC LIMIT 1) as last_sender,
              (SELECT timestamp FROM whatsapp_messages m WHERE m.contact_id = c.id ORDER BY timestamp DESC LIMIT 1) as last_timestamp
       FROM whatsapp_contacts c
       LEFT JOIN user_master u ON c.added_by = u.user_id
+      LEFT JOIN enquiries enq ON c.enquiry_id = enq.enquiry_id
     `;
     const params = [];
 
@@ -36,18 +39,29 @@ export async function GET(req) {
 
     const contacts = await query(sql, params);
 
-    const formatted = contacts.map(c => ({
+    const formatted = contacts.map(c => {
+      // Generate formatted Lead Code if numeric enquiry_id exists
+      let displayEnquiryId = c.enquiry_id;
+      if (c.enquiry_id && !isNaN(c.enquiry_id)) {
+         displayEnquiryId = formatLeadCode(c.enquiry_id, c.enquiry_date);
+      }
+
+      return {
       id: c.id,
       name: c.name || `+${c.phone}`,
       phone: c.phone,
+      enquiry_id: displayEnquiryId,
+      rawEnquiryId: c.enquiry_id,
       addedByName: c.added_by_name,
+      addedById: c.added_by,
       initials: (c.name || `+${c.phone}`).substring(0, 2).toUpperCase(),
       lastMessage: c.last_message || 'No messages yet',
       lastSender: c.last_sender || null,
       timestamp: c.last_timestamp
         ? formatTime(c.last_timestamp)
         : formatTime(c.created_at)
-    }));
+    };
+    });
 
     return NextResponse.json({ contacts: formatted });
   } catch (err) {
@@ -67,10 +81,17 @@ export async function POST(req) {
       } catch (err) { }
     }
 
-    const { name, phone } = await req.json();
+    const { name, phone, enquiry_id } = await req.json();
     if (!phone) return NextResponse.json({ error: 'Phone required' }, { status: 400 });
 
     const formattedPhone = phone.replace(/[\+\-\s()]/g, '');
+
+    // Ensure enquiry_id column exists
+    try {
+      await query("ALTER TABLE whatsapp_contacts ADD COLUMN enquiry_id VARCHAR(50) DEFAULT NULL");
+    } catch (e) {
+      // Ignore if already exists
+    }
 
     // Insert or ignore if duplicate
     const check = await query('SELECT * FROM whatsapp_contacts WHERE phone = ?', [formattedPhone]);
@@ -78,11 +99,15 @@ export async function POST(req) {
 
     if (check.length > 0) {
       newContactId = check[0].id;
+      if (enquiry_id && !check[0].enquiry_id) {
+         await query('UPDATE whatsapp_contacts SET enquiry_id = ? WHERE id = ?', [enquiry_id, newContactId]);
+      }
     } else {
-      const result = await query('INSERT INTO whatsapp_contacts (name, phone, added_by) VALUES (?, ?, ?)', [
+      const result = await query('INSERT INTO whatsapp_contacts (name, phone, added_by, enquiry_id) VALUES (?, ?, ?, ?)', [
         name || null,
         formattedPhone,
-        userId
+        userId,
+        enquiry_id || null
       ]);
       newContactId = result.insertId;
     }

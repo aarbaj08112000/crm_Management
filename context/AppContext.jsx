@@ -1,6 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import GlobalLoader from '@/components/GlobalLoader';
 import Toast from '@/components/Toast';
 
@@ -15,6 +16,12 @@ export function AppProvider({ children }) {
     project_name: 'EnquiryPro',
     company_name: ''
   });
+  
+  // RBAC State
+  const [user, setUser] = useState(null);
+  const [permissions, setPermissions] = useState([]);
+  const pathname = usePathname();
+  const isLoginPage = pathname === '/login';
 
   const fetchSettings = useCallback(async () => {
     try {
@@ -28,9 +35,26 @@ export function AppProvider({ children }) {
     }
   }, []);
 
-  React.useEffect(() => {
+  const fetchUser = useCallback(async () => {
+    if (isLoginPage) return;
+    try {
+      const response = await fetch('/api/auth/me');
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data.user);
+        if (data.permissions) {
+          setPermissions(data.permissions);
+        }
+      }
+    } catch (err) {
+      console.error('Failed to fetch user session:', err);
+    }
+  }, [isLoginPage]);
+
+  useEffect(() => {
     fetchSettings();
-  }, [fetchSettings]);
+    fetchUser();
+  }, [fetchSettings, fetchUser]);
 
   const showLoader = useCallback((state) => setIsLoading(!!state), []);
 
@@ -48,8 +72,24 @@ export function AppProvider({ children }) {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
+  const hasPermission = useCallback((menuName, action = 'can_view') => {
+    const perm = permissions.find((p) => p.menu_name === menuName);
+    if (!perm) return false;
+    
+    return Boolean(perm[action]);
+  }, [permissions]);
+
   return (
-    <AppContext.Provider value={{ showLoader, showToast, companySettings, refreshSettings: fetchSettings }}>
+    <AppContext.Provider value={{ 
+      showLoader, 
+      showToast, 
+      companySettings, 
+      refreshSettings: fetchSettings,
+      user,
+      permissions,
+      hasPermission,
+      refreshUser: fetchUser
+    }}>
       {children}
       <GlobalLoader isVisible={isLoading} />
       <div className="fixed top-4 right-4 z-[9999] flex flex-col gap-3">

@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { MessageSquare, X, Loader2, Save } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
+import { formatLeadCode } from '@/lib/utils';
 
 export default function WhatsAppModal({ enquiry, onClose, onSaved }) {
   const [waNumber, setWaNumber] = useState('');
   const [saving, setSaving] = useState(false);
-  const { showToast } = useApp();
+  const { showToast, companySettings } = useApp();
 
   useEffect(() => {
     if (enquiry) {
@@ -31,8 +32,23 @@ export default function WhatsAppModal({ enquiry, onClose, onSaved }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ whatsapp_number: waNumber }),
       });
-      
+
       if (response.ok) {
+        
+        try {
+          await fetch('/api/whatsapp/contacts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+              name: enquiry.name, 
+              phone: waNumber,
+              enquiry_id: enquiry.enquiry_id
+            })
+          });
+        } catch (e) {
+          console.error("Failed to add to WhatsApp contacts automatically", e);
+        }
+
         showToast('WhatsApp number saved!', 'success');
         onSaved();
         onClose();
@@ -51,13 +67,13 @@ export default function WhatsAppModal({ enquiry, onClose, onSaved }) {
 
   return (
     <div className="fixed inset-0 z-[100] flex justify-end overflow-hidden">
-      <div 
+      <div
         className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity animate-in fade-in duration-300"
         onClick={onClose}
       />
-      
+
       <div className="relative w-full max-w-lg bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out z-10">
-        
+
         <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 flex-shrink-0">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 bg-gradient-to-br from-[#5145f6] to-[#4338ca] rounded-2xl flex items-center justify-center shadow-xl shadow-blue-600/20">
@@ -68,7 +84,7 @@ export default function WhatsAppModal({ enquiry, onClose, onSaved }) {
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">UPDATE CONTACT INFO</p>
             </div>
           </div>
-          <button 
+          <button
             onClick={onClose}
             className="p-3 hover:bg-slate-100 rounded-xl transition-all group"
           >

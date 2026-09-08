@@ -80,7 +80,16 @@ export default function ListPage() {
   const { showToast, showLoader, companySettings } = useApp();
   const [openActionId, setOpenActionId] = useState(null);
   const [openStatusId, setOpenStatusId] = useState(null);
-  const { makeCall } = useCalling();
+  const { makeCall, setDialerVisible, setDialerMinimized, setCallState, setCurrentNumber } = useCalling();
+
+  const handleVonageCall = async (number, type, id) => {
+    if (!currentUser) {
+      showToast('You must be logged in to make a call.', 'error');
+      return;
+    }
+    setOpenActionId(null);
+    makeCall(number, type, id);
+  };
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -453,9 +462,16 @@ export default function ListPage() {
                               <button
                                 onClick={() => makeCall(enquiry.mobile_number, 'LEAD', enquiry.enquiry_id)}
                                 disabled={!enquiry.mobile_number}
-                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-indigo-700 hover:bg-indigo-50 transition-colors disabled:opacity-50"
+                                className="!hidden w-full flex items-center gap-3 px-4 py-2.5 text-sm text-indigo-700 hover:bg-indigo-50 transition-colors disabled:opacity-50"
                               >
                                 <PhoneCall className="w-4 h-4" /> Call Lead
+                              </button>
+                              <button
+                                onClick={() => handleVonageCall(enquiry.mobile_number, 'LEAD', enquiry.enquiry_id)}
+                                disabled={!enquiry.mobile_number}
+                                className="!hidden w-full flex items-center gap-3 px-4 py-2.5 text-sm text-purple-700 hover:bg-purple-50 transition-colors disabled:opacity-50"
+                              >
+                                <PhoneCall className="w-4 h-4" /> Call 2
                               </button>
                               <div className="border-t border-slate-50 my-1"></div>
                               {currentUser?.role === 'admin' && (

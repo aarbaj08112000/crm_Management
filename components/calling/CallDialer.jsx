@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useCalling } from '@/context/CallingContext';
-import { Phone, PhoneOff, Mic, MicOff, X, Minimize2, Maximize2, Loader2 } from 'lucide-react';
+import { Phone, PhoneOff, Mic, MicOff, X, Minimize2, Maximize2, Loader2, PhoneIncoming, PhoneCall } from 'lucide-react';
 
 export default function CallDialer() {
   const { 
@@ -15,6 +15,8 @@ export default function CallDialer() {
     setDialerVisible, 
     setDialerMinimized, 
     hangUp, 
+    acceptCall,
+    rejectCall,
     toggleMute 
   } = useCalling();
 
@@ -22,10 +24,12 @@ export default function CallDialer() {
 
   if (dialerMinimized) {
     return (
-      <div className="fixed bottom-6 right-6 bg-indigo-600 text-white rounded-full p-4 shadow-xl cursor-pointer hover:bg-indigo-700 transition-colors z-50 flex items-center gap-3"
+      <div className="fixed bottom-6 right-6 bg-indigo-600 text-white rounded-full p-4 shadow-xl cursor-pointer hover:bg-indigo-700 transition-colors z-50 flex items-center gap-3 animate-bounce"
            onClick={() => setDialerMinimized(false)}>
-        {callState === 'ringing' ? <Loader2 className="w-5 h-5 animate-spin" /> : <Phone className="w-5 h-5" />}
-        <span className="font-semibold">{callState === 'connected' ? callDuration : 'Calling...'}</span>
+        {callState === 'ringing' || callState === 'incoming' ? <Loader2 className="w-5 h-5 animate-spin" /> : <Phone className="w-5 h-5" />}
+        <span className="font-semibold">
+          {callState === 'connected' ? callDuration : callState === 'incoming' ? 'Incoming...' : 'Calling...'}
+        </span>
       </div>
     );
   }
@@ -55,32 +59,50 @@ export default function CallDialer() {
         <div className="text-gray-500 mb-6 flex items-center gap-2">
           {callState === 'idle' && <span>Ready</span>}
           {callState === 'ringing' && <><Loader2 className="w-4 h-4 animate-spin text-indigo-500" /> <span>Calling...</span></>}
+          {callState === 'incoming' && <><PhoneIncoming className="w-4 h-4 text-emerald-500 animate-pulse" /> <span className="text-emerald-600 font-bold">Incoming Call...</span></>}
           {callState === 'connected' && <span className="text-green-600 font-semibold">{callDuration}</span>}
         </div>
 
         {/* Controls */}
-        <div className="flex items-center gap-6">
-          <button 
-            onClick={toggleMute}
-            disabled={callState !== 'connected'}
-            className={`p-4 rounded-full transition-colors ${
-              callState !== 'connected' ? 'bg-gray-100 text-gray-400' : 
-              isMuted ? 'bg-amber-100 text-amber-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          >
-            {isMuted ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
-          </button>
+        {callState === 'incoming' ? (
+          <div className="flex items-center gap-6">
+            <button 
+              onClick={acceptCall}
+              className="p-4 rounded-full transition-all bg-emerald-500 text-white hover:bg-emerald-600 shadow-lg shadow-emerald-200 hover:scale-110"
+            >
+              <PhoneCall className="w-6 h-6" />
+            </button>
+            <button 
+              onClick={rejectCall}
+              className="p-4 rounded-full transition-all bg-red-500 text-white hover:bg-red-600 shadow-lg shadow-red-200 hover:scale-110"
+            >
+              <PhoneOff className="w-6 h-6" />
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-6">
+            <button 
+              onClick={toggleMute}
+              disabled={callState !== 'connected'}
+              className={`p-4 rounded-full transition-colors ${
+                callState !== 'connected' ? 'bg-gray-100 text-gray-400' : 
+                isMuted ? 'bg-amber-100 text-amber-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {isMuted ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
+            </button>
 
-          <button 
-            onClick={hangUp}
-            disabled={callState === 'idle'}
-            className={`p-4 rounded-full transition-colors ${
-              callState === 'idle' ? 'bg-gray-100 text-gray-400' : 'bg-red-500 text-white hover:bg-red-600 shadow-md shadow-red-200'
-            }`}
-          >
-            <PhoneOff className="w-6 h-6" />
-          </button>
-        </div>
+            <button 
+              onClick={hangUp}
+              disabled={callState === 'idle'}
+              className={`p-4 rounded-full transition-colors ${
+                callState === 'idle' ? 'bg-gray-100 text-gray-400' : 'bg-red-500 text-white hover:bg-red-600 shadow-md shadow-red-200'
+              }`}
+            >
+              <PhoneOff className="w-6 h-6" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
