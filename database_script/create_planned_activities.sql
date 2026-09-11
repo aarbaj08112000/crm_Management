@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS `planned_activities` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `enquiry_id` int NOT NULL,
+  `type` enum('Log', 'Schedule') DEFAULT 'Schedule',
+  `is_public` tinyint(1) DEFAULT 1,
+  `activity_type` varchar(100) DEFAULT NULL,
+  `sub_activity` varchar(100) DEFAULT NULL,
+  `assigned_to` int DEFAULT NULL,
+  `priority` varchar(50) DEFAULT 'Low',
+  `scheduled_date` date DEFAULT NULL,
+  `scheduled_time` time DEFAULT NULL,
+  `summary` varchar(255) DEFAULT NULL,
+  `description` text,
+  `status` enum('Pending', 'Done', 'Cancelled') DEFAULT 'Pending',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `created_by` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `enquiry_id` (`enquiry_id`),
+  KEY `assigned_to` (`assigned_to`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

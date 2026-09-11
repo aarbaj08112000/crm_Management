@@ -2,6 +2,11 @@
 
 import { X, Mail, Clock, Send, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import SidePanelHeader from './SidePanelHeader';
+import dynamic from 'next/dynamic';
+import 'react-quill-new/dist/quill.snow.css';
+
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
 export default function EmailLogDetail({ log, onClose }) {
   if (!log) return null;
@@ -28,25 +33,14 @@ export default function EmailLogDetail({ log, onClose }) {
       />
       
       {/* Side Menu Panel */}
-      <div className="relative w-full max-w-lg bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out">
+      <div className="relative w-full max-w-3xl bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out">
         {/* Header */}
-        <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-500/20">
-              <Mail className="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-black text-slate-800 tracking-tight">Email Details</h3>
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">LOG VIEWER</p>
-            </div>
-          </div>
-          <button 
-            onClick={onClose}
-            className="p-3 hover:bg-slate-100 rounded-xl transition-all group"
-          >
-            <X className="w-6 h-6 text-slate-400 group-hover:rotate-90 transition-transform duration-300" />
-          </button>
-        </div>
+        <SidePanelHeader
+          icon={Mail}
+          title="Email Details"
+          subtitle="LOG VIEWER"
+          onClose={onClose}
+        />
 
         {/* content Body */}
         <div className="flex-1 overflow-y-auto custom-scrollbar p-8 space-y-8">
@@ -73,8 +67,14 @@ export default function EmailLogDetail({ log, onClose }) {
               <div className="flex items-center justify-between w-full">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Message Detail</label>
               </div>
-              <div className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-50 rounded-2xl text-sm font-medium text-slate-700 min-h-[250px] whitespace-pre-wrap">
-                {log.body || 'No message content available.'}
+              <div className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl overflow-hidden min-h-[250px]">
+                <ReactQuill 
+                  value={log.body || 'No message content available.'}
+                  readOnly={true}
+                  theme="snow"
+                  modules={{ toolbar: false }}
+                  className="[&_.ql-container]:!border-none [&_.ql-editor]:text-sm [&_.ql-editor]:font-medium [&_.ql-editor]:text-slate-700"
+                />
               </div>
             </div>
             

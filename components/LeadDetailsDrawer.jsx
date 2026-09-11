@@ -2,6 +2,7 @@
 
 import { X, User, Phone, Mail, MapPin, Briefcase } from 'lucide-react';
 import { cn, formatLeadCode } from '@/lib/utils';
+import SidePanelHeader from './SidePanelHeader';
 
 export default function LeadDetailsDrawer({ enquiry, onClose }) {
   if (!enquiry) return null;
@@ -17,25 +18,12 @@ export default function LeadDetailsDrawer({ enquiry, onClose }) {
       {/* Side Menu Panel */}
       <div className="relative w-full max-w-lg bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out">
         {/* Header */}
-        <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-[#5145f6] to-[#4338ca] rounded-2xl flex items-center justify-center shadow-xl shadow-blue-600/20">
-              <User className="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-black text-slate-800 tracking-tight">Lead Details</h3>
-              <p className="text-xs font-bold text-indigo-500 uppercase tracking-widest mt-1">
-                {enquiry.enquiry_id ? formatLeadCode(enquiry.enquiry_id) : 'VIEW LEAD INFORMATION'}
-              </p>
-            </div>
-          </div>
-          <button 
-            onClick={onClose}
-            className="p-3 hover:bg-slate-100 rounded-xl transition-all group"
-          >
-            <X className="w-6 h-6 text-slate-400 group-hover:rotate-90 transition-transform duration-300" />
-          </button>
-        </div>
+        <SidePanelHeader
+          icon={User}
+          title="Lead Details"
+          subtitle={enquiry.enquiry_id ? formatLeadCode(enquiry.enquiry_id) : 'VIEW LEAD INFORMATION'}
+          onClose={onClose}
+        />
 
         {/* Details Body */}
         <div className="flex-1 overflow-y-auto custom-scrollbar p-8">

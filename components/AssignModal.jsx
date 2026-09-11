@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { X, UserPlus, Loader2, Users, Check, Shield, UserCircle } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { cn } from '@/lib/utils';
+import SidePanelHeader from './SidePanelHeader';
 
 export default function AssignModal({ enquiry, onClose, onAssigned }) {
   const [users, setUsers] = useState([]);
@@ -73,23 +74,12 @@ export default function AssignModal({ enquiry, onClose, onAssigned }) {
       {/* Side Panel */}
       <div className="relative w-full max-w-lg bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out z-10">
         {/* Header */}
-        <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 flex-shrink-0">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-[#5145f6] to-[#4338ca] rounded-2xl flex items-center justify-center shadow-xl shadow-blue-600/20">
-              <Users className="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-black text-slate-800 tracking-tight">Assign Lead</h3>
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">TEAM ALLOCATION</p>
-            </div>
-          </div>
-          <button 
-            onClick={onClose}
-            className="p-3 hover:bg-slate-100 rounded-xl transition-all group"
-          >
-            <X className="w-6 h-6 text-slate-400 group-hover:rotate-90 transition-transform duration-300" />
-          </button>
-        </div>
+        <SidePanelHeader
+          icon={Users}
+          title="Assign Lead"
+          subtitle="TEAM ALLOCATION"
+          onClose={onClose}
+        />
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto custom-scrollbar p-8">

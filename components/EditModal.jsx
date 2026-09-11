@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import { Controller } from 'react-hook-form';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import SidePanelHeader from './SidePanelHeader';
 
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
@@ -80,23 +81,12 @@ export default function EditModal({ enquiry, onClose, onSaved }) {
       {/* Side Menu Panel */}
       <div className="relative w-full max-w-lg bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out">
         {/* Header */}
-        <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-[#5145f6] to-[#4338ca] rounded-2xl flex items-center justify-center shadow-xl shadow-blue-600/20">
-              <User className="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-black text-slate-800 tracking-tight">Edit Lead</h3>
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">REFINE LEAD PROFILE</p>
-            </div>
-          </div>
-          <button 
-            onClick={onClose}
-            className="p-3 hover:bg-slate-100 rounded-xl transition-all group"
-          >
-            <X className="w-6 h-6 text-slate-400 group-hover:rotate-90 transition-transform duration-300" />
-          </button>
-        </div>
+        <SidePanelHeader
+          icon={User}
+          title="Edit Lead"
+          subtitle="REFINE LEAD PROFILE"
+          onClose={onClose}
+        />
 
         {/* Form Body */}
         <form id="edit-lead-form" onSubmit={handleSubmit(onSubmit)} className="flex-1 overflow-y-auto custom-scrollbar p-8 space-y-10">

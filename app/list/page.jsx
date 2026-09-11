@@ -130,6 +130,27 @@ export default function ListPage() {
   useEffect(() => {
     fetchEnquiries();
 
+    // Check for URL parameter to open email thread
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const openEmailThreadId = params.get('openEmailThread');
+      if (openEmailThreadId) {
+        // clear the URL so it doesn't re-open on manual refresh
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // fetch the specific enquiry to populate the modal
+        fetch(`/api/enquiries/${openEmailThreadId}`)
+          .then(r => r.json())
+          .then(data => {
+            if (data && !data.error) {
+              setSelectedEnquiry(data);
+              setShowEmailThreadModal(true);
+            }
+          })
+          .catch(err => console.error(err));
+      }
+    }
+
     // Fetch current user
     async function fetchMe() {
       try {
@@ -328,7 +349,12 @@ export default function ListPage() {
                 enquiries.map((enquiry, index) => (
                   <tr key={enquiry.enquiry_id} className="hover:bg-blue-50/30 transition-colors group">
                     <td className="px-4 py-3 text-blue-600 text-[13px] font-black tracking-wider font-mono">
-                      {formatLeadCode(enquiry.enquiry_id, enquiry.added_date, companySettings)}
+                      <a 
+                        href={`/admin/crm/lead-management/view/${enquiry.enquiry_id}`}
+                        className="hover:underline hover:text-blue-700 transition-colors cursor-pointer"
+                      >
+                        {formatLeadCode(enquiry.enquiry_id, enquiry.added_date, companySettings)}
+                      </a>
                     </td>
                     <td className="px-4 py-3">
                       <div className="font-semibold text-slate-900 text-sm">{enquiry.name}</div>
@@ -412,6 +438,12 @@ export default function ListPage() {
                         {openActionId === enquiry.enquiry_id && (
                           <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-slate-100 z-[100] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
                             <div className="py-1 text-left">
+                              <a
+                                href={`/admin/crm/lead-management/view/${enquiry.enquiry_id}`}
+                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                              >
+                                <CheckCircle2 className="w-4 h-4" /> View Details
+                              </a>
                               <button
                                 onClick={() => { setSelectedEnquiry(enquiry); setShowStatusModal(true); }}
                                 className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors"

@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS notifications (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NULL, 
+  type VARCHAR(50) NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  message TEXT,
+  reference_id INT NULL,
+  is_read BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

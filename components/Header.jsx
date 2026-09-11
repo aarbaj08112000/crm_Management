@@ -16,6 +16,12 @@ export default function Header({ isCollapsed, setIsCollapsed, user }) {
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
+  
+  // Notification states
+  const [notifications, setNotifications] = useState([]);
+  const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const notifRef = useRef(null);
+
   const dropdownRef = useRef(null);
 
   // Fetch profile image once we have the user id (JWT payload uses 'userId')
@@ -29,16 +35,57 @@ export default function Header({ isCollapsed, setIsCollapsed, user }) {
     }
   }, [user?.userId, user?.id]);
 
-  // Close dropdown on outside click
+  // Close dropdowns on outside click
   useEffect(() => {
     const handler = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setDropdownOpen(false);
       }
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
+        setIsNotifOpen(false);
+      }
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, []);
+
+  // Fetch notifications
+  const fetchNotifications = () => {
+    fetch('/api/notifications?unread=true')
+      .then(res => res.json())
+      .then(data => {
+        if (data.notifications) setNotifications(data.notifications);
+      })
+      .catch(err => console.error(err));
+  };
+
+  const triggerBackgroundSync = () => {
+    fetch('/api/email/sync', { method: 'POST' })
+      .then(() => fetchNotifications())
+      .catch(err => console.error(err));
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchNotifications();
+      // Auto-sync emails every 1 minute (60000 ms) and check notifications
+      const interval = setInterval(triggerBackgroundSync, 60000); 
+      return () => clearInterval(interval);
+    }
+  }, [user]);
+
+  const markNotificationRead = async (id) => {
+    try {
+      await fetch('/api/notifications', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      });
+      fetchNotifications();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -89,10 +136,60 @@ export default function Header({ isCollapsed, setIsCollapsed, user }) {
           </div>
 
           <div className="flex items-center gap-4 border-l border-slate-200 pl-6">
-            <button className="relative p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-all cursor-pointer">
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border-2 border-white"></span>
-            </button>
+            
+            {/* Notification Bell */}
+            <div className="relative" ref={notifRef}>
+              <button 
+                onClick={() => setIsNotifOpen(!isNotifOpen)}
+                className="relative p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-all cursor-pointer"
+              >
+                <Bell className="w-5 h-5" />
+                {notifications.length > 0 && (
+                  <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border-2 border-white animate-pulse"></span>
+                )}
+              </button>
+
+              {isNotifOpen && (
+                <div className="absolute right-0 top-14 w-80 bg-white border border-slate-100 rounded-2xl shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden">
+                  <div className="px-4 py-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                    <h3 className="font-semibold text-slate-800">Notifications</h3>
+                    {notifications.length > 0 && (
+                      <button 
+                        onClick={() => markNotificationRead('all')}
+                        className="text-xs text-blue-600 hover:text-blue-700 font-medium cursor-pointer"
+                      >
+                        Mark all as read
+                      </button>
+                    )}
+                  </div>
+                  <div className="max-h-80 overflow-y-auto custom-scrollbar">
+                    {notifications.length === 0 ? (
+                      <div className="px-4 py-8 text-center text-slate-500 text-sm">
+                        No new notifications
+                      </div>
+                    ) : (
+                      notifications.map(notif => (
+                        <div 
+                          key={notif.id} 
+                          onClick={() => {
+                            markNotificationRead(notif.id);
+                            setIsNotifOpen(false);
+                            if (notif.reference_id) router.push(`/list?openEmailThread=${notif.reference_id}`);
+                          }}
+                          className="px-4 py-3 border-b border-slate-50 hover:bg-slate-50 cursor-pointer transition-colors"
+                        >
+                          <p className="text-sm font-semibold text-slate-800">{notif.title}</p>
+                          <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed">{notif.message}</p>
+                          <p className="text-[10px] text-slate-400 mt-2 font-medium">
+                            {new Date(notif.created_at).toLocaleString()}
+                          </p>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* User Avatar Dropdown */}
             <div className="relative" ref={dropdownRef}>

@@ -50,6 +50,7 @@ const navigation = [
       { name: 'AI Lead Scraper', href: '/scrape', icon: Bot },
       { name: 'Contacts', href: '/contacts', icon: ClipboardList },
       { name: 'Company Settings', href: '/settings', icon: Settings },
+      { name: 'Email Accounts', href: '/settings/email', icon: Mail },
     ]
   }
 ];
