@@ -202,8 +202,8 @@ export async function PUT(req) {
        WHERE enquiry_id = ? 
        AND direction = 'received' 
        AND is_read = FALSE
-       AND (subject = ? OR subject LIKE CONCAT('%', ?))`,
-      [enquiryId, subject, cleanSubject]
+       AND (subject = ? OR subject LIKE ?)`,
+      [enquiryId, subject, `%${cleanSubject}`]
     );
 
     return NextResponse.json({ message: 'Thread marked as read' });
