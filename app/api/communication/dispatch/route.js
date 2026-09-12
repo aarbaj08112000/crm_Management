@@ -32,6 +32,10 @@ export async function POST(req) {
       }
     }
 
+    if (!userId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const defaultAccounts = await query('SELECT * FROM email_accounts WHERE is_default = 1 LIMIT 1');
     const defaultAccount = defaultAccounts.length > 0 ? defaultAccounts[0] : null;
 
