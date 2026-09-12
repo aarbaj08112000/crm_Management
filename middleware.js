@@ -11,10 +11,10 @@ export async function middleware(request) {
     pathname.startsWith('/login') || 
     pathname.startsWith('/api/auth') || 
     pathname.startsWith('/api/webhook') || 
-    pathname.startsWith('/api/twilio/voice') || 
-    pathname.startsWith('/api/twilio/status') || 
-    pathname.startsWith('/api/twilio/recording') || 
-    pathname.startsWith('/api/twilio/play') || 
+    pathname.startsWith('/api/smartoperator/voice') || 
+    pathname.startsWith('/api/smartoperator/status') || 
+    pathname.startsWith('/api/smartoperator/recording') || 
+    pathname.startsWith('/api/smartoperator/play') || 
     pathname.startsWith('/api/vonage/voice') || 
     pathname.startsWith('/_next') || 
     pathname === '/favicon.ico'

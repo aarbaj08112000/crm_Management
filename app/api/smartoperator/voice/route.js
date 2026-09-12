@@ -114,9 +114,9 @@ export async function POST(request) {
       const dial = twiml.dial({
         callerId: process.env.TWILIO_PHONE_NUMBER,
         record: 'record-from-answer',
-        recordingStatusCallback: `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/twilio/recording?parentCallSid=${callSid}`,
+        recordingStatusCallback: `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/smartoperator/recording?parentCallSid=${callSid}`,
         recordingStatusCallbackEvent: ['completed'],
-        action: `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/twilio/status`,
+        action: `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/smartoperator/status`,
         method: 'POST'
       });
       const client = dial.client(`crm_user_${userId}`);
@@ -128,9 +128,9 @@ export async function POST(request) {
       const dial = twiml.dial({
         callerId: process.env.TWILIO_PHONE_NUMBER,
         record: 'record-from-answer',
-        recordingStatusCallback: `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/twilio/recording?parentCallSid=${callSid}`,
+        recordingStatusCallback: `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/smartoperator/recording?parentCallSid=${callSid}`,
         recordingStatusCallbackEvent: ['completed'],
-        action: `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/twilio/status`,
+        action: `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/smartoperator/status`,
         method: 'POST'
       });
       

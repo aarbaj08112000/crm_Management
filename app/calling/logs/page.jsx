@@ -53,7 +53,7 @@ export default function CallLogsPage() {
       queryParams.append('page', page);
       queryParams.append('limit', limit);
       
-      const response = await fetch(`/api/twilio/logs?${queryParams.toString()}`);
+      const response = await fetch(`/api/smartoperator/logs?${queryParams.toString()}`);
       const data = await response.json();
       if (response.ok) {
         setLogs(data.logs || []);
@@ -257,7 +257,7 @@ export default function CallLogsPage() {
                       {log.recording_url ? (
                         <audio 
                           controls 
-                          src={log.recording_url.startsWith('/uploads') ? log.recording_url : `/api/twilio/play?url=${encodeURIComponent(log.recording_url)}`} 
+                          src={log.recording_url.startsWith('/uploads') ? log.recording_url : `/api/smartoperator/play?url=${encodeURIComponent(log.recording_url)}`} 
                           className="h-8 w-48"
                           controlsList="nodownload noplaybackrate"
                         >

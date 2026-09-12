@@ -42,7 +42,7 @@ export async function POST(request) {
     // 3. Initiate the call to the Sales Person's mobile
     // When they pick up, Twilio will fetch the TwiML from the URL
     // We pass the lead's number and userId as URL query parameters!
-    const callbackUrl = new URL('/api/twilio/voice', baseUrl);
+    const callbackUrl = new URL('/api/smartoperator/voice', baseUrl);
     callbackUrl.searchParams.append('LeadNumber', formattedLeadMobile);
     callbackUrl.searchParams.append('userId', userId);
     callbackUrl.searchParams.append('sourceType', sourceType || 'CONTACT');
