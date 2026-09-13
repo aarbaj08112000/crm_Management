@@ -123,9 +123,11 @@ export async function POST(req) {
     }
 
     let templateAttachments = [];
+    console.log('[EMAIL_API] Received templateAttachmentsStr:', templateAttachmentsStr);
     if (templateAttachmentsStr) {
       try {
         templateAttachments = JSON.parse(templateAttachmentsStr);
+        console.log('[EMAIL_API] Parsed templateAttachments:', templateAttachments);
       } catch (e) {
         console.error('Failed to parse templateAttachments:', e);
       }
@@ -135,7 +137,10 @@ export async function POST(req) {
       for (const att of templateAttachments) {
         if (att.path) {
           const filePath = path.join(process.cwd(), 'public', att.path);
+          console.log('[EMAIL_API] Processing template attachment. DB path:', att.path, 'Resolved filePath:', filePath);
+          
           if (fs.existsSync(filePath)) {
+            console.log('[EMAIL_API] File EXISTS at filePath:', filePath);
             const buffer = fs.readFileSync(filePath);
             mailOptions.attachments.push({
               filename: att.filename || 'attachment',
@@ -154,10 +159,15 @@ export async function POST(req) {
               path: `/uploads/emails/${uniqueName}`,
               size: buffer.length
             });
+          } else {
+            console.error('[EMAIL_API] ERROR: File does NOT exist at filePath:', filePath);
           }
+        } else {
+          console.error('[EMAIL_API] ERROR: att.path is missing for template attachment:', att);
         }
       }
     }
+    console.log('[EMAIL_API] Final attachmentsJsonArray:', attachmentsJsonArray);
 
     const attachmentsJson = attachmentsJsonArray.length > 0 ? JSON.stringify(attachmentsJsonArray) : null;
     const scheduledAtStr = formData.get('scheduled_at');
