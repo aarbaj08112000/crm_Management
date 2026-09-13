@@ -1,5 +1,5 @@
 'use client';
- 
+
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Sidebar from "@/components/Sidebar";
@@ -8,11 +8,11 @@ import { cn } from '@/lib/utils';
 import { CallingProvider } from '@/context/CallingContext';
 import CallDialer from '@/components/calling/CallDialer';
 import { useApp } from '@/context/AppContext';
- 
+
 export default function ClientLayout({ children }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [mounted, setMounted] = useState(false);
-  
+
   const { user, permissions } = useApp();
   const pathname = usePathname();
   const isLoginPage = pathname === '/login';
@@ -35,7 +35,7 @@ export default function ClientLayout({ children }) {
     <CallingProvider user={user}>
       <div className="flex min-h-screen">
         <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} user={user} permissions={permissions} />
-        
+
         <div className={cn(
           "flex-1 flex flex-col min-w-0 transition-all duration-300",
           isCollapsed ? "md:ml-20" : "md:ml-64"

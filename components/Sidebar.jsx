@@ -163,7 +163,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, user, permissions
                       className={cn(
                         "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative",
                         isActive
-                          ? "bg-purple-600 dark:bg-[#A855F7] text-white shadow-lg shadow-purple-600/20"
+                          ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
                           : "hover:bg-slate-800 hover:text-white",
                         isCollapsed && "justify-center px-0"
                       )}
@@ -171,7 +171,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, user, permissions
                     >
                       <Icon className={cn(
                         "w-5 h-5 shrink-0 transition-colors",
-                        isActive ? "text-white" : "text-slate-400 group-hover:text-purple-400 dark:group-hover:text-[#A855F7]"
+                        isActive ? "text-white" : "text-slate-400 group-hover:text-blue-400"
                       )} />
                       {!isCollapsed && (
                         <span className="text-sm font-semibold tracking-wide whitespace-nowrap">
@@ -212,7 +212,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, user, permissions
           const isActive = pathname === item.href;
           return (
             <Link key={item.name} href={item.href} className="p-2">
-              <Icon className={cn("w-6 h-6", isActive ? "text-purple-500 dark:text-[#A855F7]" : "text-slate-500")} />
+              <Icon className={cn("w-6 h-6", isActive ? "text-blue-500" : "text-slate-500")} />
             </Link>
           );
         })}
