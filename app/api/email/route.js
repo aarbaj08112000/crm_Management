@@ -77,7 +77,7 @@ export async function POST(req) {
 
     const transporter = nodemailer.createTransport(transporterOptions);
 
-    const fromAddress = defaultAccount 
+    const fromAddress = defaultAccount
       ? `"Enquiry System" <${defaultAccount.email}>`
       : (process.env.EMAIL_FROM || '"Enquiry System" <codecrafter.help@gmail.com>');
 
@@ -133,12 +133,13 @@ export async function POST(req) {
       }
     }
 
+
     if (templateAttachments && templateAttachments.length > 0) {
       for (const att of templateAttachments) {
         if (att.path) {
           const filePath = path.join(process.cwd(), 'public', att.path);
           console.log('[EMAIL_API] Processing template attachment. DB path:', att.path, 'Resolved filePath:', filePath);
-          
+
           if (fs.existsSync(filePath)) {
             console.log('[EMAIL_API] File EXISTS at filePath:', filePath);
             const buffer = fs.readFileSync(filePath);
@@ -192,7 +193,7 @@ export async function POST(req) {
             userId
           ]
         );
-        
+
         await logActivity({
           req,
           action: 'Schedule Email',
@@ -246,7 +247,7 @@ export async function PUT(req) {
 
     // Determine the base subject for matching without Re: Fwd: etc.
     let cleanSubject = subject.replace(/^(Re|Fwd|RE|FWD):\s*/i, '');
-    
+
     // We update all emails in this enquiry that have a subject matching this base subject
     await query(
       `UPDATE email_logs 
