@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { RefreshCcw, Loader2, File, FileText, Film, FileArchive, FileType, Clock, Calendar } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
-import EmailThreadModal from '../EmailThreadModal';
+import EmailLogDetail from '../EmailLogDetail';
 
 const getFileIcon = (att) => {
     if (!att || !att.filename) return <File className="w-8 h-8 text-slate-500" />;
@@ -44,7 +44,17 @@ export default function ScheduledEmailsTab({ lead }) {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerFiles, setViewerFiles] = useState([]);
   const [viewerIndex, setViewerIndex] = useState(0);
-  const [selectedThread, setSelectedThread] = useState(null);
+  const [selectedLog, setSelectedLog] = useState(null);
+
+  const handleEmailClick = (email) => {
+    setSelectedLog({
+      ...email,
+      recipient_email: email.to,
+      user_name: email.created_by_name,
+      sent_at: email.scheduled_at, // Display scheduled_at as sent_at for the viewer
+      body: email.body || email.html_body,
+    });
+  };
 
   const openViewer = (files, index = 0) => {
     setViewerFiles(files);
@@ -162,7 +172,7 @@ export default function ScheduledEmailsTab({ lead }) {
                   <div className="flex justify-between items-start mb-2 gap-4">
                     <h3 
                       className="text-[14.5px] font-semibold text-blue-700 leading-snug cursor-pointer hover:underline"
-                      onClick={() => setSelectedThread(email.subject)}
+                      onClick={() => handleEmailClick(email)}
                     >
                       {email.subject || '(No Subject)'}
                     </h3>
@@ -269,17 +279,11 @@ export default function ScheduledEmailsTab({ lead }) {
         </div>
       )}
 
-      {/* Email Thread Modal */}
-      {selectedThread && (
-        <EmailThreadModal
-          enquiryId={lead?.enquiry_id || lead?.id}
-          enquiryName={lead?.client_name || lead?.contact_name || ''}
-          enquiryEmail={lead?.email || ''}
-          initialSubject={selectedThread}
-          onClose={() => {
-            setSelectedThread(null);
-            fetchScheduledEmails();
-          }}
+      {/* Email Log Detail Modal */}
+      {selectedLog && (
+        <EmailLogDetail
+          log={selectedLog}
+          onClose={() => setSelectedLog(null)}
         />
       )}
     </div>
