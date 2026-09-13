@@ -143,11 +143,11 @@ export default function ActivitiesTab({ lead }) {
   }, {});
 
   return (
-    <div className="flex flex-1 w-full h-full min-h-0 bg-white overflow-hidden">
+    <div className="flex flex-1 w-full h-full min-h-0 bg-white dark:bg-[#121212] overflow-hidden">
       {/* Left Column: Activities Log */}
       <div className="w-1/2 border-r border-slate-100 p-6 flex flex-col h-full min-h-0 !pb-1">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-[15px] font-bold text-slate-800 flex items-center gap-2">
+          <h2 className="text-[15px] font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
             Activities <span className="text-[10px] font-bold text-slate-500 bg-slate-100 w-5 h-5 flex items-center justify-center rounded-full">{activities.length}</span>
           </h2>
           <div className="flex items-center gap-3">
@@ -198,8 +198,8 @@ export default function ActivitiesTab({ lead }) {
                       </div>
                       <div className="pl-6 space-y-1.5 w-full pr-4 border-b border-transparent group-hover:border-slate-100 pb-4 relative transition-colors">
                         <div className="text-xs text-slate-400">{formatDate(act.created_at, true)}</div>
-                        <div className="text-[13px] text-slate-700 font-medium leading-snug [&_a]:text-blue-500 [&_a]:underline [&_p]:mb-1 last:[&_p]:mb-0">
-                          {act.action && <div className="font-bold text-slate-800 mb-1"><span className="text-blue-600">Summary :</span> {act.action}</div>}
+                        <div className="text-[13px] text-slate-700 dark:text-slate-200 font-medium leading-snug [&_a]:text-blue-500 [&_a]:underline [&_p]:mb-1 last:[&_p]:mb-0">
+                          {act.action && <div className="font-bold text-slate-800 dark:text-slate-100 mb-1"><span className="text-blue-600">Summary :</span> {act.action}</div>}
                           {act.description && <div dangerouslySetInnerHTML={{ __html: act.description }} />}
                         </div>
                         {act.user_name && (
@@ -210,7 +210,7 @@ export default function ActivitiesTab({ lead }) {
                           <div className="absolute bottom-4 right-4 flex items-center gap-1.5">
                             <button
                               onClick={() => openViewer(attachments, 0)}
-                              className="w-10 h-10 rounded-md overflow-hidden bg-white border border-slate-200 shadow-sm flex items-center justify-center hover:border-blue-400 transition-colors"
+                              className="w-10 h-10 rounded-md overflow-hidden bg-white dark:bg-[#1A1A1A] border border-slate-200 dark:border-[#27272A] shadow-sm flex items-center justify-center hover:border-blue-400 transition-colors"
                             >
                               {attachments[0].type.includes('image') ? (
                                 <img src={attachments[0].url} alt="att" className="w-full h-full object-cover" />
@@ -239,17 +239,17 @@ export default function ActivitiesTab({ lead }) {
       </div>
 
       {/* Right Column: Planned Activities */}
-      <div className="w-1/2 p-6 flex flex-col h-full bg-white min-h-0">
+      <div className="w-1/2 p-6 flex flex-col h-full bg-white dark:bg-[#121212] min-h-0">
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-4">
-            <h2 className="text-[15px] font-bold text-slate-800">Planned Activities</h2>
-            <select className="text-xs font-semibold border border-slate-200 text-slate-700 rounded px-3 py-1.5 bg-white outline-none cursor-pointer">
+            <h2 className="text-[15px] font-bold text-slate-800 dark:text-slate-100">Planned Activities</h2>
+            <select className="text-xs font-semibold border border-slate-200 dark:border-[#27272A] text-slate-700 dark:text-slate-200 rounded px-3 py-1.5 bg-white dark:bg-[#1A1A1A] outline-none cursor-pointer">
               <option>All</option>
             </select>
           </div>
           <button
             onClick={() => setIsAddActivityOpen(true)}
-            className="flex items-center gap-1.5 text-xs font-bold text-white bg-blue-600 rounded px-4 py-1.5 hover:bg-blue-700 transition-colors shadow-sm"
+            className="flex items-center gap-1.5 text-xs font-bold text-white bg-blue-600 dark:bg-purple-600 rounded px-4 py-1.5 hover:bg-blue-700 dark:hover:bg-purple-700 transition-colors shadow-sm"
           >
             <Plus className="w-3.5 h-3.5" />
             Add Activity
@@ -259,16 +259,16 @@ export default function ActivitiesTab({ lead }) {
         <div className="flex-1 overflow-y-auto custom-scrollbar pr-2">
           {plannedActivities.length === 0 ? (
             <div className="flex flex-col items-center justify-center text-center p-8 h-full">
-              <div className="w-24 h-24 bg-blue-50/50 rounded-full flex items-center justify-center mb-6">
-                <Search className="w-8 h-8 text-blue-300" strokeWidth={2.5} />
+              <div className="w-24 h-24 bg-blue-50/50 dark:bg-purple-900/20 rounded-full flex items-center justify-center mb-6">
+                <Search className="w-8 h-8 text-blue-300 dark:text-purple-400" strokeWidth={2.5} />
               </div>
-              <h3 className="text-base font-bold text-slate-800 mb-2">No Data Found</h3>
+              <h3 className="text-base font-bold text-slate-800 dark:text-slate-100 mb-2">No Data Found</h3>
               <p className="text-[13px] text-slate-500 max-w-xs mb-6 leading-relaxed">
                 You haven't added any planned activities details. Once you add them, they'll appear here.
               </p>
               <button
                 onClick={() => setIsAddActivityOpen(true)}
-                className="flex items-center gap-2 text-[13px] font-bold text-white bg-blue-600 rounded-md px-6 py-2 hover:bg-blue-700 transition-colors shadow-md shadow-blue-200"
+                className="flex items-center gap-2 text-[13px] font-bold text-white bg-blue-600 dark:bg-purple-600 rounded-md px-6 py-2 hover:bg-blue-700 dark:hover:bg-purple-700 transition-colors shadow-md shadow-blue-200 dark:shadow-none"
               >
                 <Plus className="w-4 h-4" />
                 Add Activity
@@ -292,7 +292,7 @@ export default function ActivitiesTab({ lead }) {
                     </div>
                     <div className="flex-1">
                       <div className="text-[11px] text-slate-500 font-semibold mb-1">{displayDate}</div>
-                      <div className="text-[13px] text-slate-800 font-bold mb-3 flex items-center gap-1.5">
+                      <div className="text-[13px] text-slate-800 dark:text-slate-100 font-bold mb-3 flex items-center gap-1.5">
                         {prefix}: "{pa.summary}" {pa.assigned_name && <span className="font-medium text-slate-500">for <span className="text-blue-600 font-bold">{pa.assigned_name}</span></span>}
                         <Info className="w-3.5 h-3.5 text-slate-400" />
                       </div>
@@ -351,11 +351,11 @@ export default function ActivitiesTab({ lead }) {
                 href={viewerFiles[viewerIndex]?.url}
                 download={viewerFiles[viewerIndex]?.name}
                 target="_blank"
-                className="text-xs font-bold bg-white/10 hover:bg-white/20 px-4 py-2 rounded transition-colors"
+                className="text-xs font-bold bg-white dark:bg-slate-900/10 hover:bg-white dark:bg-slate-900/20 px-4 py-2 rounded transition-colors"
               >
                 Download
               </a>
-              <button onClick={() => setViewerOpen(false)} className="p-2 hover:bg-white/20 rounded-full transition-colors">
+              <button onClick={() => setViewerOpen(false)} className="p-2 hover:bg-white dark:bg-slate-900/20 rounded-full transition-colors">
                 <CancelIcon className="w-5 h-5" />
               </button>
             </div>
@@ -365,7 +365,7 @@ export default function ActivitiesTab({ lead }) {
             {viewerFiles[viewerIndex]?.type?.includes('image') ? (
               <img src={viewerFiles[viewerIndex]?.url} className="max-w-full max-h-full object-contain rounded-md shadow-2xl" />
             ) : (
-              <iframe src={viewerFiles[viewerIndex]?.url} className="w-full h-full bg-white rounded-xl shadow-2xl" />
+              <iframe src={viewerFiles[viewerIndex]?.url} className="w-full h-full bg-white dark:bg-slate-900 rounded-xl shadow-2xl" />
             )}
           </div>
 
@@ -374,19 +374,19 @@ export default function ActivitiesTab({ lead }) {
               <button
                 onClick={() => setViewerIndex(prev => Math.max(0, prev - 1))}
                 disabled={viewerIndex === 0}
-                className="px-6 py-2 bg-white/10 text-white rounded hover:bg-white/20 disabled:opacity-30 text-sm font-bold transition-colors"
+                className="px-6 py-2 bg-white dark:bg-slate-900/10 text-white rounded hover:bg-white dark:bg-slate-900/20 disabled:opacity-30 text-sm font-bold transition-colors"
               >
                 Previous
               </button>
               <div className="flex items-center gap-2">
                 {viewerFiles.map((_, i) => (
-                  <div key={i} className={cn("w-2 h-2 rounded-full", i === viewerIndex ? "bg-blue-500" : "bg-white/30")} />
+                  <div key={i} className={cn("w-2 h-2 rounded-full", i === viewerIndex ? "bg-blue-500" : "bg-white dark:bg-slate-900/30")} />
                 ))}
               </div>
               <button
                 onClick={() => setViewerIndex(prev => Math.min(viewerFiles.length - 1, prev + 1))}
                 disabled={viewerIndex === viewerFiles.length - 1}
-                className="px-6 py-2 bg-white/10 text-white rounded hover:bg-white/20 disabled:opacity-30 text-sm font-bold transition-colors"
+                className="px-6 py-2 bg-white dark:bg-slate-900/10 text-white rounded hover:bg-white dark:bg-slate-900/20 disabled:opacity-30 text-sm font-bold transition-colors"
               >
                 Next
               </button>

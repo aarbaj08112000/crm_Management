@@ -77,13 +77,13 @@ export default function AddEnquiryForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
           {/* Name */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-700 ml-1">Company / Lead Name <span className="text-rose-500">*</span></label>
+            <label className="text-sm font-semibold text-slate-700 dark:text-slate-200 ml-1">Company / Lead Name <span className="text-rose-500">*</span></label>
             <div className="relative group">
               <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-blue-600 transition-colors" />
               <input
                 {...register('name')}
                 className={cn(
-                  "w-full pl-11 pr-4 py-3 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-blue-600 outline-none transition-all text-sm font-medium text-slate-800 shadow-sm",
+                  "w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm",
                   errors.name && "border-rose-200 bg-rose-50"
                 )}
                 placeholder="Enter company or person name"
@@ -94,12 +94,12 @@ export default function AddEnquiryForm() {
 
           {/* Contact Person */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-700 ml-1">Contact Person</label>
+            <label className="text-sm font-semibold text-slate-700 dark:text-slate-200 ml-1">Contact Person</label>
             <div className="relative group">
               <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-blue-600 transition-colors" />
               <input
                 {...register('contact_person')}
-                className="w-full pl-11 pr-4 py-3 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-blue-600 outline-none transition-all text-sm font-medium text-slate-800 shadow-sm"
+                className="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm"
                 placeholder="Name of contact"
               />
             </div>
@@ -107,7 +107,7 @@ export default function AddEnquiryForm() {
 
           {/* Mobile */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-700 ml-1">Mobile Number <span className="text-rose-500">*</span></label>
+            <label className="text-sm font-semibold text-slate-700 dark:text-slate-200 ml-1">Mobile Number <span className="text-rose-500">*</span></label>
             <div className="react-tel-input-wrapper relative group">
               <Controller
                 name="mobile"
@@ -120,12 +120,12 @@ export default function AddEnquiryForm() {
                     inputProps={{
                       required: true,
                       className: cn(
-                        "w-full pl-12 pr-4 py-3 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-blue-600 outline-none transition-all text-sm font-medium text-slate-800 shadow-sm",
+                        "w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm",
                         errors.mobile && "border-rose-200 bg-rose-50"
                       )
                     }}
                     containerClass="!w-full"
-                    buttonClass="!border-slate-50 !bg-slate-50 !rounded-l-2xl hover:!bg-slate-100"
+                    buttonClass="!border-slate-50 dark:!border-[#27272A] !bg-slate-50 dark:bg-[#121212] !rounded-l-2xl hover:!bg-slate-100 dark:hover:!bg-[#1A1A1A]"
                     dropdownClass="!w-64"
                   />
                 )}
@@ -136,12 +136,12 @@ export default function AddEnquiryForm() {
 
           {/* Email */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-700 ml-1">Email Address</label>
+            <label className="text-sm font-semibold text-slate-700 dark:text-slate-200 ml-1">Email Address</label>
             <div className="relative group">
               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-purple-500 transition-colors" />
               <input
                 {...register('email')}
-                className="w-full pl-11 pr-4 py-3 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-blue-600 outline-none transition-all text-sm font-medium text-slate-800 shadow-sm"
+                className="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm"
                 placeholder="example@email.com"
               />
             </div>
@@ -149,12 +149,12 @@ export default function AddEnquiryForm() {
 
           {/* Type */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-700 ml-1">Enquiry Type</label>
+            <label className="text-sm font-semibold text-slate-700 dark:text-slate-200 ml-1">Enquiry Type</label>
             <div className="relative group">
               <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-amber-500 transition-colors" />
               <input
                 {...register('type')}
-                className="w-full pl-11 pr-4 py-3 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-blue-600 outline-none transition-all text-sm font-medium text-slate-800 shadow-sm"
+                className="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm"
                 placeholder="e.g. School, Office"
               />
             </div>
@@ -162,12 +162,12 @@ export default function AddEnquiryForm() {
 
           {/* Status */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-700 ml-1">Initial Status</label>
+            <label className="text-sm font-semibold text-slate-700 dark:text-slate-200 ml-1">Initial Status</label>
             <div className="relative group">
               <CheckCircle2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-blue-600 transition-colors pointer-events-none" />
               <select
                 {...register('status')}
-                className="w-full pl-11 pr-10 py-3 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-blue-600 outline-none text-sm font-medium text-slate-800 shadow-sm appearance-none cursor-pointer"
+                className="w-full pl-11 pr-10 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm appearance-none cursor-pointer"
               >
                 <option value="Pending">Pending</option>
                 <option value="In Progress">In Progress</option>
@@ -183,7 +183,7 @@ export default function AddEnquiryForm() {
 
         {/* Message Sent - Tabs Style */}
         <div className="space-y-4 pt-2">
-          <label className="text-sm font-semibold text-slate-700 ml-1 block">Follow-up Communication Status</label>
+          <label className="text-sm font-semibold text-slate-700 dark:text-slate-200 ml-1 block">Follow-up Communication Status</label>
           <div className="flex flex-wrap  gap-3">
             {[
               { value: 'No', label: 'Not Sent' },
@@ -199,8 +199,8 @@ export default function AddEnquiryForm() {
                   className="peer sr-only"
                 />
                 <div className={cn(
-                  "px-6 py-2 rounded-xl border border-slate-200 font-bold text-xs uppercase tracking-wider transition-all duration-300",
-                  "bg-white text-slate-500 hover:bg-slate-50 peer-checked:bg-slate-900 peer-checked:text-white peer-checked:border-slate-900 peer-checked:shadow-lg"
+                  "px-6 py-2 rounded-xl border border-slate-200 dark:border-[#27272A] font-bold text-xs uppercase tracking-wider transition-all duration-300",
+                  "bg-white dark:bg-[#1A1A1A] text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#27272A] peer-checked:bg-slate-900 dark:peer-checked:bg-[#27272A] peer-checked:text-white dark:peer-checked:text-slate-100 peer-checked:border-slate-900 dark:peer-checked:border-purple-500 peer-checked:shadow-lg dark:peer-checked:shadow-none"
                 )}>
                   {option.label}
                 </div>
@@ -212,22 +212,22 @@ export default function AddEnquiryForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
           {/* Address */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-700 ml-1">Address Details</label>
+            <label className="text-sm font-semibold text-slate-700 dark:text-slate-200 ml-1">Address Details</label>
             <textarea
               {...register('address')}
               rows={4}
-              className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-blue-600 outline-none transition-all text-sm font-medium text-slate-800 resize-none shadow-sm"
+              className="w-full px-5 py-4 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 resize-none shadow-sm"
               placeholder="Enter full address..."
             />
           </div>
 
           {/* Comment */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-700 ml-1">Internal Notes</label>
+            <label className="text-sm font-semibold text-slate-700 dark:text-slate-200 ml-1">Internal Notes</label>
             <textarea
               {...register('comment')}
               rows={4}
-              className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-blue-600 outline-none transition-all text-sm font-medium text-slate-800 resize-none shadow-sm"
+              className="w-full px-5 py-4 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 resize-none shadow-sm"
               placeholder="Private comments..."
             />
           </div>
@@ -237,7 +237,7 @@ export default function AddEnquiryForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full md:w-auto md:min-w-[300px] py-4 px-10 bg-blue-600 text-white font-black rounded-2xl shadow-xl shadow-blue-600/20 hover:bg-blue-500 hover:-translate-y-1 active:translate-y-0 transition-all flex items-center justify-center gap-3 group disabled:opacity-70 disabled:hover:translate-y-0 mx-auto"
+            className="w-full md:w-auto md:min-w-[300px] py-4 px-10 bg-blue-600 dark:bg-purple-600 text-white font-black rounded-2xl shadow-xl shadow-blue-600/20 dark:shadow-none hover:bg-blue-500 dark:hover:bg-purple-500 hover:-translate-y-1 active:translate-y-0 transition-all flex items-center justify-center gap-3 group disabled:opacity-70 disabled:hover:translate-y-0 mx-auto"
           >
             {loading ? (
               <Loader2 className="w-5 h-5 animate-spin" />

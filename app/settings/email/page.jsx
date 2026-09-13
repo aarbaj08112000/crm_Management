@@ -103,7 +103,7 @@ export default function EmailAccountsPage() {
                 <Mail className="w-5 h-5" />
               </div>
               <div>
-                <h1 className="text-[1.25rem] font-black text-slate-800 tracking-tight">Email Accounts</h1>
+                <h1 className="text-[1.25rem] font-black text-slate-800 dark:text-slate-100 tracking-tight">Email Accounts</h1>
                 <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-0.5">Manage connected Gmail accounts</p>
               </div>
             </div>
@@ -111,7 +111,7 @@ export default function EmailAccountsPage() {
             <div className="flex items-center gap-4 w-full md:w-auto">
               <button
                 onClick={fetchAccounts}
-                className="p-2 hover:bg-slate-100 rounded-lg transition-colors text-slate-400 hover:text-[#5145f6] border border-slate-200"
+                className="p-2 hover:bg-slate-100 rounded-lg transition-colors text-slate-400 hover:text-[#5145f6] border border-slate-200 dark:border-slate-700"
                 title="Refresh"
               >
                 <RefreshCcw className={cn("w-4 h-4", loading && "animate-spin")} />
@@ -132,12 +132,12 @@ export default function EmailAccountsPage() {
       <Card className="overflow-hidden">
         <div className="overflow-auto min-h-[400px]">
           <table className="w-full text-left border-collapse relative text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200 sticky top-0 z-10">
+            <thead className="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
               <tr>
-                <th className="px-6 py-4 font-black text-slate-700 uppercase tracking-widest text-[10px]">Email Address</th>
-                <th className="px-6 py-4 font-black text-slate-700 uppercase tracking-widest text-[10px]">Connected On</th>
-                <th className="px-6 py-4 font-black text-slate-700 uppercase tracking-widest text-[10px]">Status</th>
-                <th className="px-6 py-4 font-black text-slate-700 uppercase tracking-widest text-[10px] text-right">Action</th>
+                <th className="px-6 py-4 font-black text-slate-700 dark:text-slate-200 uppercase tracking-widest text-[10px]">Email Address</th>
+                <th className="px-6 py-4 font-black text-slate-700 dark:text-slate-200 uppercase tracking-widest text-[10px]">Connected On</th>
+                <th className="px-6 py-4 font-black text-slate-700 dark:text-slate-200 uppercase tracking-widest text-[10px]">Status</th>
+                <th className="px-6 py-4 font-black text-slate-700 dark:text-slate-200 uppercase tracking-widest text-[10px] text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -152,7 +152,7 @@ export default function EmailAccountsPage() {
                   <td colSpan={4} className="px-6 py-12 text-center text-slate-500">
                     <div className="flex flex-col items-center justify-center">
                       <Mail className="w-12 h-12 text-slate-200 mb-3" />
-                      <p className="font-bold text-slate-600">No accounts connected.</p>
+                      <p className="font-bold text-slate-600 dark:text-slate-300">No accounts connected.</p>
                       <p className="text-xs text-slate-400 mt-1">Connect your Google account to enable email sending.</p>
                     </div>
                   </td>

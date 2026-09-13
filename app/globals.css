@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 @theme {
   --font-sans: var(--font-inter);
 }
@@ -9,6 +11,13 @@
   --background-start-rgb: 248, 250, 252;
   --background-end-rgb: 255, 255, 255;
 }
+
+.dark {
+  --foreground-rgb: 248, 250, 252;
+  --background-start-rgb: 15, 23, 42;
+  --background-end-rgb: 2, 6, 23;
+}
+
 
 body {
   color: rgb(var(--foreground-rgb));

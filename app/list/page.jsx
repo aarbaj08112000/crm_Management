@@ -33,19 +33,19 @@ import WhatsAppModal from '@/components/WhatsAppModal';
 import EmailThreadModal from '@/components/EmailThreadModal';
 
 const statusColors = {
-  'Pending': 'text-amber-600 border-amber-200',
-  'In Progress': 'text-blue-600 border-blue-200',
-  'Converted': 'text-emerald-600 border-emerald-200',
-  'Rejected': 'text-rose-600 border-rose-200',
+  'Pending': 'text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-900/50 dark:bg-amber-900/20',
+  'In Progress': 'text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-900/50 dark:bg-blue-900/20',
+  'Converted': 'text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/50 dark:bg-emerald-900/20',
+  'Rejected': 'text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-900/50 dark:bg-rose-900/20',
 };
 
 const msgSentColors = {
-  'No': 'text-slate-400 border-slate-100 bg-white',
-  'Email': 'text-blue-600 border-blue-100 bg-white',
-  'WhatsApp': 'text-emerald-600 border-emerald-100 bg-white',
-  'Both': 'text-purple-600 border-purple-100 bg-white',
-  'Sent': 'text-emerald-700 border-emerald-200 bg-white',
-  '1': 'text-emerald-700 border-emerald-200 bg-white',
+  'No': 'text-slate-400 dark:text-slate-500 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900',
+  'Email': 'text-blue-600 dark:text-blue-400 border-blue-100 dark:border-blue-900/30 bg-white dark:bg-blue-900/10',
+  'WhatsApp': 'text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900/30 bg-white dark:bg-emerald-900/10',
+  'Both': 'text-purple-600 dark:text-purple-400 border-purple-100 dark:border-purple-900/30 bg-white dark:bg-purple-900/10',
+  'Sent': 'text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/30 bg-white dark:bg-emerald-900/10',
+  '1': 'text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/30 bg-white dark:bg-emerald-900/10',
 };
 
 const msgSentLabels = {
@@ -266,7 +266,7 @@ export default function ListPage() {
                 placeholder="Search name or mobile..."
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-                className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#121212] text-slate-900 dark:text-slate-100 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"
               />
             </div>
             <div className="flex items-center gap-4">
@@ -275,12 +275,12 @@ export default function ListPage() {
                 placeholder="Filter by Type..."
                 value={type}
                 onChange={(e) => { setType(e.target.value); setPage(1); }}
-                className="px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-sm w-40"
+                className="px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-[#121212] text-slate-900 dark:text-slate-100 text-sm w-40"
               />
               <select
                 value={status}
                 onChange={(e) => { setStatus(e.target.value); setPage(1); }}
-                className="px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-sm"
+                className="px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-[#121212] text-slate-900 dark:text-slate-100 text-sm"
               >
                 <option value="">All Status</option>
                 <option value="Pending">Pending</option>
@@ -292,7 +292,7 @@ export default function ListPage() {
                 <select
                   value={assignedTo}
                   onChange={(e) => { setAssignedTo(e.target.value); setPage(1); }}
-                  className="px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white text-sm font-medium"
+                  className="px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-[#121212] text-slate-900 dark:text-slate-100 text-sm font-medium"
                 >
                   <option value="">All</option>
                   <option value="unassigned">Unassigned</option>
@@ -306,7 +306,7 @@ export default function ListPage() {
               )}
               <button
                 onClick={fetchEnquiries}
-                className="p-2 hover:bg-slate-100 rounded-lg transition-colors text-slate-400 hover:text-blue-600 border border-slate-200"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-slate-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#121212]"
                 title="Refresh"
               >
                 <RefreshCcw className={cn("w-5 h-5", loading && "animate-spin")} />
@@ -320,19 +320,19 @@ export default function ListPage() {
       <Card className="overflow-hidden">
         <div className="overflow-auto h-[calc(100vh-280px)] min-h-[400px]">
           <table className="w-full text-left border-collapse relative text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200 sticky top-0 z-10">
+            <thead className="bg-slate-50 dark:bg-[#1A1A1A] border-b border-slate-200 dark:border-[#27272A] sticky top-0 z-10">
               <tr>
-                <th className="px-4 py-4 font-semibold text-slate-700">Lead Code</th>
-                <th className="px-4 py-4 font-semibold text-slate-700">Enquiry Info</th>
-                <th className="px-4 py-4 font-semibold text-slate-700">Email</th>
-                <th className="px-4 py-4 font-semibold text-slate-700">Type</th>
-                <th className="px-4 py-4 font-semibold text-slate-700">Assigned</th>
-                <th className="px-4 py-4 font-semibold text-slate-700">Msg Sent</th>
-                <th className="px-4 py-4 font-semibold text-slate-700">Status</th>
-                <th className="px-4 py-4 font-semibold text-slate-700 text-right">Action</th>
+                <th className="px-4 py-4 font-semibold text-slate-700 dark:text-slate-200">Lead Code</th>
+                <th className="px-4 py-4 font-semibold text-slate-700 dark:text-slate-200">Enquiry Info</th>
+                <th className="px-4 py-4 font-semibold text-slate-700 dark:text-slate-200">Email</th>
+                <th className="px-4 py-4 font-semibold text-slate-700 dark:text-slate-200">Type</th>
+                <th className="px-4 py-4 font-semibold text-slate-700 dark:text-slate-200">Assigned</th>
+                <th className="px-4 py-4 font-semibold text-slate-700 dark:text-slate-200">Msg Sent</th>
+                <th className="px-4 py-4 font-semibold text-slate-700 dark:text-slate-200">Status</th>
+                <th className="px-4 py-4 font-semibold text-slate-700 dark:text-slate-200 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-700/50">
               {loading && enquiries.length === 0 ? (
                 <tr>
                   <td colSpan={8} className="px-6 py-12 text-center text-slate-400">
@@ -347,8 +347,8 @@ export default function ListPage() {
                 </tr>
               ) : (
                 enquiries.map((enquiry, index) => (
-                  <tr key={enquiry.enquiry_id} className="hover:bg-blue-50/30 transition-colors group">
-                    <td className="px-4 py-3 text-blue-600 text-[13px] font-black tracking-wider font-mono">
+                  <tr key={enquiry.enquiry_id} className="hover:bg-blue-50/30 dark:hover:bg-[#1C1C1C] transition-colors group">
+                    <td className="px-4 py-3 text-blue-600 dark:text-blue-400 text-[13px] font-black tracking-wider font-mono">
                       <a 
                         href={`/admin/crm/lead-management/view/${enquiry.enquiry_id}`}
                         className="hover:underline hover:text-blue-700 transition-colors cursor-pointer"
@@ -357,31 +357,31 @@ export default function ListPage() {
                       </a>
                     </td>
                     <td className="px-4 py-3">
-                      <div className="font-semibold text-slate-900 text-sm">{enquiry.name}</div>
-                      <div className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
-                        <span className="font-medium text-slate-600">{enquiry.mobile_number}</span>
+                      <div className="font-semibold text-slate-900 dark:text-slate-100 text-sm">{enquiry.name}</div>
+                      <div className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-0.5">
+                        <span className="font-medium text-slate-600 dark:text-slate-300">{enquiry.mobile_number}</span>
                         {enquiry.contact_person && <span>| {enquiry.contact_person}</span>}
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="text-xs text-slate-600">{enquiry.email || '--'}</span>
+                      <span className="text-xs text-slate-600 dark:text-slate-300">{enquiry.email || '--'}</span>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-xs font-medium capitalize">
+                      <span className="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md text-xs font-medium capitalize">
                         {enquiry.type}
                       </span>
                     </td>
                     <td className="px-4 py-3">
                       <span className={cn(
                         "text-xs font-bold px-2 py-1 rounded-md",
-                        enquiry.assignee_name ? "text-blue-600 bg-blue-50" : "text-slate-400 italic"
+                        enquiry.assignee_name ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30" : "text-slate-400 dark:text-slate-500 italic"
                       )}>
                         {enquiry.assignee_name || 'Not Assigned'}
                       </span>
                     </td>
                     <td className="px-4 py-3">
                       <span className={cn(
-                        "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border bg-white",
+                        "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border bg-white dark:bg-slate-900",
                         msgSentColors[enquiry.msg_sent] || msgSentColors['No']
                       )}>
                         {msgSentLabels[enquiry.msg_sent] || 'Not Sent'}
@@ -395,15 +395,15 @@ export default function ListPage() {
                             setOpenStatusId(openStatusId === enquiry.enquiry_id ? null : enquiry.enquiry_id);
                           }}
                           className={cn(
-                            "w-full px-4 py-1.5 rounded-xl text-xs font-bold border-2 transition-all hover:shadow-sm flex items-center justify-center gap-2 bg-white",
-                            statusColors[enquiry.status] || 'border-slate-200'
+                            "w-full px-4 py-1.5 rounded-xl text-xs font-bold border-2 transition-all hover:shadow-sm flex items-center justify-center gap-2 bg-white dark:bg-slate-900",
+                            statusColors[enquiry.status] || 'border-slate-200 dark:border-slate-700'
                           )}
                         >
                           {enquiry.status}
                         </button>
 
                         {openStatusId === enquiry.enquiry_id && (
-                          <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-100 rounded-xl shadow-xl z-[60] overflow-hidden animate-in zoom-in-95 duration-200">
+                          <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-100 rounded-xl shadow-xl z-[60] overflow-hidden animate-in zoom-in-95 duration-200">
                             {['Pending', 'In Progress', 'Converted', 'Rejected'].map((s) => (
                               <button
                                 key={s}
@@ -412,8 +412,8 @@ export default function ListPage() {
                                   setOpenStatusId(null);
                                 }}
                                 className={cn(
-                                  "w-full px-4 py-2.5 text-xs font-bold text-center transition-all hover:bg-slate-50",
-                                  enquiry.status === s ? "text-blue-600 bg-blue-50/50" : "text-slate-600"
+                                  "w-full px-4 py-2.5 text-xs font-bold text-center transition-all hover:bg-slate-50 dark:bg-slate-800",
+                                  enquiry.status === s ? "text-blue-600 bg-blue-50/50" : "text-slate-600 dark:text-slate-300"
                                 )}
                               >
                                 {s}
@@ -430,63 +430,63 @@ export default function ListPage() {
                             e.stopPropagation();
                             setOpenActionId(openActionId === enquiry.enquiry_id ? null : enquiry.enquiry_id);
                           }}
-                          className="p-2 hover:bg-slate-100 rounded-lg transition-colors text-blue-500"
+                          className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-blue-500"
                         >
                           <MoreVertical className="w-5 h-5" />
                         </button>
 
                         {openActionId === enquiry.enquiry_id && (
-                          <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-slate-100 z-[100] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                          <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-100 z-[100] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
                             <div className="py-1 text-left">
                               <a
                                 href={`/admin/crm/lead-management/view/${enquiry.enquiry_id}`}
-                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:bg-slate-800 transition-colors"
                               >
                                 <CheckCircle2 className="w-4 h-4" /> View Details
                               </a>
                               <button
                                 onClick={() => { setSelectedEnquiry(enquiry); setShowStatusModal(true); }}
-                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:bg-slate-800 transition-colors"
                               >
                                 <Check className="w-4 h-4" /> Update Msg Sent
                               </button>
                               {currentUser?.role === 'admin' && (
                                 <button
                                   onClick={() => { setSelectedEnquiry(enquiry); setShowAssignModal(true); }}
-                                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                                 >
                                   <UserPlus className="w-4 h-4" /> Assign Lead
                                 </button>
                               )}
                               <button
                                 onClick={() => { setSelectedEnquiry(enquiry); setShowEditModal(true); }}
-                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
+                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-amber-50 dark:hover:bg-amber-900/30 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
                               >
                                 <Pencil className="w-4 h-4" /> Edit Details
                               </button>
                               <button
                                 onClick={() => { setSelectedEnquiry(enquiry); setShowEmailModal(true); }}
-                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                               >
                                 <Mail className="w-4 h-4" /> Send Email
                               </button>
                               <button
                                 onClick={() => { setSelectedEnquiry(enquiry); setShowEmailThreadModal(true); }}
-                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-purple-50 hover:text-purple-600 transition-colors"
+                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-purple-50 dark:hover:bg-purple-900/30 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                               >
                                 <Mail className="w-4 h-4" /> View Email Thread
                               </button>
                               {!enquiry.whatsapp_number ? (
                                 <button
                                   onClick={() => handleAddWhatsappNumber(enquiry)}
-                                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
                                 >
                                   <Plus className="w-4 h-4" /> Add WA Number
                                 </button>
                               ) : (
                                 <button
                                   onClick={() => redirectToWhatsAppModule(enquiry)}
-                                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
                                 >
                                   <MessageSquare className="w-4 h-4" /> WhatsApp
                                 </button>
@@ -494,22 +494,22 @@ export default function ListPage() {
                               <button
                                 onClick={() => makeCall(enquiry.mobile_number, 'LEAD', enquiry.enquiry_id)}
                                 disabled={!enquiry.mobile_number}
-                                className="!hidden w-full flex items-center gap-3 px-4 py-2.5 text-sm text-indigo-700 hover:bg-indigo-50 transition-colors disabled:opacity-50"
+                                className="!hidden w-full flex items-center gap-3 px-4 py-2.5 text-sm text-indigo-700 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors disabled:opacity-50"
                               >
                                 <PhoneCall className="w-4 h-4" /> Call Lead
                               </button>
                               <button
                                 onClick={() => handleVonageCall(enquiry.mobile_number, 'LEAD', enquiry.enquiry_id)}
                                 disabled={!enquiry.mobile_number}
-                                className="!hidden w-full flex items-center gap-3 px-4 py-2.5 text-sm text-purple-700 hover:bg-purple-50 transition-colors disabled:opacity-50"
+                                className="!hidden w-full flex items-center gap-3 px-4 py-2.5 text-sm text-purple-700 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/30 transition-colors disabled:opacity-50"
                               >
                                 <PhoneCall className="w-4 h-4" /> Call 2
                               </button>
-                              <div className="border-t border-slate-50 my-1"></div>
+                              <div className="border-t border-slate-50 dark:border-slate-800 my-1"></div>
                               {currentUser?.role === 'admin' && (
                                 <button
                                   onClick={() => { setSelectedEnquiry(enquiry); setShowDeleteModal(true); }}
-                                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-rose-600 hover:bg-rose-50 transition-colors"
+                                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/30 transition-colors"
                                 >
                                   <Trash2 className="w-4 h-4" /> Delete
                                 </button>
@@ -527,15 +527,15 @@ export default function ListPage() {
         </div>
 
         {/* Pagination */}
-        <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between bg-slate-50 dark:bg-[#1A1A1A]">
           <p className="text-sm text-slate-500">
-            Total: <span className="font-bold text-slate-800">{total}</span> enquiries
+            Total: <span className="font-bold text-slate-800 dark:text-slate-100">{total}</span> enquiries
           </p>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="p-2 border border-slate-200 rounded-lg hover:bg-white disabled:opacity-40 transition-all"
+              className="p-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-white dark:bg-slate-900 disabled:opacity-40 transition-all"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -543,7 +543,7 @@ export default function ListPage() {
             <button
               onClick={() => setPage(p => p + 1)}
               disabled={page * 10 >= total}
-              className="p-2 border border-slate-200 rounded-lg hover:bg-white disabled:opacity-40 transition-all"
+              className="p-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-white dark:bg-slate-900 disabled:opacity-40 transition-all"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -607,35 +607,32 @@ export default function ListPage() {
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && selectedEnquiry && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-[3rem] shadow-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-300">
-            <div className="p-10 text-center space-y-6">
-              <div className="w-20 h-20 bg-rose-50 text-rose-500 rounded-[1.5rem] flex items-center justify-center mx-auto shadow-xl shadow-rose-500/10">
-                <AlertTriangle className="w-10 h-10" />
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="p-6 text-center space-y-4">
+              <div className="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                <AlertTriangle className="w-8 h-8" />
               </div>
-              <div className="space-y-2">
-                <h3 className="text-[1.75rem] font-[900] text-slate-800 tracking-tight">Delete Enquiry?</h3>
-                <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.15em]">Permanent Action</p>
-              </div>
-              <p className="text-slate-500 font-bold leading-relaxed px-4">
-                Are you sure you want to delete <span className="text-[#5145f6] underline decoration-2 underline-offset-4">{selectedEnquiry.name}</span>? This action cannot be undone.
+              <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">Delete Enquiry?</h3>
+              <p className="text-sm text-slate-500">
+                Are you sure you want to delete <span className="font-bold text-slate-700 dark:text-slate-200">{selectedEnquiry.name}</span>? This action cannot be undone.
               </p>
-              <div className="grid grid-cols-2 gap-4 pt-4">
-                <button
-                  onClick={() => { setShowDeleteModal(false); setSelectedEnquiry(null); }}
-                  className="py-5 bg-slate-50 text-slate-400 font-black rounded-[1.5rem] hover:bg-slate-100 transition-all uppercase text-[10px] tracking-widest"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleDelete}
-                  disabled={deleting}
-                  className="py-5 bg-rose-600 text-white font-black rounded-[1.5rem] shadow-xl shadow-rose-600/20 hover:bg-rose-700 transition-all flex items-center justify-center gap-3 disabled:opacity-70 uppercase text-[10px] tracking-widest"
-                >
-                  {deleting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Trash2 className="w-5 h-5" />}
-                  {deleting ? 'Deleting...' : 'Confirm'}
-                </button>
-              </div>
+            </div>
+            <div className="p-4 bg-slate-50 dark:bg-slate-800 border-t border-slate-100 flex gap-3">
+              <button
+                onClick={() => { setShowDeleteModal(false); setSelectedEnquiry(null); }}
+                className="flex-1 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold rounded-xl hover:bg-slate-50 dark:bg-slate-800 transition-all text-sm"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={deleting}
+                className="flex-1 py-2.5 bg-rose-600 text-white font-bold rounded-xl shadow-lg shadow-rose-500/20 hover:bg-rose-700 transition-all flex items-center justify-center gap-2 text-sm disabled:opacity-70"
+              >
+                {deleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                Confirm
+              </button>
             </div>
           </div>
         </div>

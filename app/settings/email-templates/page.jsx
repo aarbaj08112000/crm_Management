@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { FileText, Plus, Trash2, Edit, Search, RefreshCcw, Mail, Loader2, AlertTriangle } from 'lucide-react';
+import { FileText, Plus, Trash2, Edit, Search, RefreshCcw, Mail, Loader2, AlertTriangle, Eye } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import EmailTemplateModal from '@/components/EmailTemplateModal';
 import { Card, CardContent } from '@/components/Card';
@@ -12,6 +12,7 @@ export default function EmailTemplatesPage() {
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewMode, setIsViewMode] = useState(false);
   const [editingTemplate, setEditingTemplate] = useState(null);
   const [search, setSearch] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -63,13 +64,21 @@ export default function EmailTemplatesPage() {
     }
   };
 
+  const handleView = (template) => {
+    setEditingTemplate(template);
+    setIsViewMode(true);
+    setIsModalOpen(true);
+  };
+
   const handleEdit = (template) => {
     setEditingTemplate(template);
+    setIsViewMode(false);
     setIsModalOpen(true);
   };
 
   const handleCreateNew = () => {
     setEditingTemplate(null);
+    setIsViewMode(false);
     setIsModalOpen(true);
   };
 
@@ -97,7 +106,7 @@ export default function EmailTemplatesPage() {
                 <FileText className="w-5 h-5" />
               </div>
               <div>
-                <h1 className="text-[1.25rem] font-black text-slate-800 tracking-tight">Email Templates</h1>
+                <h1 className="text-[1.25rem] font-black text-slate-800 dark:text-slate-100 tracking-tight">Email Templates</h1>
                 <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-0.5">Manage reusable email templates</p>
               </div>
             </div>
@@ -110,12 +119,12 @@ export default function EmailTemplatesPage() {
                   placeholder="Search templates..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#5145f6]/20 focus:border-[#5145f6] outline-none transition-all font-medium"
+                  className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-[#5145f6]/20 focus:border-[#5145f6] outline-none transition-all font-medium"
                 />
               </div>
               <button
                 onClick={fetchTemplates}
-                className="p-2 hover:bg-slate-100 rounded-lg transition-colors text-slate-400 hover:text-[#5145f6] border border-slate-200"
+                className="p-2 hover:bg-slate-100 rounded-lg transition-colors text-slate-400 hover:text-[#5145f6] border border-slate-200 dark:border-slate-700"
                 title="Refresh"
               >
                 <RefreshCcw className={cn("w-4 h-4", loading && "animate-spin")} />
@@ -136,13 +145,13 @@ export default function EmailTemplatesPage() {
       <Card className="overflow-hidden">
         <div className="overflow-auto min-h-[400px]">
           <table className="w-full text-left border-collapse relative text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200 sticky top-0 z-10">
+            <thead className="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
               <tr>
-                <th className="px-6 py-4 font-black text-slate-700 uppercase tracking-widest text-[10px]">Template Name</th>
-                <th className="px-6 py-4 font-black text-slate-700 uppercase tracking-widest text-[10px]">Subject Line</th>
-                <th className="px-6 py-4 font-black text-slate-700 uppercase tracking-widest text-[10px]">Added By / Date</th>
-                <th className="px-6 py-4 font-black text-slate-700 uppercase tracking-widest text-[10px]">Updated By / Date</th>
-                <th className="px-6 py-4 font-black text-slate-700 uppercase tracking-widest text-[10px] text-right">Action</th>
+                <th className="px-6 py-4 font-black text-slate-700 dark:text-slate-200 uppercase tracking-widest text-[10px]">Template Name</th>
+                <th className="px-6 py-4 font-black text-slate-700 dark:text-slate-200 uppercase tracking-widest text-[10px]">Subject Line</th>
+                <th className="px-6 py-4 font-black text-slate-700 dark:text-slate-200 uppercase tracking-widest text-[10px]">Added By / Date</th>
+                <th className="px-6 py-4 font-black text-slate-700 dark:text-slate-200 uppercase tracking-widest text-[10px]">Updated By / Date</th>
+                <th className="px-6 py-4 font-black text-slate-700 dark:text-slate-200 uppercase tracking-widest text-[10px] text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -157,7 +166,7 @@ export default function EmailTemplatesPage() {
                   <td colSpan={5} className="px-6 py-12 text-center text-slate-500">
                     <div className="flex flex-col items-center justify-center">
                       <FileText className="w-12 h-12 text-slate-200 mb-3" />
-                      <p className="font-bold text-slate-600">No templates found.</p>
+                      <p className="font-bold text-slate-600 dark:text-slate-300">No templates found.</p>
                       <p className="text-xs text-slate-400 mt-1">Create your first email template to save time.</p>
                     </div>
                   </td>
@@ -174,11 +183,11 @@ export default function EmailTemplatesPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-sm font-medium text-slate-600">{template.subject}</span>
+                      <span className="text-sm font-medium text-slate-600 dark:text-slate-300">{template.subject}</span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-col">
-                        <span className="text-sm font-bold text-slate-700">{template.added_by_name || 'System'}</span>
+                        <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{template.added_by_name || 'System'}</span>
                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                           {new Date(template.created_at).toLocaleDateString()} {new Date(template.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                         </span>
@@ -186,7 +195,7 @@ export default function EmailTemplatesPage() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-col">
-                        <span className="text-sm font-bold text-slate-700">{template.updated_by_name || 'System'}</span>
+                        <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{template.updated_by_name || 'System'}</span>
                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                           {new Date(template.updated_at).toLocaleDateString()} {new Date(template.updated_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                         </span>
@@ -194,6 +203,13 @@ export default function EmailTemplatesPage() {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2 transition-opacity">
+                        <button
+                          onClick={() => handleView(template)}
+                          className="p-2 text-slate-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-colors border border-transparent hover:border-blue-200"
+                          title="View Template"
+                        >
+                          <Eye className="w-4 h-4" />
+                        </button>
                         <button
                           onClick={() => handleEdit(template)}
                           className="p-2 text-slate-400 hover:text-amber-500 hover:bg-amber-50 rounded-lg transition-colors border border-transparent hover:border-amber-200"
@@ -218,24 +234,25 @@ export default function EmailTemplatesPage() {
         </div>
       </Card>
 
-      {/* Editor Modal */}
+      {/* Editor/Viewer Modal */}
       {isModalOpen && (
         <EmailTemplateModal 
           template={editingTemplate} 
           onClose={handleModalClose} 
+          isViewMode={isViewMode}
         />
       )}
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && templateToDelete && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-[3rem] shadow-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-300">
+          <div className="bg-white dark:bg-slate-900 rounded-[3rem] shadow-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-300">
             <div className="p-10 text-center space-y-6">
               <div className="w-20 h-20 bg-rose-50 text-rose-500 rounded-[1.5rem] flex items-center justify-center mx-auto shadow-xl shadow-rose-500/10">
                 <AlertTriangle className="w-10 h-10" />
               </div>
               <div className="space-y-2">
-                <h3 className="text-[1.75rem] font-[900] text-slate-800 tracking-tight">Delete Template?</h3>
+                <h3 className="text-[1.75rem] font-[900] text-slate-800 dark:text-slate-100 tracking-tight">Delete Template?</h3>
                 <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.15em]">Permanent Action</p>
               </div>
               <p className="text-slate-500 font-bold leading-relaxed px-4">
@@ -244,7 +261,7 @@ export default function EmailTemplatesPage() {
               <div className="grid grid-cols-2 gap-4 pt-4">
                 <button
                   onClick={() => { setShowDeleteModal(false); setTemplateToDelete(null); }}
-                  className="py-5 bg-slate-50 text-slate-400 font-black rounded-[1.5rem] hover:bg-slate-100 transition-all uppercase text-[10px] tracking-widest"
+                  className="py-5 bg-slate-50 dark:bg-slate-800 text-slate-400 font-black rounded-[1.5rem] hover:bg-slate-100 transition-all uppercase text-[10px] tracking-widest"
                 >
                   Cancel
                 </button>

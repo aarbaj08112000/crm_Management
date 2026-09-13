@@ -32,31 +32,31 @@ export default function UpdateMsgStatusModal({ enquiry, onClose, onUpdated }) {
 
   return (
     <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-200">
-        <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-200">
+        <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50 dark:bg-slate-800/50">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center">
               <CheckCircle2 className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-slate-800">Update Message Status</h3>
+              <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">Update Message Status</h3>
               <p className="text-xs text-slate-500">For: {enquiry.name}</p>
             </div>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-white rounded-lg transition-colors">
+          <button onClick={onClose} className="p-2 hover:bg-white dark:bg-slate-900 rounded-lg transition-colors">
             <X className="w-5 h-5 text-slate-400" />
           </button>
         </div>
 
         <div className="p-6 space-y-6">
           <div className="space-y-3">
-            <label className="text-sm font-bold text-slate-700 block mb-2">
+            <label className="text-sm font-bold text-slate-700 dark:text-slate-200 block mb-2">
               Select Communication Status
             </label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none bg-white text-slate-700 font-medium"
+              className="w-full px-4 py-3 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 font-medium"
             >
               <option value="No">⏳ Not Sent</option>
               <option value="Email">📧 Email Sent</option>
@@ -69,7 +69,7 @@ export default function UpdateMsgStatusModal({ enquiry, onClose, onUpdated }) {
           <div className="flex gap-3 pt-2">
             <button
               onClick={onClose}
-              className="flex-1 py-3 border border-slate-200 text-slate-600 font-semibold rounded-xl hover:bg-slate-50 transition-all"
+              className="flex-1 py-3 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-semibold rounded-xl hover:bg-slate-50 dark:bg-slate-800 transition-all"
             >
               Cancel
             </button>

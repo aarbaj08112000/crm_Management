@@ -73,7 +73,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, user, permissions
 
   // Filter navigation based on dynamic permissions from DB
   let filteredNavigation = [];
-  
+
   if (permissions && permissions.length > 0) {
     // If permissions array exists, group them
     const grouped = {};
@@ -112,7 +112,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, user, permissions
       {/* Desktop Sidebar */}
       <div
         className={cn(
-          "hidden md:flex flex-col h-screen bg-[#0f172a] text-slate-300 border-r border-slate-800 fixed top-0 left-0 z-40 shadow-2xl transition-all duration-300 ease-in-out",
+          "hidden md:flex flex-col h-screen bg-[#0f172a] dark:bg-[#000000] text-slate-300 border-r border-slate-800 dark:border-[#27272A] fixed top-0 left-0 z-40 shadow-2xl transition-all duration-300 ease-in-out",
           isCollapsed ? "w-20" : "w-64"
         )}
       >
@@ -163,7 +163,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, user, permissions
                       className={cn(
                         "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative",
                         isActive
-                          ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
+                          ? "bg-purple-600 dark:bg-[#A855F7] text-white shadow-lg shadow-purple-600/20"
                           : "hover:bg-slate-800 hover:text-white",
                         isCollapsed && "justify-center px-0"
                       )}
@@ -171,7 +171,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, user, permissions
                     >
                       <Icon className={cn(
                         "w-5 h-5 shrink-0 transition-colors",
-                        isActive ? "text-white" : "text-slate-400 group-hover:text-blue-400"
+                        isActive ? "text-white" : "text-slate-400 group-hover:text-purple-400 dark:group-hover:text-[#A855F7]"
                       )} />
                       {!isCollapsed && (
                         <span className="text-sm font-semibold tracking-wide whitespace-nowrap">
@@ -179,7 +179,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, user, permissions
                         </span>
                       )}
                       {isActive && !isCollapsed && (
-                        <div className="absolute right-3 w-1.5 h-1.5 bg-white/40 rounded-full" />
+                        <div className="absolute right-3 w-1.5 h-1.5 bg-white dark:bg-slate-900/40 rounded-full" />
                       )}
                     </Link>
                   );
@@ -206,13 +206,13 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, user, permissions
       </div>
 
       {/* Mobile Bottom Navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-[#0f172a] border-t border-slate-800 flex items-center justify-around px-4 z-50">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-[#0f172a] dark:bg-[#000000] border-t border-slate-800 dark:border-[#27272A] flex items-center justify-around px-4 z-50">
         {filteredNavigation.find(g => g.group === 'MANAGEMENT')?.items.map((item) => { // Using management items for mobile bar
           const Icon = item.icon;
           const isActive = pathname === item.href;
           return (
             <Link key={item.name} href={item.href} className="p-2">
-              <Icon className={cn("w-6 h-6", isActive ? "text-blue-500" : "text-slate-500")} />
+              <Icon className={cn("w-6 h-6", isActive ? "text-purple-500 dark:text-[#A855F7]" : "text-slate-500")} />
             </Link>
           );
         })}

@@ -72,7 +72,7 @@ export default function UsersPage() {
     <div className="p-8 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 tracking-tight">System Users</h1>
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">System Users</h1>
           <p className="text-sm text-slate-500 font-medium">Manage team members and their access levels</p>
         </div>
         <button 
@@ -93,7 +93,7 @@ export default function UsersPage() {
               placeholder="Search by name or email..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"
             />
           </div>
         </CardContent>
@@ -115,16 +115,16 @@ export default function UsersPage() {
               </button>
 
               {activeDropdown === user.user_id && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-100 rounded-xl shadow-xl py-2 animate-in fade-in zoom-in-95 origin-top-right">
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-slate-100 rounded-xl shadow-xl py-2 animate-in fade-in zoom-in-95 origin-top-right">
                   <button 
                     onClick={(e) => { e.stopPropagation(); setActiveDropdown(null); setEditingUser(user); setIsDrawerOpen(true); }}
-                    className="w-full px-4 py-2 text-sm text-left font-semibold text-slate-700 hover:bg-slate-50 hover:text-blue-600 flex items-center gap-3 transition-colors cursor-pointer"
+                    className="w-full px-4 py-2 text-sm text-left font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:bg-slate-800 hover:text-blue-600 flex items-center gap-3 transition-colors cursor-pointer"
                   >
                     <UserPen className="w-4 h-4" /> Edit Profile
                   </button>
                   <button 
                     onClick={(e) => { e.stopPropagation(); setActiveDropdown(null); setEditingUser(user); setIsPasswordModalOpen(true); }}
-                    className="w-full px-4 py-2 text-sm text-left font-semibold text-slate-700 hover:bg-slate-50 hover:text-blue-600 flex items-center gap-3 transition-colors cursor-pointer"
+                    className="w-full px-4 py-2 text-sm text-left font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:bg-slate-800 hover:text-blue-600 flex items-center gap-3 transition-colors cursor-pointer"
                   >
                     <KeyRound className="w-4 h-4" /> Change Password
                   </button>
@@ -152,7 +152,7 @@ export default function UsersPage() {
                 </div>
 
                 <div className="flex-1">
-                  <h3 className="font-bold text-slate-800 text-lg group-hover:text-blue-600 transition-colors">
+                  <h3 className="font-bold text-slate-800 dark:text-slate-100 text-lg group-hover:text-blue-600 transition-colors">
                     {user.name || 'Unnamed Agent'}
                   </h3>
                   <p className="text-sm text-slate-500 truncate mb-1">{user.email || 'No email'}</p>

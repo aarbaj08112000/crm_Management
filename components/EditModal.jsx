@@ -79,7 +79,7 @@ export default function EditModal({ enquiry, onClose, onSaved }) {
       />
       
       {/* Side Menu Panel */}
-      <div className="relative w-full max-w-lg bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out">
+      <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out">
         {/* Header */}
         <SidePanelHeader
           icon={User}
@@ -96,12 +96,12 @@ export default function EditModal({ enquiry, onClose, onSaved }) {
               
               {/* Name */}
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Company / Full Name</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1.5">Company / Full Name</label>
                 <input
                   {...register('name')}
                   className={cn(
-                    "w-full px-5 py-4 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-[#5145f6] outline-none transition-all font-bold text-slate-800",
-                    errors.name && "border-rose-200 bg-rose-50"
+                    "w-full px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md focus:outline-none focus:border-blue-500 transition-all font-medium text-slate-800 dark:text-slate-100 text-sm",
+                    errors.name && "border-rose-300 focus:border-rose-500"
                   )}
                 />
               </div>
@@ -109,7 +109,7 @@ export default function EditModal({ enquiry, onClose, onSaved }) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Mobile */}
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Mobile</label>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1.5">Mobile</label>
                   <div className="react-tel-input-wrapper">
                     <Controller
                       name="mobile_number"
@@ -122,12 +122,12 @@ export default function EditModal({ enquiry, onClose, onSaved }) {
                           inputProps={{
                             required: true,
                             className: cn(
-                              "w-full pl-12 pr-5 py-3.5 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-[#5145f6] outline-none transition-all font-bold text-slate-800",
-                              errors.mobile_number && "border-rose-200 bg-rose-50"
+                              "w-full pl-12 pr-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md focus:outline-none focus:border-blue-500 transition-all font-medium text-slate-800 dark:text-slate-100 text-sm",
+                              errors.mobile_number && "border-rose-300 focus:border-rose-500"
                             )
                           }}
                           containerClass="!w-full"
-                          buttonClass="!border-slate-50 !bg-slate-50 !rounded-l-2xl hover:!bg-slate-100"
+                          buttonClass="!border-slate-200 dark:border-slate-700 !bg-slate-50 dark:bg-slate-800 !rounded-l-md hover:!bg-slate-100"
                           dropdownClass="!w-64"
                         />
                       )}
@@ -138,10 +138,10 @@ export default function EditModal({ enquiry, onClose, onSaved }) {
 
                 {/* Email */}
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email</label>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1.5">Email</label>
                   <input
                     {...register('email')}
-                    className="w-full px-5 py-3.5 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-[#5145f6] outline-none transition-all font-bold text-slate-800"
+                    className="w-full px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md focus:outline-none focus:border-blue-500 transition-all font-medium text-slate-800 dark:text-slate-100 text-sm"
                   />
                 </div>
               </div>
@@ -152,28 +152,28 @@ export default function EditModal({ enquiry, onClose, onSaved }) {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Contact Person</label>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1.5">Contact Person</label>
                   <input
                     {...register('contact_person')}
-                    className="w-full px-5 py-3.5 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-[#5145f6] outline-none transition-all font-bold text-slate-800"
+                    className="w-full px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md focus:outline-none focus:border-blue-500 transition-all font-medium text-slate-800 dark:text-slate-100 text-sm"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Lead Type</label>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1.5">Lead Type</label>
                   <input
                     {...register('type')}
-                    className="w-full px-5 py-3.5 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-[#5145f6] outline-none transition-all font-bold text-slate-800"
+                    className="w-full px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md focus:outline-none focus:border-blue-500 transition-all font-medium text-slate-800 dark:text-slate-100 text-sm"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Location / Address</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1.5">Location / Address</label>
                 <textarea
                   {...register('address')}
                   rows={4}
-                  className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-50 rounded-2xl focus:bg-white focus:border-[#5145f6] outline-none transition-all font-bold text-slate-800 resize-none"
+                  className="w-full px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md focus:outline-none focus:border-blue-500 transition-all font-medium text-slate-800 dark:text-slate-100 text-sm resize-none"
                 />
               </div>
             </div>
@@ -181,22 +181,22 @@ export default function EditModal({ enquiry, onClose, onSaved }) {
         </form>
 
         {/* Footer */}
-        <div className="p-8 bg-slate-50 border-t border-slate-100 flex gap-4">
+        <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-100 flex justify-end gap-3 items-center">
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-4 bg-white text-slate-600 font-bold rounded-2xl border border-slate-200 hover:bg-slate-50 transition-all text-xs uppercase tracking-widest"
+            className="px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md hover:bg-slate-50 dark:bg-slate-800 transition-colors"
           >
-            CANCEL
+            Cancel
           </button>
           <button
             form="edit-lead-form"
             type="submit"
             disabled={loading}
-            className="flex-[2] py-4 bg-[#1e293b] text-white font-black rounded-2xl shadow-xl hover:bg-blue-600 transition-all flex items-center justify-center gap-3 disabled:opacity-70 text-xs uppercase tracking-widest"
+            className="px-6 py-2 text-sm font-semibold text-white bg-[#5145f6] rounded-md shadow-sm hover:bg-[#4135e6] transition-all flex items-center justify-center gap-2 disabled:opacity-70"
           >
-            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-            {loading ? 'SAVING...' : 'COMMIT CHANGES'}
+            {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+            {loading ? 'Updating...' : 'Update'}
           </button>
         </div>
       </div>

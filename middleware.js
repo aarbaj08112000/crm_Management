@@ -6,17 +6,18 @@ const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secr
 export async function middleware(request) {
   const { pathname } = request.nextUrl;
 
-  // Paths that don't require authentication
   if (
-    pathname.startsWith('/login') || 
-    pathname.startsWith('/api/auth') || 
-    pathname.startsWith('/api/webhook') || 
-    pathname.startsWith('/api/smartoperator/voice') || 
-    pathname.startsWith('/api/smartoperator/status') || 
-    pathname.startsWith('/api/smartoperator/recording') || 
-    pathname.startsWith('/api/smartoperator/play') || 
-    pathname.startsWith('/api/vonage/voice') || 
-    pathname.startsWith('/_next') || 
+    pathname.startsWith('/login') ||
+    pathname.startsWith('/api/auth') ||
+    pathname.startsWith('/api/webhook') ||
+    pathname.startsWith('/api/cron') ||
+    pathname.startsWith('/api/debug-emails') ||
+    pathname.startsWith('/api/smartoperator/voice') ||
+    pathname.startsWith('/api/smartoperator/status') ||
+    pathname.startsWith('/api/smartoperator/recording') ||
+    pathname.startsWith('/api/smartoperator/play') ||
+    pathname.startsWith('/api/vonage/voice') ||
+    pathname.startsWith('/_next') ||
     pathname === '/favicon.ico'
   ) {
     return NextResponse.next();

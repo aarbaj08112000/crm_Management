@@ -107,7 +107,7 @@ export default function LoginPage() {
                   <input
                     {...register('email')}
                     className={cn(
-                      "w-full pl-12 pr-4 py-4 bg-slate-800/50 border border-slate-700/50 text-white rounded-2xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600",
+                      "w-full pl-12 pr-4 py-4 bg-slate-800/50 border border-slate-700/50 text-white rounded-2xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600 dark:text-slate-300",
                       errors.email && "border-rose-500/50 focus:ring-rose-500/50 focus:border-rose-500"
                     )}
                     placeholder="Enter email or username"
@@ -133,7 +133,7 @@ export default function LoginPage() {
                     type={showPassword ? "text" : "password"}
                     {...register('password')}
                     className={cn(
-                      "w-full pl-12 pr-12 py-4 bg-slate-800/50 border border-slate-700/50 text-white rounded-2xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600",
+                      "w-full pl-12 pr-12 py-4 bg-slate-800/50 border border-slate-700/50 text-white rounded-2xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600 dark:text-slate-300",
                       errors.password && "border-rose-500/50 focus:ring-rose-500/50 focus:border-rose-500"
                     )}
                     placeholder="••••••••"
@@ -159,7 +159,7 @@ export default function LoginPage() {
             </form>
           </div>
           
-          <div className="px-8 py-4 bg-white/5 border-t border-white/5 flex items-center justify-center">
+          <div className="px-8 py-4 bg-white dark:bg-slate-900/5 border-t border-white/5 flex items-center justify-center">
             <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em]">
               Authorized Personnel Only
             </p>
@@ -168,9 +168,9 @@ export default function LoginPage() {
         
         <div className="flex flex-col items-center gap-4">
           <div className="flex items-center gap-6">
-            <p className="text-slate-600 text-[11px] font-bold uppercase tracking-widest underline cursor-pointer hover:text-slate-500 transition-colors">Privacy Policy</p>
+            <p className="text-slate-600 dark:text-slate-300 text-[11px] font-bold uppercase tracking-widest underline cursor-pointer hover:text-slate-500 transition-colors">Privacy Policy</p>
             <div className="h-4 w-[1px] bg-slate-800" />
-            <p className="text-slate-600 text-[11px] font-bold uppercase tracking-widest underline cursor-pointer hover:text-slate-500 transition-colors">Terms of Service</p>
+            <p className="text-slate-600 dark:text-slate-300 text-[11px] font-bold uppercase tracking-widest underline cursor-pointer hover:text-slate-500 transition-colors">Terms of Service</p>
           </div>
           <p className="text-slate-500 text-[11px] font-bold uppercase tracking-widest text-center">
             &copy; 2026 All rights reserved by <span className="text-blue-500/80">Code Crafter Infotech</span>

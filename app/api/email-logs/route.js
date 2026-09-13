@@ -15,7 +15,7 @@ export async function GET(req) {
     const role = (payload.role || '').toString().toLowerCase();
 
     let sql = `
-      SELECT el.id, el.user_id, el.recipient_email, el.subject, el.body, el.sent_at, el.enquiry_id, el.direction, u.user_name, enq.added_date
+      SELECT el.id, el.user_id, el.recipient_email, el.subject, el.body, el.sent_at, el.enquiry_id, el.direction, el.attachments, u.user_name, enq.added_date
       FROM email_logs el
       LEFT JOIN user_master u ON el.user_id = u.user_id
       LEFT JOIN enquiries enq ON el.enquiry_id = enq.enquiry_id

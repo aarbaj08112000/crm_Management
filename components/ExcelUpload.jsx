@@ -109,15 +109,15 @@ export default function ExcelUpload() {
               <Upload className="w-12 h-12" />
             </div>
             <div>
-              <p className="text-2xl font-black text-slate-800 tracking-tight">Drop your Excel here</p>
+              <p className="text-2xl font-black text-slate-800 dark:text-slate-100 tracking-tight">Drop your Excel here</p>
               <p className="text-sm text-slate-400 font-bold uppercase tracking-widest mt-2 italic">Support: .xlsx, .xls, .csv</p>
             </div>
           </div>
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="flex items-center justify-between bg-slate-50 p-6 rounded-2xl border border-slate-100">
-            <h4 className="font-black text-slate-800 flex items-center gap-3 text-lg tracking-tight">
+          <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl border border-slate-100">
+            <h4 className="font-black text-slate-800 dark:text-slate-100 flex items-center gap-3 text-lg tracking-tight">
               <FileSpreadsheet className="w-6 h-6 text-blue-600" />
               Previewing {data.length} Enquiries
             </h4>
@@ -129,22 +129,22 @@ export default function ExcelUpload() {
             </button>
           </div>
 
-          <div className="max-h-[400px] overflow-auto border-2 border-slate-50 rounded-2xl shadow-inner bg-slate-50/30">
+          <div className="max-h-[400px] overflow-auto border-2 border-slate-50 rounded-2xl shadow-inner bg-slate-50 dark:bg-slate-800/30">
             <table className="w-full text-left text-sm">
-              <thead className="bg-white border-b border-slate-100 sticky top-0 z-10">
+              <thead className="bg-white dark:bg-slate-900 border-b border-slate-100 sticky top-0 z-10">
                 <tr>
                   <th className="px-6 py-4 font-black text-slate-400 uppercase tracking-widest text-[10px]">#</th>
-                  <th className="px-6 py-4 font-black text-slate-800">NAME</th>
-                  <th className="px-6 py-4 font-black text-slate-800 text-center">MOBILE</th>
-                  <th className="px-6 py-4 font-black text-slate-800">TYPE</th>
+                  <th className="px-6 py-4 font-black text-slate-800 dark:text-slate-100">NAME</th>
+                  <th className="px-6 py-4 font-black text-slate-800 dark:text-slate-100 text-center">MOBILE</th>
+                  <th className="px-6 py-4 font-black text-slate-800 dark:text-slate-100">TYPE</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
                 {data.map((row, i) => (
-                  <tr key={i} className="hover:bg-white transition-colors">
+                  <tr key={i} className="hover:bg-white dark:bg-slate-900 transition-colors">
                     <td className="px-6 py-4 text-slate-300 font-mono text-xs">{i + 1}</td>
                     <td className="px-6 py-4 text-slate-900 font-bold">{row.name}</td>
-                    <td className="px-6 py-4 text-slate-600 text-center font-mono">{row.mobile_number}</td>
+                    <td className="px-6 py-4 text-slate-600 dark:text-slate-300 text-center font-mono">{row.mobile_number}</td>
                     <td className="px-6 py-4">
                       <span className="px-3 py-1 bg-slate-100 rounded-lg text-[10px] font-black uppercase tracking-wider text-slate-500">{row.type}</span>
                     </td>

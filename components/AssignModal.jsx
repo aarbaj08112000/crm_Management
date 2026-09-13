@@ -72,7 +72,7 @@ export default function AssignModal({ enquiry, onClose, onAssigned }) {
       />
       
       {/* Side Panel */}
-      <div className="relative w-full max-w-lg bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out z-10">
+      <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out z-10">
         {/* Header */}
         <SidePanelHeader
           icon={Users}
@@ -94,13 +94,13 @@ export default function AssignModal({ enquiry, onClose, onAssigned }) {
                   "w-full p-3 rounded-xl transition-all duration-300 text-left flex items-center justify-between group border-2",
                   (selectedUser === '' || selectedUser === null)
                     ? "bg-[#141726] border-[#141726] text-white shadow-lg shadow-slate-900/20"
-                    : "bg-slate-50 border-transparent text-slate-700 hover:bg-slate-100 hover:border-slate-200"
+                    : "bg-slate-50 dark:bg-slate-800 border-transparent text-slate-700 dark:text-slate-200 hover:bg-slate-100 hover:border-slate-200 dark:border-slate-700"
                 )}
               >
                 <div className="flex items-center gap-3">
                   <div className={cn(
                     "w-10 h-10 rounded-xl flex items-center justify-center font-black text-xs transition-all duration-300",
-                    (selectedUser === '' || selectedUser === null) ? "bg-white/10 text-white" : "bg-slate-200 text-slate-500"
+                    (selectedUser === '' || selectedUser === null) ? "bg-white dark:bg-slate-900/10 text-white" : "bg-slate-200 text-slate-500"
                   )}>
                     <X className="w-4 h-4" />
                   </div>
@@ -121,13 +121,13 @@ export default function AssignModal({ enquiry, onClose, onAssigned }) {
                     "w-full p-3 rounded-xl transition-all duration-300 text-left flex items-center justify-between group border-2",
                     selectedUser == user.user_id 
                       ? "bg-[#141726] border-[#141726] text-white shadow-lg shadow-slate-900/20"
-                      : "bg-slate-50 border-transparent text-slate-700 hover:bg-slate-100 hover:border-slate-200"
+                      : "bg-slate-50 dark:bg-slate-800 border-transparent text-slate-700 dark:text-slate-200 hover:bg-slate-100 hover:border-slate-200 dark:border-slate-700"
                   )}
                 >
                   <div className="flex items-center gap-3">
                     <div className={cn(
                       "w-10 h-10 rounded-xl flex items-center justify-center font-black text-xs transition-all duration-300 relative",
-                      selectedUser == user.user_id ? "bg-white/10 text-white" : "bg-blue-100 text-blue-600"
+                      selectedUser == user.user_id ? "bg-white dark:bg-slate-900/10 text-white" : "bg-blue-100 text-blue-600"
                     )}>
                       {getInitials(user.user_name || user.name)}
                       {user.role === 'admin' && (
@@ -140,7 +140,7 @@ export default function AssignModal({ enquiry, onClose, onAssigned }) {
                       <p className="font-bold text-xs uppercase tracking-wider">{user.user_name || user.name}</p>
                       <p className={cn(
                         "text-[8px] font-bold uppercase tracking-widest mt-0.5",
-                        selectedUser == user.user_id ? "text-slate-400" : "text-blue-500"
+                        selectedUser == user.user_id ? "text-slate-400" : "text-blue-500 dark:text-blue-400"
                       )}>
                         {user.role || 'Sales Team'}
                       </p>
@@ -154,21 +154,21 @@ export default function AssignModal({ enquiry, onClose, onAssigned }) {
         </div>
 
         {/* Footer Action */}
-        <div className="p-8 bg-slate-50 border-t border-slate-100 flex gap-4">
+        <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-3 items-center">
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-4 bg-white text-slate-600 font-bold rounded-2xl border border-slate-200 hover:bg-slate-50 transition-all text-xs uppercase tracking-widest"
+            className="px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
           >
-            CANCEL
+            Cancel
           </button>
           <button
             onClick={handleAssign}
             disabled={loading}
-            className="flex-[2] py-4 bg-[#1e293b] text-white font-black rounded-2xl shadow-xl hover:bg-blue-600 transition-all flex items-center justify-center gap-3 disabled:opacity-70 text-xs uppercase tracking-widest"
+            className="px-6 py-2 text-sm font-semibold text-white bg-[#5145f6] rounded-md shadow-sm hover:bg-[#4135e6] transition-all flex items-center justify-center gap-2 disabled:opacity-70"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <UserPlus className="w-4 h-4" />}
-            {loading ? 'PROCESSING...' : 'CONFIRM ASSIGNMENT'}
+            {loading ? 'Processing...' : 'Confirm Assignment'}
           </button>
         </div>
       </div>

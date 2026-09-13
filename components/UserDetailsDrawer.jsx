@@ -42,13 +42,13 @@ export default function UserDetailsDrawer({ isOpen, onClose, userId, onEdit }) {
     <>
       <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100]" onClick={onClose} />
       <div className={cn(
-        "fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-[110] transform transition-transform duration-300 ease-in-out flex flex-col",
+        "fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl z-[110] transform transition-transform duration-300 ease-in-out flex flex-col",
         isOpen ? "translate-x-0" : "translate-x-full"
       )}>
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-white shrink-0">
-          <h2 className="text-lg font-bold text-slate-800">User</h2>
-          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors">
+        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-white dark:bg-slate-900 shrink-0">
+          <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">User</h2>
+          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 dark:text-slate-300 hover:bg-slate-100 rounded-full transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -57,26 +57,26 @@ export default function UserDetailsDrawer({ isOpen, onClose, userId, onEdit }) {
         <div className="flex border-b border-slate-100 px-6 shrink-0">
           <button
             onClick={() => setActiveTab('summary')}
-            className={cn("px-4 py-3 text-sm font-bold border-b-2 transition-colors cursor-pointer", activeTab === 'summary' ? "border-rose-500 text-slate-800" : "border-transparent text-slate-400 hover:text-slate-600")}
+            className={cn("px-4 py-3 text-sm font-bold border-b-2 transition-colors cursor-pointer", activeTab === 'summary' ? "border-rose-500 text-slate-800 dark:text-slate-100" : "border-transparent text-slate-400 hover:text-slate-600 dark:text-slate-300")}
           >
             Summary
           </button>
           <button
             onClick={() => setActiveTab('activities')}
-            className={cn("px-4 py-3 text-sm font-bold border-b-2 transition-colors cursor-pointer", activeTab === 'activities' ? "border-rose-500 text-slate-800" : "border-transparent text-slate-400 hover:text-slate-600")}
+            className={cn("px-4 py-3 text-sm font-bold border-b-2 transition-colors cursor-pointer", activeTab === 'activities' ? "border-rose-500 text-slate-800 dark:text-slate-100" : "border-transparent text-slate-400 hover:text-slate-600 dark:text-slate-300")}
           >
             Activities
           </button>
           <button
             onClick={() => setActiveTab('enquiries')}
-            className={cn("px-4 py-3 text-sm font-bold border-b-2 transition-colors cursor-pointer", activeTab === 'enquiries' ? "border-rose-500 text-slate-800" : "border-transparent text-slate-400 hover:text-slate-600")}
+            className={cn("px-4 py-3 text-sm font-bold border-b-2 transition-colors cursor-pointer", activeTab === 'enquiries' ? "border-rose-500 text-slate-800 dark:text-slate-100" : "border-transparent text-slate-400 hover:text-slate-600 dark:text-slate-300")}
           >
             Enquiries
           </button>
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto px-6 py-6 custom-scrollbar bg-slate-50/30">
+        <div className="flex-1 overflow-y-auto px-6 py-6 custom-scrollbar bg-slate-50 dark:bg-slate-800/30">
           {loading || !data.user ? (
             <div className="text-center text-slate-400 pt-10 font-medium">Loading details...</div>
           ) : (
@@ -92,7 +92,7 @@ export default function UserDetailsDrawer({ isOpen, onClose, userId, onEdit }) {
                           <UserCircle2 className="w-10 h-10" />
                         </div>
                       )}
-                      <h3 className="mt-3 text-lg font-extrabold text-slate-800">{data.user.name}</h3>
+                      <h3 className="mt-3 text-lg font-extrabold text-slate-800 dark:text-slate-100">{data.user.name}</h3>
                     </div>
                     
                     <div className="flex items-center gap-3">
@@ -111,30 +111,30 @@ export default function UserDetailsDrawer({ isOpen, onClose, userId, onEdit }) {
                   <div className="space-y-4">
                     <div className="border-b border-slate-100 pb-3">
                       <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Email</label>
-                      <p className="text-sm font-medium text-slate-700 mt-1">{data.user.email || '-'}</p>
+                      <p className="text-sm font-medium text-slate-700 dark:text-slate-200 mt-1">{data.user.email || '-'}</p>
                     </div>
                     <div className="border-b border-slate-100 pb-3">
                       <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Username</label>
-                      <p className="text-sm font-medium text-slate-700 mt-1">{data.user.name || '-'}</p>
+                      <p className="text-sm font-medium text-slate-700 dark:text-slate-200 mt-1">{data.user.name || '-'}</p>
                     </div>
                     <div className="border-b border-slate-100 pb-3">
                       <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Phone Number</label>
-                      <p className="text-sm font-medium text-slate-700 mt-1">{data.user.mobile ? `+${data.user.mobile}` : '-'}</p>
+                      <p className="text-sm font-medium text-slate-700 dark:text-slate-200 mt-1">{data.user.mobile ? `+${data.user.mobile}` : '-'}</p>
                     </div>
                     <div className="border-b border-slate-100 pb-3">
                       <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Group</label>
                       <p className="text-sm font-bold text-rose-500 mt-1 capitalize">{data.user.role || 'User'}</p>
                     </div>
                     <div className="grid grid-cols-2 gap-4 mt-6">
-                      <div className="bg-slate-50/80 p-3 rounded-lg border border-slate-100">
+                      <div className="bg-slate-50 dark:bg-slate-800/80 p-3 rounded-lg border border-slate-100">
                         <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block mb-1">Added Date</label>
-                        <p className="text-xs font-semibold text-slate-700">
+                        <p className="text-xs font-semibold text-slate-700 dark:text-slate-200">
                           {data.user.added_date ? new Date(data.user.added_date).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : '-'}
                         </p>
                       </div>
-                      <div className="bg-slate-50/80 p-3 rounded-lg border border-slate-100">
+                      <div className="bg-slate-50 dark:bg-slate-800/80 p-3 rounded-lg border border-slate-100">
                         <label className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block mb-1">Last Updated</label>
-                        <p className="text-xs font-semibold text-slate-700">
+                        <p className="text-xs font-semibold text-slate-700 dark:text-slate-200">
                           {data.user.updated_date ? new Date(data.user.updated_date).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : '-'}
                         </p>
                       </div>
@@ -148,7 +148,7 @@ export default function UserDetailsDrawer({ isOpen, onClose, userId, onEdit }) {
                   {data.activities.length === 0 ? (
                     <div className="text-center text-slate-400 text-sm font-medium py-8">No activity recorded yet.</div>
                   ) : (
-                    <div className="relative pl-6 border-l-2 border-slate-200 space-y-6">
+                    <div className="relative pl-6 border-l-2 border-slate-200 dark:border-slate-700 space-y-6">
                       {data.activities.map((act) => {
                         let Icon = Activity;
                         let color = "text-blue-500 bg-blue-50";
@@ -163,10 +163,10 @@ export default function UserDetailsDrawer({ isOpen, onClose, userId, onEdit }) {
                             <span className={cn("absolute -left-[37px] top-1 w-8 h-8 rounded-full border-2 border-white flex items-center justify-center shadow-sm", color)}>
                               <Icon className="w-4 h-4" />
                             </span>
-                            <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                            <div className="bg-white dark:bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-100">
                               <div className="flex justify-between items-start mb-1">
-                                <span className="font-bold text-sm text-slate-800">{act.action}</span>
-                                <span className="text-[9px] font-bold text-slate-400 bg-slate-50 border border-slate-100 px-2 py-0.5 rounded uppercase tracking-wider">{new Date(act.created_at).toLocaleString([], { dateStyle:'medium', timeStyle:'short' })}</span>
+                                <span className="font-bold text-sm text-slate-800 dark:text-slate-100">{act.action}</span>
+                                <span className="text-[9px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 border border-slate-100 px-2 py-0.5 rounded uppercase tracking-wider">{new Date(act.created_at).toLocaleString([], { dateStyle:'medium', timeStyle:'short' })}</span>
                               </div>
                               <p className="text-xs text-slate-500 font-medium mt-1 leading-relaxed">{act.description}</p>
                             </div>
@@ -185,11 +185,11 @@ export default function UserDetailsDrawer({ isOpen, onClose, userId, onEdit }) {
                   ) : (
                     <div className="space-y-3">
                       {data.enquiries.map(enq => (
-                        <div key={enq.enquiry_id} className="p-4 bg-white rounded-xl shadow-sm border border-slate-100 hover:border-blue-200 transition-colors">
+                        <div key={enq.enquiry_id} className="p-4 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 hover:border-blue-200 transition-colors">
                           <div className="flex justify-between items-start mb-2">
                             <div>
                               <p className="text-xs font-black text-blue-600 font-mono tracking-widest">{formatLeadCode(enq.enquiry_id, enq.added_date, companySettings)}</p>
-                              <span className="font-bold text-slate-800">{enq.name}</span>
+                              <span className="font-bold text-slate-800 dark:text-slate-100">{enq.name}</span>
                             </div>
                             <span className={cn("text-[9px] font-bold px-2 py-0.5 rounded-md border uppercase tracking-wider", enq.status === 'Converted' ? 'text-emerald-600 bg-emerald-50 border-emerald-200' : 'text-amber-600 bg-amber-50 border-amber-200')}>
                               {enq.status}

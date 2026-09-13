@@ -54,9 +54,9 @@ export default function SettingsPage() {
 
   return (
     <div className="p-8 max-w-4xl mx-auto animate-in fade-in zoom-in-95 duration-300">
-      <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl overflow-hidden border border-slate-100">
         <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-8 text-white flex items-center gap-4">
-          <div className="p-3 bg-white/10 rounded-2xl backdrop-blur-sm">
+          <div className="p-3 bg-white dark:bg-slate-900/10 rounded-2xl backdrop-blur-sm">
             <Building2 className="w-8 h-8" />
           </div>
           <div>
@@ -73,7 +73,7 @@ export default function SettingsPage() {
                 name="company_code"
                 value={formData.company_code}
                 onChange={handleChange}
-                className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:bg-white focus:border-blue-500 outline-none transition-all font-bold text-slate-800"
+                className="w-full px-5 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 rounded-2xl focus:bg-white dark:bg-slate-900 focus:border-blue-500 outline-none transition-all font-bold text-slate-800 dark:text-slate-100"
                 placeholder="HB"
                 required
               />
@@ -86,7 +86,7 @@ export default function SettingsPage() {
                 name="lead_code"
                 value={formData.lead_code}
                 onChange={handleChange}
-                className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:bg-white focus:border-blue-500 outline-none transition-all font-bold text-slate-800"
+                className="w-full px-5 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 rounded-2xl focus:bg-white dark:bg-slate-900 focus:border-blue-500 outline-none transition-all font-bold text-slate-800 dark:text-slate-100"
                 placeholder="LD"
                 required
               />
@@ -99,7 +99,7 @@ export default function SettingsPage() {
                 name="project_name"
                 value={formData.project_name}
                 onChange={handleChange}
-                className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:bg-white focus:border-blue-500 outline-none transition-all font-bold text-slate-800"
+                className="w-full px-5 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 rounded-2xl focus:bg-white dark:bg-slate-900 focus:border-blue-500 outline-none transition-all font-bold text-slate-800 dark:text-slate-100"
                 placeholder="EnquiryPro"
                 required
               />
@@ -112,7 +112,7 @@ export default function SettingsPage() {
                 name="company_name"
                 value={formData.company_name}
                 onChange={handleChange}
-                className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:bg-white focus:border-blue-500 outline-none transition-all font-bold text-slate-800"
+                className="w-full px-5 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 rounded-2xl focus:bg-white dark:bg-slate-900 focus:border-blue-500 outline-none transition-all font-bold text-slate-800 dark:text-slate-100"
                 placeholder="My Company"
               />
               <p className="text-xs text-slate-400">Your organization's legal name.</p>

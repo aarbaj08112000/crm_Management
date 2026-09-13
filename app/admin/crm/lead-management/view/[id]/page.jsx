@@ -6,6 +6,7 @@ import { cn, formatLeadCode, formatDate } from '@/lib/utils';
 import LeadSidebar from '@/components/lead-details/LeadSidebar';
 import ActivitiesTab from '@/components/lead-details/ActivitiesTab';
 import EmailsTab from '@/components/lead-details/EmailsTab';
+import ScheduledEmailsTab from '@/components/lead-details/ScheduledEmailsTab';
 import EditModal from '@/components/EditModal';
 import { ChevronLeft, ChevronRight, Menu, Edit } from 'lucide-react';
 
@@ -21,6 +22,7 @@ export default function LeadDetailsPage() {
   const TABS = [
     { id: 'activities', label: 'Activities' },
     { id: 'emails', label: 'Emails' },
+    { id: 'scheduled-emails', label: 'Scheduled Emails' },
   ];
 
   useEffect(() => {
@@ -92,24 +94,24 @@ export default function LeadDetailsPage() {
   } : null;
 
   return (
-    <div className="flex flex-col h-screen bg-slate-50 max-h-[calc(100vh-64px)]">
+    <div className="flex flex-col h-screen bg-slate-50 dark:bg-[#0A0A0A] max-h-[calc(100vh-64px)]">
       {/* Top Breadcrumb & Action Bar */}
-      <div className="h-16 flex-shrink-0 bg-white border-b border-slate-200 flex items-center justify-between px-6 shadow-sm z-10 relative">
+      <div className="h-16 flex-shrink-0 bg-white dark:bg-[#121212] border-b border-slate-200 dark:border-[#27272A] flex items-center justify-between px-6 shadow-sm z-10 relative">
         <div>
-          <h1 className="text-lg font-black text-slate-800">Details</h1>
+          <h1 className="text-lg font-black text-slate-800 dark:text-slate-100">Details</h1>
           <div className="text-xs font-semibold text-slate-500 flex items-center gap-2 mt-0.5">
             <span className="text-blue-600 hover:underline cursor-pointer">Leads</span>
             <span>&raquo;</span>
             <span className="text-blue-600 hover:underline cursor-pointer">Lead Management</span>
             <span>&raquo;</span>
-            <span className="text-slate-600">{displayLead?.id}</span>
+            <span className="text-slate-600 dark:text-slate-300">{displayLead?.id}</span>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
           <button
             onClick={() => setShowEditModal(true)}
-            className="flex items-center gap-1.5 text-xs font-bold text-blue-600 border border-blue-200 bg-white rounded-md px-4 py-2 hover:bg-blue-50 transition-colors shadow-sm"
+            className="flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-purple-400 border border-blue-200 dark:border-[#27272A] bg-white dark:bg-[#1A1A1A] rounded-md px-4 py-2 hover:bg-blue-50 dark:hover:bg-[#27272A] transition-colors shadow-sm"
           >
             <Edit className="w-3.5 h-3.5" />
             Edit
@@ -123,9 +125,9 @@ export default function LeadDetailsPage() {
         <LeadSidebar lead={displayLead} />
 
         {/* Right Content Area */}
-        <div className="flex-1 flex flex-col min-w-0 min-h-0 bg-white overflow-hidden">
+        <div className="flex-1 flex flex-col min-w-0 min-h-0 bg-white dark:bg-[#121212] overflow-hidden">
           {/* Tabs */}
-          <div className="flex items-center gap-1 border-b border-slate-200 px-2 pt-2 bg-slate-50 overflow-x-auto custom-scrollbar flex-shrink-0">
+          <div className="flex items-center gap-1 border-b border-slate-200 dark:border-[#27272A] px-2 pt-2 bg-slate-50 dark:bg-[#121212] overflow-x-auto custom-scrollbar flex-shrink-0">
             {TABS.map((tab) => (
               <button
                 key={tab.id}
@@ -133,14 +135,14 @@ export default function LeadDetailsPage() {
                 className={cn(
                   "px-5 py-3 text-xs font-bold whitespace-nowrap transition-all border-b-2 relative",
                   activeTab === tab.id
-                    ? "text-blue-600 border-blue-600 bg-white shadow-[0_-2px_4px_rgba(0,0,0,0.02)] rounded-t-lg"
-                    : "text-slate-500 border-transparent hover:text-slate-700 hover:bg-slate-100/50 rounded-t-lg"
+                    ? "text-blue-600 dark:text-purple-400 border-blue-600 dark:border-purple-500 bg-white dark:bg-[#1A1A1A] shadow-[0_-2px_4px_rgba(0,0,0,0.02)] rounded-t-lg"
+                    : "text-slate-500 border-transparent hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100/50 dark:hover:bg-[#1A1A1A] rounded-t-lg"
                 )}
               >
                 <div className="flex items-center gap-2">
                   {tab.label}
                   {tab.badge && (
-                    <span className="flex items-center justify-center w-4 h-4 bg-blue-600 text-white rounded-full text-[9px] shadow-sm">
+                    <span className="flex items-center justify-center w-4 h-4 bg-blue-600 dark:bg-purple-600 text-white rounded-full text-[9px] shadow-sm">
                       {tab.badge}
                     </span>
                   )}
@@ -150,10 +152,11 @@ export default function LeadDetailsPage() {
           </div>
 
           {/* Tab Content */}
-          <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-white">
+          <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-white dark:bg-[#121212]">
             {activeTab === 'activities' && <ActivitiesTab lead={displayLead} />}
             {activeTab === 'emails' && <EmailsTab lead={displayLead} />}
-            {!['activities', 'emails'].includes(activeTab) && (
+            {activeTab === 'scheduled-emails' && <ScheduledEmailsTab lead={displayLead} />}
+            {!['activities', 'emails', 'scheduled-emails'].includes(activeTab) && (
               <div className="flex flex-col items-center justify-center h-full p-8 text-slate-500">
                 <p className="text-sm font-semibold mb-2">This tab is currently under construction.</p>
                 <p className="text-xs">Select Activities or Emails to view content.</p>

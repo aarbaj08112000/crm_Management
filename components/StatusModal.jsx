@@ -62,7 +62,7 @@ export default function StatusModal({ enquiry, onClose, onUpdated }) {
       />
       
       {/* Side Panel */}
-      <div className="relative w-full max-w-lg bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out z-10">
+      <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out z-10">
         {/* Header */}
         <SidePanelHeader
           icon={MessageCircle}
@@ -85,12 +85,12 @@ export default function StatusModal({ enquiry, onClose, onUpdated }) {
                     "p-6 rounded-[2rem] transition-all duration-500 flex flex-col items-center gap-3 border-2 group",
                     selectedStatus === opt.value 
                       ? "bg-[#141726] border-[#141726] text-white shadow-2xl shadow-blue-900/20 scale-105" 
-                      : "bg-slate-50 border-transparent text-slate-400 hover:bg-slate-100 hover:border-slate-200"
+                      : "bg-slate-50 dark:bg-slate-800 border-transparent text-slate-400 hover:bg-slate-100 hover:border-slate-200 dark:border-slate-700"
                   )}
                 >
                   <div className={cn(
                     "w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500",
-                    selectedStatus === opt.value ? "bg-white/10 text-white" : opt.color
+                    selectedStatus === opt.value ? "bg-white dark:bg-slate-900/10 text-white" : opt.color
                   )}>
                     <opt.icon className={cn("w-6 h-6", selectedStatus === opt.value && "scale-110")} />
                   </div>
@@ -105,21 +105,21 @@ export default function StatusModal({ enquiry, onClose, onUpdated }) {
         </div>
 
         {/* Footer Action */}
-        <div className="p-8 bg-slate-50 border-t border-slate-100 flex gap-4">
+        <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-100 flex justify-end gap-3 items-center">
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-4 bg-white text-slate-600 font-bold rounded-2xl border border-slate-200 hover:bg-slate-50 transition-all text-xs uppercase tracking-widest"
+            className="px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md hover:bg-slate-50 dark:bg-slate-800 transition-colors"
           >
-            CANCEL
+            Cancel
           </button>
           <button
             onClick={handleUpdate}
             disabled={loading}
-            className="flex-[2] py-4 bg-[#1e293b] text-white font-black rounded-2xl shadow-xl hover:bg-blue-600 transition-all flex items-center justify-center gap-3 disabled:opacity-70 text-xs uppercase tracking-widest"
+            className="px-6 py-2 text-sm font-semibold text-white bg-[#5145f6] rounded-md shadow-sm hover:bg-[#4135e6] transition-all flex items-center justify-center gap-2 disabled:opacity-70"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-            {loading ? 'PROCESSING...' : 'SAVE UPDATES'}
+            {loading ? 'Processing...' : 'Save Updates'}
           </button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 'use client';
-
 import { useState, useEffect } from 'react';
-import { RefreshCcw, Plus, Reply, Loader2, File, FileText, Film, FileArchive, FileType } from 'lucide-react';
+import { RefreshCcw, Loader2, File, FileText, Film, FileArchive, FileType, Clock, Calendar } from 'lucide-react';
+import { useApp } from '@/context/AppContext';
 import EmailThreadModal from '../EmailThreadModal';
 
 const getFileIcon = (att) => {
@@ -36,11 +36,10 @@ const getFileIcon = (att) => {
     return <File className="w-8 h-8 text-blue-500" />;
 };
 
-export default function EmailsTab({ lead }) {
+export default function ScheduledEmailsTab({ lead }) {
   const [emails, setEmails] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('All');
-  const [isComposeOpen, setIsComposeOpen] = useState(false);
+  const { showToast } = useApp();
 
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerFiles, setViewerFiles] = useState([]);
@@ -53,59 +52,39 @@ export default function EmailsTab({ lead }) {
     setViewerOpen(true);
   };
 
-  const fetchEmails = async () => {
-    if (!lead?.id) return;
+  const fetchScheduledEmails = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/enquiries/${lead.id}/emails?filter=${filter}`);
+      const res = await fetch(`/api/enquiries/${lead.enquiry_id || lead.id}/scheduled-emails`);
       if (res.ok) {
         const data = await res.json();
-        setEmails(data.emails || []);
+        setEmails(data);
       }
-    } catch (err) {
-      console.error('Failed to fetch emails:', err);
+    } catch (error) {
+      console.error('Failed to fetch scheduled emails', error);
+      showToast('Failed to load scheduled emails', 'error');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchEmails();
-  }, [lead?.id, filter]);
+    if (lead?.enquiry_id || lead?.id) {
+      fetchScheduledEmails();
+    }
+  }, [lead]);
 
   return (
-    <div className="p-6 h-full flex flex-col">
+    <div className="p-6 h-full flex flex-col bg-white dark:bg-[#121212]">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-          Emails <span className="text-xs font-semibold text-slate-500">({emails.length})</span>
+          Scheduled Emails <span className="text-xs font-semibold text-slate-500">({emails.length})</span>
         </h2>
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-3 mr-4">
-            <button 
-              onClick={() => setFilter('All')} 
-              className={`px-3 py-1 text-xs font-bold rounded ${filter === 'All' ? 'text-white bg-blue-600' : 'text-slate-500 hover:text-slate-800 dark:text-slate-100'}`}
-            >
-              All
-            </button>
-            <button 
-              onClick={() => setFilter('Sent')} 
-              className={`px-2 py-1 text-xs font-bold rounded ${filter === 'Sent' ? 'text-white bg-blue-600' : 'text-slate-500 hover:text-slate-800 dark:text-slate-100'}`}
-            >
-              Sent
-            </button>
-            <button 
-              onClick={() => setFilter('Received')} 
-              className={`px-2 py-1 text-xs font-bold rounded ${filter === 'Received' ? 'text-white bg-blue-600' : 'text-slate-500 hover:text-slate-800 dark:text-slate-100'}`}
-            >
-              Received
-            </button>
-          </div>
-          <button onClick={fetchEmails} className="flex items-center gap-1.5 text-xs font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded px-3 py-1.5 hover:bg-slate-50 dark:bg-slate-800 transition-colors">
+          <button onClick={fetchScheduledEmails} className="flex items-center gap-1.5 text-xs font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded px-3 py-1.5 hover:bg-slate-50 dark:bg-slate-800 transition-colors">
             {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCcw className="w-3.5 h-3.5" />}
             Refresh
           </button>
-          {/* We'll leave Compose disabled or handle it if we have EmailModal. Actually, let's keep it as is since we don't have EmailModal import. Wait, EmailModal is in components/EmailModal.jsx */}
-          {/* The user didn't ask to fix compose here but to make it dynamic */}
         </div>
       </div>
 
@@ -116,18 +95,27 @@ export default function EmailsTab({ lead }) {
             Loading emails...
           </div>
         ) : emails.length === 0 ? (
-          <div className="text-center text-slate-500 text-sm mt-10">No emails found.</div>
+          <div className="flex flex-col items-center justify-center text-center p-12 bg-white dark:bg-[#1A1A1A] rounded-2xl border border-slate-200 dark:border-[#27272A] border-dashed">
+            <div className="w-16 h-16 bg-purple-50 dark:bg-purple-900/20 rounded-full flex items-center justify-center mb-4">
+              <Calendar className="w-6 h-6 text-purple-400" />
+            </div>
+            <h3 className="text-base font-bold text-slate-800 dark:text-slate-100 mb-2">No Scheduled Emails</h3>
+            <p className="text-[13px] text-slate-500 max-w-xs mx-auto">
+              You haven't scheduled any emails for this lead yet. Use the "Send Email" button and choose "Schedule" to queue one.
+            </p>
+          </div>
         ) : (
           emails.map((email) => {
-            const date = new Date(email.sent_at).toLocaleString();
-            const emailId = `EMAIL-${email.id}`;
+            const date = new Date(email.created_at).toLocaleString();
+            const scheduledDate = new Date(email.scheduled_at).toLocaleString();
+            const emailId = `SCH-EMAIL-${email.id}`;
             let parsedAttachments = [];
             if (email.attachments) {
                try { parsedAttachments = typeof email.attachments === 'string' ? JSON.parse(email.attachments) : email.attachments; } catch(e) {}
             }
             let preview = '';
-            if (email.body) {
-              preview = email.body
+            if (email.body || email.html_body) {
+              preview = (email.body || email.html_body)
                 .replace(/<[^>]+>/g, ' ')
                 .replace(/&nbsp;/g, ' ')
                 .replace(/&amp;/g, '&')
@@ -139,47 +127,42 @@ export default function EmailsTab({ lead }) {
                 .trim();
               if (preview.length > 250) preview = preview.substring(0, 250) + '...';
             }
-            const sender = email.direction === 'sent' ? (email.sender_name || 'System') : email.recipient_email;
-            const receiver = email.direction === 'sent' ? email.recipient_email : 'System';
-            const type = email.direction === 'sent' ? 'Outbound' : 'Inbound';
-            const isUnread = email.direction === 'received' && !email.is_read;
+            const sender = email.created_by_name || 'System';
+            const receiver = email.to;
 
             return (
-              <div key={email.id} className={`bg-white dark:bg-slate-900 border ${isUnread ? 'border-blue-400 shadow-md bg-blue-50/10' : 'border-slate-200 dark:border-slate-700 shadow-sm'} rounded-lg p-5 group relative`}>
-                {isUnread && (
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full ring-2 ring-white" title="Unread Message"></div>
-                )}
-                
+              <div key={email.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm rounded-lg p-5 group relative">
                 <div className="flex justify-between items-start mb-3">
                   <div className="text-[13px] font-medium text-slate-700 dark:text-slate-200">{date}</div>
                   <div className="flex items-center gap-3">
                     <div className="text-[13px] text-slate-700 dark:text-slate-200">
-                      Lead : <span className="text-blue-600 font-semibold cursor-pointer hover:underline">{lead?.id}</span>
+                      Lead : <span className="text-blue-600 font-semibold cursor-pointer hover:underline">{lead?.enquiry_id || lead?.id}</span>
                     </div>
-                    {type === 'Inbound' ? (
-                      <span className="bg-[#e1f0ff] text-blue-700 font-bold px-2 py-0.5 rounded text-[11px] flex items-center gap-1">
-                        ✓ Inbound
+                    {email.status === 'Pending' ? (
+                      <span className="bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded text-[11px] flex items-center gap-1">
+                        <Clock className="w-3 h-3" /> Pending
+                      </span>
+                    ) : email.status === 'Sent' ? (
+                      <span className="bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded text-[11px] flex items-center gap-1">
+                        ✓ Sent
                       </span>
                     ) : (
-                      <span className="bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded text-[11px] flex items-center gap-1">
-                        ↗ Outbound
+                      <span className="bg-rose-50 text-rose-700 font-bold px-2 py-0.5 rounded text-[11px] flex items-center gap-1">
+                        ✕ Failed
                       </span>
                     )}
-                    <button 
-                      onClick={() => setSelectedThread(email.subject)}
-                      className="flex items-center gap-1.5 text-xs font-bold text-white bg-[#8699da] rounded px-3 py-1 hover:bg-[#6c83d1] transition-colors"
-                    >
-                      <Reply className="w-3.5 h-3.5" />
-                      Reply
-                    </button>
+                    <span className="flex items-center gap-1.5 text-xs font-bold text-white bg-purple-600 rounded px-3 py-1">
+                      <Clock className="w-3.5 h-3.5" />
+                      Sch: {scheduledDate}
+                    </span>
                   </div>
                 </div>
 
                 <div className="mb-2">
                   <div className="flex justify-between items-start mb-2 gap-4">
                     <h3 
+                      className="text-[14.5px] font-semibold text-blue-700 leading-snug cursor-pointer hover:underline"
                       onClick={() => setSelectedThread(email.subject)}
-                      className={`text-[14.5px] ${isUnread ? 'font-bold text-blue-800' : 'font-semibold text-blue-700'} leading-snug cursor-pointer hover:underline`}
                     >
                       {email.subject || '(No Subject)'}
                     </h3>
@@ -198,8 +181,14 @@ export default function EmailsTab({ lead }) {
                   <div className="text-slate-500">Receiver : <span className="text-slate-600 dark:text-slate-300">{receiver}</span></div>
                 </div>
 
+                {email.error_message && (
+                  <div className="mt-2 text-xs text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/10 px-2 py-1.5 rounded">
+                    Error: {email.error_message}
+                  </div>
+                )}
+
                 {parsedAttachments.length > 0 && (
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-3 mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
                     {parsedAttachments.map((att, i) => (
                       <button
                         key={i}
@@ -283,13 +272,13 @@ export default function EmailsTab({ lead }) {
       {/* Email Thread Modal */}
       {selectedThread && (
         <EmailThreadModal
-          enquiryId={lead?.id}
+          enquiryId={lead?.enquiry_id || lead?.id}
           enquiryName={lead?.client_name || lead?.contact_name || ''}
           enquiryEmail={lead?.email || ''}
           initialSubject={selectedThread}
           onClose={() => {
             setSelectedThread(null);
-            fetchEmails(); // Refresh emails after modal closes in case there are updates
+            fetchScheduledEmails();
           }}
         />
       )}

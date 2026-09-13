@@ -16,7 +16,7 @@ export default function LeadDetailsDrawer({ enquiry, onClose }) {
       />
       
       {/* Side Menu Panel */}
-      <div className="relative w-full max-w-lg bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out">
+      <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out">
         {/* Header */}
         <SidePanelHeader
           icon={User}
@@ -36,7 +36,7 @@ export default function LeadDetailsDrawer({ enquiry, onClose }) {
               
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Company / Full Name</label>
-                <div className="text-xl font-bold text-slate-800">
+                <div className="text-xl font-bold text-slate-800 dark:text-slate-100">
                   {enquiry.name || '-'}
                 </div>
               </div>
@@ -44,7 +44,7 @@ export default function LeadDetailsDrawer({ enquiry, onClose }) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-1">
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Mobile</label>
-                  <div className="font-semibold text-slate-700 flex items-center gap-2">
+                  <div className="font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-2">
                     <Phone className="w-4 h-4 text-indigo-500" />
                     {enquiry.mobile_number || '-'}
                   </div>
@@ -52,7 +52,7 @@ export default function LeadDetailsDrawer({ enquiry, onClose }) {
 
                 <div className="space-y-1">
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Email</label>
-                  <div className="font-semibold text-slate-700 flex items-center gap-2 break-all">
+                  <div className="font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-2 break-all">
                     <Mail className="w-4 h-4 text-indigo-500 min-w-4" />
                     {enquiry.email || '-'}
                   </div>
@@ -69,7 +69,7 @@ export default function LeadDetailsDrawer({ enquiry, onClose }) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-1">
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Contact Person</label>
-                  <div className="font-semibold text-slate-700 flex items-center gap-2">
+                  <div className="font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-2">
                     <Briefcase className="w-4 h-4 text-amber-500" />
                     {enquiry.contact_person || '-'}
                   </div>
@@ -77,8 +77,8 @@ export default function LeadDetailsDrawer({ enquiry, onClose }) {
 
                 <div className="space-y-1">
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Lead Type</label>
-                  <div className="font-semibold text-slate-700">
-                    <span className="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold uppercase tracking-wider">
+                  <div className="font-semibold text-slate-700 dark:text-slate-200">
+                    <span className="px-3 py-1 bg-slate-100 text-slate-600 dark:text-slate-300 rounded-full text-xs font-bold uppercase tracking-wider">
                       {enquiry.type || '-'}
                     </span>
                   </div>
@@ -87,7 +87,7 @@ export default function LeadDetailsDrawer({ enquiry, onClose }) {
 
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Location / Address</label>
-                <div className="font-medium text-slate-600 flex items-start gap-2 bg-slate-50 p-4 rounded-xl leading-relaxed">
+                <div className="font-medium text-slate-600 dark:text-slate-300 flex items-start gap-2 bg-slate-50 dark:bg-slate-800 p-4 rounded-xl leading-relaxed">
                   <MapPin className="w-5 h-5 text-rose-400 mt-0.5 flex-shrink-0" />
                   <span>{enquiry.address || '-'}</span>
                 </div>
@@ -97,7 +97,7 @@ export default function LeadDetailsDrawer({ enquiry, onClose }) {
         </div>
 
         {/* Footer */}
-        <div className="p-8 bg-slate-50 border-t border-slate-100 flex gap-4">
+        <div className="p-8 bg-slate-50 dark:bg-slate-800 border-t border-slate-100 flex gap-4">
           <button
             type="button"
             onClick={onClose}

@@ -98,7 +98,7 @@ export default function CallLogsPage() {
             <Phone className="w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-800">Call Logs</h1>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Call Logs</h1>
             <p className="text-slate-500">History of all calls made from the CRM.</p>
           </div>
         </div>
@@ -115,7 +115,7 @@ export default function CallLogsPage() {
                 name="startDate"
                 value={filters.startDate}
                 onChange={handleFilterChange}
-                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
             <div className="flex-1 space-y-1">
@@ -125,7 +125,7 @@ export default function CallLogsPage() {
                 name="endDate"
                 value={filters.endDate}
                 onChange={handleFilterChange}
-                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
             <div className="flex-1 space-y-1">
@@ -134,7 +134,7 @@ export default function CallLogsPage() {
                 name="salespersonId"
                 value={filters.salespersonId}
                 onChange={handleFilterChange}
-                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+                className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-slate-900"
               >
                 <option value="">All Salespersons</option>
                 {users.map(user => (
@@ -159,7 +159,7 @@ export default function CallLogsPage() {
       <Card>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-slate-50 text-slate-500 border-b border-slate-100">
+            <thead className="bg-slate-50 dark:bg-slate-800 text-slate-500 border-b border-slate-100">
               <tr>
                 <th className="px-6 py-4 font-medium">Date</th>
                 <th className="px-6 py-4 font-medium">Lead Code</th>
@@ -185,8 +185,8 @@ export default function CallLogsPage() {
                 </tr>
               ) : (
                 logs.map((log) => (
-                  <tr key={log.id} className="hover:bg-slate-50/50">
-                    <td className="px-6 py-4 text-slate-600">
+                  <tr key={log.id} className="hover:bg-slate-50 dark:bg-slate-800/50">
+                    <td className="px-6 py-4 text-slate-600 dark:text-slate-300">
                       {new Date(log.created_at).toLocaleString()}
                     </td>
                     <td className="px-6 py-4 font-medium text-indigo-600">
@@ -220,7 +220,7 @@ export default function CallLogsPage() {
                       </button>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-2 text-slate-700">
+                      <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                         {log.direction === 'incoming' ? (
                           <PhoneIncoming className="w-4 h-4 text-emerald-500" />
                         ) : (
@@ -228,7 +228,7 @@ export default function CallLogsPage() {
                         )}
                         <div>
                           {(log.contact_name || log.lead_company_name) && (
-                            <div className="text-xs font-semibold text-slate-800 mb-0.5">
+                            <div className="text-xs font-semibold text-slate-800 dark:text-slate-100 mb-0.5">
                               {log.lead_company_name || log.contact_name} {log.lead_contact_name ? `(${log.lead_contact_name})` : ''}
                             </div>
                           )}
@@ -242,12 +242,12 @@ export default function CallLogsPage() {
                         ['no-answer', 'unanswered', 'busy', 'unavailable', 'timeout'].includes(log.status) ? 'bg-amber-100 text-amber-700' :
                         ['failed', 'rejected', 'cancelled'].includes(log.status) ? 'bg-red-100 text-red-700' :
                         log.status === 'in-progress' ? 'bg-blue-100 text-blue-700' :
-                        'bg-slate-100 text-slate-700'
+                        'bg-slate-100 text-slate-700 dark:text-slate-200'
                       }`}>
                         {log.status || 'unknown'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-slate-600">
+                    <td className="px-6 py-4 text-slate-600 dark:text-slate-300">
                       <div className="flex items-center gap-1.5">
                         <Clock className="w-4 h-4 text-slate-400" />
                         {formatDuration(log.duration_seconds)}
@@ -276,14 +276,14 @@ export default function CallLogsPage() {
       </Card>
 
       {totalItems > 0 && (
-        <div className="flex flex-col md:flex-row items-center justify-between p-4 bg-white border border-slate-100 rounded-b-xl shadow-sm mt-4 gap-4">
+        <div className="flex flex-col md:flex-row items-center justify-between p-4 bg-white dark:bg-slate-900 border border-slate-100 rounded-b-xl shadow-sm mt-4 gap-4">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
               <span className="text-sm text-slate-500 font-medium">Rows per page:</span>
               <select
                 value={limit}
                 onChange={handleLimitChange}
-                className="text-sm border border-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-slate-700 font-medium cursor-pointer"
+                className="text-sm border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 font-medium cursor-pointer"
               >
                 <option value={10}>10</option>
                 <option value={20}>20</option>
@@ -299,17 +299,17 @@ export default function CallLogsPage() {
             <button
               onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="px-4 py-2 text-sm font-medium border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed bg-white text-slate-700 transition-colors"
+              className="px-4 py-2 text-sm font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 transition-colors"
             >
               Previous
             </button>
-            <div className="flex items-center px-4 py-2 text-sm font-semibold text-slate-700 bg-slate-50 rounded-lg border border-slate-100">
+            <div className="flex items-center px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-100">
               Page {page} of {totalPages}
             </div>
             <button
               onClick={() => setPage(p => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages}
-              className="px-4 py-2 text-sm font-medium border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed bg-white text-slate-700 transition-colors"
+              className="px-4 py-2 text-sm font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 transition-colors"
             >
               Next
             </button>

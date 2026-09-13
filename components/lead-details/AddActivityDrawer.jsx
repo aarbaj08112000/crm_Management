@@ -180,20 +180,20 @@ export default function AddActivityDrawer({ isOpen, onClose, lead, onSaved, edit
     <>
       <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100]" onClick={onClose} />
       <div className={cn(
-        "fixed top-0 right-0 h-full w-full max-w-[800px] bg-white shadow-2xl z-[110] transform transition-transform duration-300 ease-in-out flex flex-col",
+        "fixed top-0 right-0 h-full w-full max-w-[800px] bg-white dark:bg-slate-900 shadow-2xl z-[110] transform transition-transform duration-300 ease-in-out flex flex-col",
         isOpen ? "translate-x-0" : "translate-x-full"
       )}>
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-white shrink-0">
-          <h2 className="text-lg font-bold text-slate-800">Add Activity</h2>
-          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors">
+        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-white dark:bg-slate-900 shrink-0">
+          <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">Add Activity</h2>
+          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 dark:text-slate-300 hover:bg-slate-100 rounded-full transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Lead Info Banner */}
         {lead && (
-          <div className="px-6 py-2 bg-slate-50 border-b border-slate-100 flex items-center gap-3 text-xs font-semibold text-slate-600">
+          <div className="px-6 py-2 bg-slate-50 dark:bg-slate-800 border-b border-slate-100 flex items-center gap-3 text-xs font-semibold text-slate-600 dark:text-slate-300">
             <span className="text-blue-600 font-bold">{lead.formatted_id || lead.id}</span>
             <span className="text-slate-300">|</span>
             <span className="flex items-center gap-1.5"><span className="w-4 h-4 rounded-full bg-slate-200 flex items-center justify-center">👤</span> {lead.contact_person || 'N/A'}</span>
@@ -203,7 +203,7 @@ export default function AddActivityDrawer({ isOpen, onClose, lead, onSaved, edit
         )}
 
         {/* Content Form */}
-        <div className="flex-1 overflow-y-auto p-6 custom-scrollbar bg-white">
+        <div className="flex-1 overflow-y-auto p-6 custom-scrollbar bg-white dark:bg-slate-900">
           <form id="activityForm" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
             {/* Top toggles */}
@@ -218,7 +218,7 @@ export default function AddActivityDrawer({ isOpen, onClose, lead, onSaved, edit
                       onChange={() => setValue('type', 'Log')}
                       className="w-4 h-4 text-blue-600"
                     />
-                    <span className="text-sm font-semibold text-slate-700">Log Activity</span>
+                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">Log Activity</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
@@ -228,7 +228,7 @@ export default function AddActivityDrawer({ isOpen, onClose, lead, onSaved, edit
                       onChange={() => setValue('type', 'Schedule')}
                       className="w-4 h-4 text-blue-600"
                     />
-                    <span className="text-sm font-semibold text-slate-700">Schedule Activity</span>
+                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">Schedule Activity</span>
                   </label>
                 </div>
               </div>
@@ -236,13 +236,13 @@ export default function AddActivityDrawer({ isOpen, onClose, lead, onSaved, edit
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-700">Activity<span className="text-rose-500">*</span></label>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-200">Activity<span className="text-rose-500">*</span></label>
                 <Controller
                   name="activityType"
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <select {...field} className="w-full border border-slate-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    <select {...field} className="w-full border border-slate-200 dark:border-slate-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
                       <option value="">Select Activity</option>
                       <option value="None">None</option>
                       <option value="Call New">Call New</option>
@@ -257,13 +257,13 @@ export default function AddActivityDrawer({ isOpen, onClose, lead, onSaved, edit
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-700">Priority<span className="text-rose-500">*</span></label>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-200">Priority<span className="text-rose-500">*</span></label>
                 <Controller
                   name="priority"
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <select {...field} className="w-full border border-slate-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    <select {...field} className="w-full border border-slate-200 dark:border-slate-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
                       <option value="Low">Low</option>
                       <option value="Normal">Normal</option>
                       <option value="High">High</option>
@@ -275,7 +275,7 @@ export default function AddActivityDrawer({ isOpen, onClose, lead, onSaved, edit
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-700">Scheduled At</label>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-200">Scheduled At</label>
                 <Controller
                   name="scheduledAtPreset"
                   control={control}
@@ -286,7 +286,7 @@ export default function AddActivityDrawer({ isOpen, onClose, lead, onSaved, edit
                         field.onChange(e);
                         handleScheduledAtChange(e.target.value);
                       }}
-                      className="w-full border border-slate-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
+                      className="w-full border border-slate-200 dark:border-slate-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
                     >
                       <option value="Search...">Search...</option>
                       <option value="None">None</option>
@@ -306,23 +306,23 @@ export default function AddActivityDrawer({ isOpen, onClose, lead, onSaved, edit
 
               <div className="grid grid-cols-2 gap-2">
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-700">Date<span className="text-rose-500">*</span></label>
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-200">Date<span className="text-rose-500">*</span></label>
                   <Controller
                     name="scheduledDate"
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <input type="date" {...field} className="w-full border border-slate-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500" />
+                      <input type="date" {...field} className="w-full border border-slate-200 dark:border-slate-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500" />
                     )}
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-700">Time</label>
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-200">Time</label>
                   <Controller
                     name="scheduledTime"
                     control={control}
                     render={({ field }) => (
-                      <input type="time" {...field} className="w-full border border-slate-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500" />
+                      <input type="time" {...field} className="w-full border border-slate-200 dark:border-slate-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500" />
                     )}
                   />
                 </div>
@@ -330,29 +330,29 @@ export default function AddActivityDrawer({ isOpen, onClose, lead, onSaved, edit
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700">Summary<span className="text-rose-500">*</span></label>
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-200">Summary<span className="text-rose-500">*</span></label>
               <Controller
                 name="summary"
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
-                  <input type="text" placeholder="e.g. Discuss Proposal" {...field} className="w-full border border-slate-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500" />
+                  <input type="text" placeholder="e.g. Discuss Proposal" {...field} className="w-full border border-slate-200 dark:border-slate-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-500" />
                 )}
               />
             </div>
 
             <div className="space-y-1 ">
-              <label className="text-xs font-bold text-slate-700">Description</label>
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-200">Description</label>
               <Controller
                 name="description"
                 control={control}
                 render={({ field }) => (
-                  <div className="border border-slate-200 rounded-md overflow-hidden focus-within:border-blue-500 transition-all flex flex-col h-55">
+                  <div className="border border-slate-200 dark:border-slate-700 rounded-md overflow-hidden focus-within:border-blue-500 transition-all flex flex-col h-55">
                     <ReactQuill
                       theme="snow"
                       value={field.value}
                       onChange={field.onChange}
-                      className="flex-1 flex flex-col bg-white min-h-0 [&_.ql-toolbar]:!border-none [&_.ql-toolbar]:!border-b [&_.ql-toolbar]:!border-slate-200 [&_.ql-container]:!border-none [&_.ql-container]:flex-1 [&_.ql-container]:overflow-y-auto [&_.ql-container]:custom-scrollbar [&_.ql-editor]:min-h-full [&_.ql-editor]:text-sm"
+                      className="flex-1 flex flex-col bg-white dark:bg-slate-900 min-h-0 [&_.ql-toolbar]:!border-none [&_.ql-toolbar]:!border-b [&_.ql-toolbar]:!border-slate-200 dark:border-slate-700 [&_.ql-container]:!border-none [&_.ql-container]:flex-1 [&_.ql-container]:overflow-y-auto [&_.ql-container]:custom-scrollbar [&_.ql-editor]:min-h-full [&_.ql-editor]:text-sm"
                     />
                   </div>
                 )}
@@ -361,8 +361,8 @@ export default function AddActivityDrawer({ isOpen, onClose, lead, onSaved, edit
 
             {type === 'Log' && !editData && (
               <div className="space-y-1 pb-0">
-                <label className="text-xs font-bold text-slate-700 mb-1.5">Attachments</label>
-                <div className="border border-dashed border-slate-300 rounded-lg p-4 flex flex-col items-center justify-center text-center hover:bg-slate-50 transition-colors relative">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5">Attachments</label>
+                <div className="border border-dashed border-slate-300 dark:border-slate-600 rounded-lg p-4 flex flex-col items-center justify-center text-center hover:bg-slate-50 dark:bg-slate-800 transition-colors relative">
                   <UploadCloud className="w-5 h-5 text-slate-400 mb-1" />
                   <div className="text-xs text-slate-500">
                     Drag image or <span className="text-blue-600 font-semibold">choose file</span> to upload
@@ -379,7 +379,7 @@ export default function AddActivityDrawer({ isOpen, onClose, lead, onSaved, edit
                     {files.map((f, i) => (
                       <div key={i} className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-lg">
                         <File className="w-4 h-4 text-slate-500" />
-                        <span className="text-xs font-medium text-slate-700 truncate max-w-[150px]">{f.name}</span>
+                        <span className="text-xs font-medium text-slate-700 dark:text-slate-200 truncate max-w-[150px]">{f.name}</span>
                         <button type="button" onClick={() => setFiles(prev => prev.filter((_, idx) => idx !== i))} className="p-1 hover:bg-slate-200 rounded text-slate-500">
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -394,11 +394,11 @@ export default function AddActivityDrawer({ isOpen, onClose, lead, onSaved, edit
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-end gap-3 bg-white shrink-0">
+        <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-end gap-3 bg-white dark:bg-slate-900 shrink-0">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-sm font-bold text-slate-600 bg-white border border-slate-200 rounded-md hover:bg-slate-50 transition-colors"
+            className="px-4 py-2 text-sm font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md hover:bg-slate-50 dark:bg-slate-800 transition-colors"
           >
             Discard
           </button>

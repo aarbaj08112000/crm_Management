@@ -2,6 +2,11 @@ const { createServer } = require('http');
 const { parse } = require('url');
 const next = require('next');
 const cron = require('node-cron');
+const { loadEnvConfig } = require('@next/env');
+
+// Load environment variables manually for the custom server
+const projectDir = process.cwd();
+loadEnvConfig(projectDir);
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = 'localhost';
@@ -27,6 +32,10 @@ app.prepare().then(() => {
     .listen(port, () => {
       console.log(`> Ready on http://${hostname}:${port}`);
       
+      // Get base URL and ensure no trailing slash
+      const rawAppUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.API_BASE_URL || `http://${hostname}:${port}`;
+      const baseUrl = rawAppUrl.endsWith('/') ? rawAppUrl.slice(0, -1) : rawAppUrl;
+      
       // Initialize Background Cron Job
       console.log('> Starting node-cron email sync scheduler (runs every 1 minute)');
       
@@ -34,8 +43,6 @@ app.prepare().then(() => {
       cron.schedule('* * * * *', async () => {
         console.log(`[Cron] [${new Date().toISOString()}] Running background email sync...`);
         try {
-          // Use the base URL from the environment or fallback to localhost
-          const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.API_BASE_URL || `http://${hostname}:${port}`;
           const response = await fetch(`${baseUrl}/api/email/sync`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -48,6 +55,26 @@ app.prepare().then(() => {
           }
         } catch (error) {
           console.error('[Cron] Error during background email sync:', error);
+        }
+      });
+
+      console.log('> Starting node-cron scheduled emails sender (runs every 1 minute)');
+      
+      cron.schedule('* * * * *', async () => {
+        console.log(`[Cron] [${new Date().toISOString()}] Running scheduled emails sender...`);
+        try {
+          const response = await fetch(`${baseUrl}/api/cron/send-scheduled-emails`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+          });
+          
+          if (!response.ok) {
+            console.error('[Cron] Send scheduled emails failed with status:', response.status);
+          } else {
+            console.log('[Cron] Send scheduled emails completed successfully.');
+          }
+        } catch (error) {
+          console.error('[Cron] Error during send scheduled emails:', error);
         }
       });
     });

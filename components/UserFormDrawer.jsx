@@ -110,13 +110,13 @@ export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
     <>
       <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100]" onClick={onClose} />
       <div className={cn(
-        "fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-[110] transform transition-transform duration-300 ease-in-out flex flex-col",
+        "fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl z-[110] transform transition-transform duration-300 ease-in-out flex flex-col",
         isOpen ? "translate-x-0" : "translate-x-full"
       )}>
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-white">
-          <h2 className="text-lg font-bold text-slate-800">{user ? 'Edit User' : 'Add User'}</h2>
-          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors">
+        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-white dark:bg-slate-900">
+          <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">{user ? 'Edit User' : 'Add User'}</h2>
+          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 dark:text-slate-300 hover:bg-slate-100 rounded-full transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -130,7 +130,7 @@ export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
               <label className="text-xs font-semibold text-slate-500 mb-2">Profile Image</label>
               <div 
                 onClick={handleImageClick}
-                className="w-32 h-32 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-400 hover:bg-slate-50 hover:border-blue-400 hover:text-blue-500 transition-all cursor-pointer overflow-hidden relative group"
+                className="w-32 h-32 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center text-slate-400 hover:bg-slate-50 dark:bg-slate-800 hover:border-blue-400 hover:text-blue-500 transition-all cursor-pointer overflow-hidden relative group"
               >
                 {preview ? (
                   <>
@@ -151,20 +151,20 @@ export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Name <span className="text-rose-500">*</span></label>
-                <input required type="text" placeholder="Enter Name" className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase mb-1">Name <span className="text-rose-500">*</span></label>
+                <input required type="text" placeholder="Enter Name" className="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Email <span className="text-rose-500">*</span></label>
-                <input required type="email" placeholder="Enter Email" className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase mb-1">Email <span className="text-rose-500">*</span></label>
+                <input required type="email" placeholder="Enter Email" className="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Username <span className="text-rose-500">*</span></label>
-                <input required type="text" placeholder="Enter Username" className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.username} onChange={e => setFormData({...formData, username: e.target.value})} />
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase mb-1">Username <span className="text-rose-500">*</span></label>
+                <input required type="text" placeholder="Enter Username" className="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.username} onChange={e => setFormData({...formData, username: e.target.value})} />
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Phone Number</label>
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase mb-1">Phone Number</label>
                 <div className="react-tel-input-wrapper">
                   <PhoneInput
                     country={'in'}
@@ -173,10 +173,10 @@ export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
                     inputProps={{
                       name: 'phone',
                       required: false,
-                      className: 'w-full pl-12 pr-4 py-2.5 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm'
+                      className: 'w-full pl-12 pr-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm'
                     }}
                     containerClass="!w-full"
-                    buttonClass="!border-slate-200 !bg-slate-50 !rounded-l-lg hover:!bg-slate-100"
+                    buttonClass="!border-slate-200 dark:border-slate-700 !bg-slate-50 dark:bg-slate-800 !rounded-l-lg hover:!bg-slate-100"
                     dropdownClass="!w-64"
                   />
                 </div>
@@ -184,15 +184,15 @@ export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
 
               {!user && (
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Password <span className="text-rose-500">*</span></label>
-                  <input required type="password" placeholder="Enter Password" className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} />
+                  <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase mb-1">Password <span className="text-rose-500">*</span></label>
+                  <input required type="password" placeholder="Enter Password" className="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} />
                 </div>
               )}
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Group <span className="text-rose-500">*</span></label>
-                  <select className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})}>
+                  <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase mb-1">Group <span className="text-rose-500">*</span></label>
+                  <select className="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})}>
                     <option value="user">User</option>
                     <option value="sales">Sales</option>
                     <option value="manager">Manager</option>
@@ -200,8 +200,8 @@ export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-700 uppercase mb-1">Status <span className="text-rose-500">*</span></label>
-                  <select className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.status} onChange={e => setFormData({...formData, status: parseInt(e.target.value)})}>
+                  <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase mb-1">Status <span className="text-rose-500">*</span></label>
+                  <select className="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.status} onChange={e => setFormData({...formData, status: parseInt(e.target.value)})}>
                     <option value={1}>Active</option>
                     <option value={0}>Inactive</option>
                   </select>
@@ -209,12 +209,12 @@ export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
               </div>
 
               <div className="flex items-center justify-between pt-2">
-                <label className="text-sm font-semibold text-slate-700">Email Verified</label>
+                <label className="text-sm font-semibold text-slate-700 dark:text-slate-200">Email Verified</label>
                 <div 
                   className={cn("w-10 h-6 rounded-full cursor-pointer flex items-center p-1 transition-colors", formData.emailVerified ? "bg-emerald-500" : "bg-slate-300")}
                   onClick={() => setFormData(prev => ({...prev, emailVerified: !prev.emailVerified}))}
                 >
-                  <div className={cn("bg-white w-4 h-4 rounded-full shadow-sm transform transition-transform", formData.emailVerified ? "translate-x-4" : "translate-x-0")} />
+                  <div className={cn("bg-white dark:bg-slate-900 w-4 h-4 rounded-full shadow-sm transform transition-transform", formData.emailVerified ? "translate-x-4" : "translate-x-0")} />
                 </div>
               </div>
 
@@ -223,7 +223,7 @@ export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-slate-100 bg-slate-50 flex gap-3">
+        <div className="p-6 border-t border-slate-100 bg-slate-50 dark:bg-slate-800 flex gap-3">
           <button 
             type="submit" 
             form="user-form"

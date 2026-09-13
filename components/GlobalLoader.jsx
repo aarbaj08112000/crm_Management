@@ -25,7 +25,7 @@ export default function GlobalLoader({ isVisible }) {
           <div className="absolute inset-2 rounded-full bg-blue-600/20 blur-lg animate-pulse" />
 
           {/* Logo in center */}
-          <div className="relative z-10 w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-xl">
+          <div className="relative z-10 w-16 h-16 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center shadow-xl">
             <img
               src="/logo.png"
               alt="CRM"

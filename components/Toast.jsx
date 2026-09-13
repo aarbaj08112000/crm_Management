@@ -64,12 +64,12 @@ export default function Toast({ message, type = 'success', onClose }) {
       
       <div className="flex-1">
         <p className="text-slate-900 font-bold text-sm leading-tight capitalize">{type}</p>
-        <p className="text-slate-600 text-[13px] font-medium leading-relaxed">{message}</p>
+        <p className="text-slate-600 dark:text-slate-300 text-[13px] font-medium leading-relaxed">{message}</p>
       </div>
 
       <button 
         onClick={handleClose}
-        className="p-1 hover:bg-slate-200/50 rounded-lg transition-colors text-slate-400 hover:text-slate-600"
+        className="p-1 hover:bg-slate-200/50 rounded-lg transition-colors text-slate-400 hover:text-slate-600 dark:text-slate-300"
       >
         <X className="w-4 h-4" />
       </button>

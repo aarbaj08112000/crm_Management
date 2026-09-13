@@ -35,7 +35,7 @@ export default function CallDialer() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 bg-white border border-gray-200 rounded-2xl shadow-2xl w-80 z-50 overflow-hidden">
+    <div className="fixed bottom-6 right-6 bg-white dark:bg-slate-900 border border-gray-200 rounded-2xl shadow-2xl w-80 z-50 overflow-hidden">
       {/* Header */}
       <div className="bg-indigo-600 text-white px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -43,10 +43,10 @@ export default function CallDialer() {
           <span className="font-semibold text-sm">CRM Dialer</span>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={() => setDialerMinimized(true)} className="hover:bg-white/20 p-1 rounded transition-colors">
+          <button onClick={() => setDialerMinimized(true)} className="hover:bg-white dark:bg-slate-900/20 p-1 rounded transition-colors">
             <Minimize2 className="w-4 h-4" />
           </button>
-          <button onClick={() => setDialerVisible(false)} className="hover:bg-white/20 p-1 rounded transition-colors">
+          <button onClick={() => setDialerVisible(false)} className="hover:bg-white dark:bg-slate-900/20 p-1 rounded transition-colors">
             <X className="w-4 h-4" />
           </button>
         </div>

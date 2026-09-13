@@ -3,7 +3,7 @@ import { query } from '@/lib/db';
 import { SignJWT } from 'jose';
 import bcrypt from 'bcryptjs';
 import { logActivity } from '@/lib/activity';
-import { syncEmailsToDB } from '@/lib/imap';
+import { fetchAndSyncEmails } from '@/lib/imap';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
 
@@ -57,7 +57,7 @@ export async function POST(req) {
     // Fire background sync without awaiting it
     Promise.resolve().then(() => {
       console.log('[Login] Triggering background email sync...');
-      syncEmailsToDB().catch(err => console.error('[Login] Background sync failed:', err));
+      fetchAndSyncEmails().catch(err => console.error('[Login] Background sync failed:', err));
     });
 
     return response;

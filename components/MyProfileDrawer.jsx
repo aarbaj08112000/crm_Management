@@ -31,12 +31,12 @@ export default function MyProfileDrawer({ isOpen, onClose, userId, onEdit }) {
   return (
     <>
       <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100]" onClick={onClose} />
-      <div className="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-[110] flex flex-col">
+      <div className="fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl z-[110] flex flex-col">
 
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-white shrink-0">
-          <h2 className="text-lg font-bold text-slate-800">My Profile</h2>
-          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors cursor-pointer">
+        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-white dark:bg-slate-900 shrink-0">
+          <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">My Profile</h2>
+          <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 dark:text-slate-300 hover:bg-slate-100 rounded-full transition-colors cursor-pointer">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -65,7 +65,7 @@ export default function MyProfileDrawer({ isOpen, onClose, userId, onEdit }) {
                     <Pencil className="w-5 h-5 text-white" />
                   </div>
                 </div>
-                <h3 className="mt-4 text-xl font-extrabold text-slate-800">{user.name}</h3>
+                <h3 className="mt-4 text-xl font-extrabold text-slate-800 dark:text-slate-100">{user.name}</h3>
                 <span className={cn(
                   "mt-1.5 text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full",
                   user.status === 1 ? "bg-emerald-50 text-emerald-600" : "bg-rose-50 text-rose-600"
@@ -75,7 +75,7 @@ export default function MyProfileDrawer({ isOpen, onClose, userId, onEdit }) {
               </div>
 
               {/* Details list */}
-              <div className="bg-slate-50 rounded-2xl divide-y divide-slate-100 overflow-hidden border border-slate-100">
+              <div className="bg-slate-50 dark:bg-slate-800 rounded-2xl divide-y divide-slate-100 overflow-hidden border border-slate-100">
                 <Row label="Email" value={user.email} />
                 <Row label="Mobile" value={user.mobile ? `+${user.mobile}` : '-'} />
                 <Row label="Role / Group">
@@ -104,7 +104,7 @@ function Row({ label, value, children }) {
   return (
     <div className="flex items-center justify-between px-5 py-3.5">
       <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">{label}</span>
-      {children ?? <span className="text-sm font-semibold text-slate-700">{value || '-'}</span>}
+      {children ?? <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{value || '-'}</span>}
     </div>
   );
 }

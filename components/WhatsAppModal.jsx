@@ -73,7 +73,7 @@ export default function WhatsAppModal({ enquiry, onClose, onSaved }) {
         onClick={onClose}
       />
 
-      <div className="relative w-full max-w-lg bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out z-10">
+      <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out z-10">
 
         <SidePanelHeader
           icon={MessageSquare}
@@ -84,7 +84,7 @@ export default function WhatsAppModal({ enquiry, onClose, onSaved }) {
 
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
               Number starting with Country Code
             </label>
             <input
@@ -92,7 +92,7 @@ export default function WhatsAppModal({ enquiry, onClose, onSaved }) {
               value={waNumber}
               onChange={(e) => setWaNumber(e.target.value)}
               placeholder="e.g. 919876543210"
-              className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-slate-700"
+              className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-slate-700 dark:text-slate-200"
               autoFocus
             />
             <p className="text-[11px] text-slate-500 mt-2 font-medium">
@@ -102,11 +102,11 @@ export default function WhatsAppModal({ enquiry, onClose, onSaved }) {
         </div>
 
         {/* Footer */}
-        <div className="p-8 bg-slate-50 border-t border-slate-100 flex gap-4">
+        <div className="p-8 bg-slate-50 dark:bg-slate-800 border-t border-slate-100 flex gap-4">
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-4 bg-white text-slate-600 font-bold rounded-2xl border border-slate-200 hover:bg-slate-50 transition-all text-xs uppercase tracking-widest"
+            className="flex-1 py-4 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 font-bold rounded-2xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:bg-slate-800 transition-all text-xs uppercase tracking-widest"
           >
             CANCEL
           </button>

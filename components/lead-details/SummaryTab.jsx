@@ -7,8 +7,8 @@ export default function SummaryTab({ lead }) {
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-sm font-bold text-slate-800">Summary</h2>
-        <button className="flex items-center gap-2 text-xs font-semibold text-blue-600 border border-blue-200 bg-white rounded-md px-3 py-1.5 hover:bg-blue-50 transition-colors shadow-sm">
+        <h2 className="text-sm font-bold text-slate-800 dark:text-slate-100">Summary</h2>
+        <button className="flex items-center gap-2 text-xs font-semibold text-blue-600 border border-blue-200 bg-white dark:bg-slate-900 rounded-md px-3 py-1.5 hover:bg-blue-50 transition-colors shadow-sm">
           <Settings className="w-3.5 h-3.5" />
           Configuration
         </button>
@@ -80,9 +80,9 @@ export default function SummaryTab({ lead }) {
 
 function SummaryCard({ title, children }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 p-5 shadow-sm hover:shadow-md transition-shadow">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-sm font-bold text-slate-800">{title}</h3>
+        <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100">{title}</h3>
         <button className="flex items-center gap-1 text-[10px] font-bold text-blue-600 border border-blue-200 rounded px-2 py-1 hover:bg-blue-50 transition-colors uppercase tracking-wider">
           <Edit className="w-3 h-3" />
           Edit
@@ -100,9 +100,9 @@ function InfoItem({ label, value, colSpan, className }) {
     <div className={cn("space-y-1.5", colSpan === 2 && "col-span-2", colSpan === 3 && "col-span-3")}>
       <div className="flex items-center gap-1 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
         {label}
-        <span className="w-3 h-3 rounded-full border border-slate-300 text-[8px] flex items-center justify-center text-slate-400 cursor-help" title="Info">i</span>
+        <span className="w-3 h-3 rounded-full border border-slate-300 dark:border-slate-600 text-[8px] flex items-center justify-center text-slate-400 cursor-help" title="Info">i</span>
       </div>
-      <div className={cn("text-xs font-semibold text-slate-800", className)}>
+      <div className={cn("text-xs font-semibold text-slate-800 dark:text-slate-100", className)}>
         {value}
       </div>
     </div>

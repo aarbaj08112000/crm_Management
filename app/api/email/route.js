@@ -160,7 +160,44 @@ export async function POST(req) {
     }
 
     const attachmentsJson = attachmentsJsonArray.length > 0 ? JSON.stringify(attachmentsJsonArray) : null;
+    const scheduledAt = formData.get('scheduled_at');
 
+    if (scheduledAt) {
+      // It's a scheduled email, so save it to the scheduled_emails table and don't send immediately.
+      try {
+        await query(
+          'INSERT INTO scheduled_emails (enquiry_id, `to`, cc, bcc, subject, body, text_body, attachments, scheduled_at, status, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+          [
+            parsedEnquiryId || null,
+            to,
+            cc || null,
+            bcc || null,
+            subject,
+            html || null,
+            text || null,
+            attachmentsJson,
+            scheduledAt,
+            'Pending',
+            userId
+          ]
+        );
+        
+        await logActivity({
+          req,
+          action: 'Schedule Email',
+          module: parsedEnquiryId ? 'Enquiry' : 'Email',
+          recordId: parsedEnquiryId || null,
+          description: `Scheduled email to ${to} for ${new Date(scheduledAt).toLocaleString()}`
+        });
+
+        return NextResponse.json({ message: 'Email scheduled successfully' });
+      } catch (dbErr) {
+        console.error('Failed to insert scheduled email:', dbErr);
+        return NextResponse.json({ error: 'Failed to schedule email' }, { status: 500 });
+      }
+    }
+
+    // Send immediately if not scheduled
     const info = await transporter.sendMail(mailOptions);
 
     await logActivity({

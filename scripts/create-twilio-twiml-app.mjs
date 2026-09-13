@@ -34,7 +34,7 @@ async function run() {
   const authToken = process.env.TWILIO_AUTH_TOKEN;
   const appBaseUrl = process.env.APP_BASE_URL || 'http://localhost:3000';
   const friendlyName = 'CRM Browser Calling';
-  const voiceUrl = `${appBaseUrl}/api/twilio/voice`;
+  const voiceUrl = `${appBaseUrl}/api/smartoperator/voice`;
 
   if (!accountSid || !authToken) {
     console.error('Error: TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN must be set in .env.local or .env');
