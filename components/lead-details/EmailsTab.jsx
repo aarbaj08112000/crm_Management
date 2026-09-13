@@ -232,11 +232,11 @@ export default function EmailsTab({ lead }) {
                 download={viewerFiles[viewerIndex]?.filename || viewerFiles[viewerIndex]?.name}
                 target="_blank"
                 rel="noreferrer"
-                className="text-xs font-bold bg-white dark:bg-slate-900/10 hover:bg-white dark:bg-slate-900/20 px-4 py-2 rounded transition-colors"
+                className="text-xs font-bold text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded transition-colors"
               >
                 Download
               </a>
-              <button onClick={() => setViewerOpen(false)} className="p-2 hover:bg-white dark:bg-slate-900/20 rounded-full transition-colors">
+              <button onClick={() => setViewerOpen(false)} className="p-2 text-white hover:bg-white/20 rounded-full transition-colors">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
               </button>
             </div>
@@ -259,7 +259,7 @@ export default function EmailsTab({ lead }) {
               <button
                 onClick={() => setViewerIndex(prev => Math.max(0, prev - 1))}
                 disabled={viewerIndex === 0}
-                className="px-6 py-2 bg-white dark:bg-slate-900/10 text-white rounded hover:bg-white dark:bg-slate-900/20 disabled:opacity-30 text-sm font-bold transition-colors"
+                className="px-6 py-2 bg-white/10 text-white rounded hover:bg-white/20 disabled:opacity-30 text-sm font-bold transition-colors"
               >
                 Previous
               </button>
@@ -271,7 +271,7 @@ export default function EmailsTab({ lead }) {
               <button
                 onClick={() => setViewerIndex(prev => Math.min(viewerFiles.length - 1, prev + 1))}
                 disabled={viewerIndex === viewerFiles.length - 1}
-                className="px-6 py-2 bg-white dark:bg-slate-900/10 text-white rounded hover:bg-white dark:bg-slate-900/20 disabled:opacity-30 text-sm font-bold transition-colors"
+                className="px-6 py-2 bg-white/10 text-white rounded hover:bg-white/20 disabled:opacity-30 text-sm font-bold transition-colors"
               >
                 Next
               </button>
