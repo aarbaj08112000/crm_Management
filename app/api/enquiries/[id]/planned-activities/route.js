@@ -3,6 +3,7 @@ import { pool } from '@/lib/db';
 import { jwtVerify } from 'jose';
 import path from 'path';
 import fs from 'fs/promises';
+import { getBaseUploadDir } from '@/lib/upload';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
 
@@ -72,7 +73,7 @@ export async function POST(req, { params }) {
       let uploadedFiles = [];
       
       if (files && files.length > 0) {
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+        const uploadDir = path.join(getBaseUploadDir(), 'uploads');
         await fs.mkdir(uploadDir, { recursive: true });
 
         for (const file of files) {

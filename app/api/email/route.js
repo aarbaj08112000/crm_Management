@@ -5,6 +5,7 @@ import { query } from '@/lib/db';
 import { jwtVerify } from 'jose';
 import fs from 'fs';
 import path from 'path';
+import { getBaseUploadDir } from '@/lib/upload';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
 
@@ -107,7 +108,7 @@ export async function POST(req) {
 
           // Save file locally
           const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '-' + originalFilename.replace(/[^a-zA-Z0-9.-]/g, '_');
-          const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'emails');
+          const uploadDir = path.join(getBaseUploadDir(), 'uploads', 'emails');
           if (!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir, { recursive: true });
           }
@@ -137,7 +138,7 @@ export async function POST(req) {
     if (templateAttachments && templateAttachments.length > 0) {
       for (const att of templateAttachments) {
         if (att.path) {
-          const filePath = path.join(process.cwd(), 'public', att.path);
+          const filePath = path.join(getBaseUploadDir(), att.path);
           console.log('[EMAIL_API] Processing template attachment. DB path:', att.path, 'Resolved filePath:', filePath);
 
           if (fs.existsSync(filePath)) {
@@ -149,7 +150,7 @@ export async function POST(req) {
             });
             // Save file locally for email logs
             const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '-' + (att.filename || 'attachment').replace(/[^a-zA-Z0-9.-]/g, '_');
-            const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'emails');
+            const uploadDir = path.join(getBaseUploadDir(), 'uploads', 'emails');
             if (!fs.existsSync(uploadDir)) {
               fs.mkdirSync(uploadDir, { recursive: true });
             }

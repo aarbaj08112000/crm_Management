@@ -3,6 +3,7 @@ import { query } from '@/lib/db';
 import { jwtVerify } from 'jose';
 import fs from 'fs';
 import path from 'path';
+import { getBaseUploadDir } from '@/lib/upload';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret-key');
 
@@ -65,7 +66,7 @@ export async function PUT(req, { params }) {
     }
 
     if (newAttachments && newAttachments.length > 0) {
-      const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'templates');
+      const uploadDir = path.join(getBaseUploadDir(), 'uploads', 'templates');
       if (!fs.existsSync(uploadDir)) {
         fs.mkdirSync(uploadDir, { recursive: true });
       }

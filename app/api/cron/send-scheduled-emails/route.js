@@ -3,6 +3,7 @@ import nodemailer from 'nodemailer';
 import { query } from '@/lib/db';
 import fs from 'fs';
 import path from 'path';
+import { getBaseUploadDir } from '@/lib/upload';
 
 // Note: To secure this route in production, you might want to add an authentication token or IP restriction.
 export async function POST(req) {
@@ -80,7 +81,7 @@ export async function POST(req) {
             const atts = JSON.parse(email.attachments);
             for (const att of atts) {
               if (att.path) {
-                const filePath = path.join(process.cwd(), 'public', att.path);
+                const filePath = path.join(getBaseUploadDir(), att.path);
                 if (fs.existsSync(filePath)) {
                   mailOptions.attachments.push({
                     filename: att.filename,

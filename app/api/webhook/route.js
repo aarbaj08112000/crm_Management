@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import fs from 'fs';
 import path from 'path';
+import { getBaseUploadDir } from '@/lib/upload';
 
 export const dynamic = 'force-dynamic';
 
@@ -82,7 +83,7 @@ export async function POST(request) {
                     if (msgType === 'audio' && (ext.includes('ogg') || mimeType.includes('audio/ogg'))) cleanExt = 'ogg';
 
                     const filename = `${mediaId}.${cleanExt}`;
-                    const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'whatsapp');
+                    const uploadDir = path.join(getBaseUploadDir(), 'uploads', 'whatsapp');
                     if (!fs.existsSync(uploadDir)) {
                       fs.mkdirSync(uploadDir, { recursive: true });
                     }

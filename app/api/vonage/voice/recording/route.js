@@ -3,6 +3,7 @@ import { pool } from '@/lib/db';
 import { tokenGenerate } from '@vonage/jwt';
 import fs from 'fs';
 import path from 'path';
+import { getBaseUploadDir } from '@/lib/upload';
 
 async function processRecording(event) {
   try {
@@ -38,7 +39,7 @@ async function processRecording(event) {
     const buffer = await response.arrayBuffer();
 
     // Ensure uploads directory exists
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'recordings');
+    const uploadsDir = path.join(getBaseUploadDir(), 'uploads', 'recordings');
     if (!fs.existsSync(uploadsDir)) {
       fs.mkdirSync(uploadsDir, { recursive: true });
     }
