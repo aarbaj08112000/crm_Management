@@ -160,9 +160,10 @@ export async function POST(req) {
     }
 
     const attachmentsJson = attachmentsJsonArray.length > 0 ? JSON.stringify(attachmentsJsonArray) : null;
-    const scheduledAt = formData.get('scheduled_at');
+    const scheduledAtStr = formData.get('scheduled_at');
 
-    if (scheduledAt) {
+    if (scheduledAtStr) {
+      const scheduledAtDate = new Date(scheduledAtStr);
       // It's a scheduled email, so save it to the scheduled_emails table and don't send immediately.
       try {
         await query(
@@ -176,7 +177,7 @@ export async function POST(req) {
             html || null,
             text || null,
             attachmentsJson,
-            scheduledAt,
+            scheduledAtDate,
             'Pending',
             userId
           ]
@@ -187,7 +188,7 @@ export async function POST(req) {
           action: 'Schedule Email',
           module: parsedEnquiryId ? 'Enquiry' : 'Email',
           recordId: parsedEnquiryId || null,
-          description: `Scheduled email to ${to} for ${new Date(scheduledAt).toLocaleString()}`
+          description: `Scheduled email to ${to} for ${scheduledAtDate.toLocaleString()}`
         });
 
         return NextResponse.json({ message: 'Email scheduled successfully' });

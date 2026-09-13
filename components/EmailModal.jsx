@@ -178,7 +178,8 @@ export default function EmailModal({ enquiry, onClose }) {
         formData.append('enquiryId', eId);
       }
       if (sendType === 'Schedule' && scheduledAt) {
-        formData.append('scheduled_at', scheduledAt);
+        const utcDate = new Date(scheduledAt).toISOString();
+        formData.append('scheduled_at', utcDate);
       }
       if (attachments.length > 0) {
         attachments.forEach(file => {
