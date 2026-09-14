@@ -249,7 +249,7 @@ export default function ActivitiesTab({ lead }) {
           </div>
           <button
             onClick={() => setIsAddActivityOpen(true)}
-            className="flex items-center gap-1.5 text-xs font-bold text-white bg-blue-600 dark:bg-purple-600 rounded px-4 py-1.5 hover:bg-blue-700 dark:hover:bg-purple-700 transition-colors shadow-sm"
+            className="flex items-center gap-1.5 text-xs font-bold text-white bg-blue-600 dark:bg-blue-600 rounded px-4 py-1.5 hover:bg-blue-700 dark:hover:bg-blue-700 transition-colors shadow-sm"
           >
             <Plus className="w-3.5 h-3.5" />
             Add Activity
@@ -259,8 +259,8 @@ export default function ActivitiesTab({ lead }) {
         <div className="flex-1 overflow-y-auto custom-scrollbar pr-2">
           {plannedActivities.length === 0 ? (
             <div className="flex flex-col items-center justify-center text-center p-8 h-full">
-              <div className="w-24 h-24 bg-blue-50/50 dark:bg-purple-900/20 rounded-full flex items-center justify-center mb-6">
-                <Search className="w-8 h-8 text-blue-300 dark:text-purple-400" strokeWidth={2.5} />
+              <div className="w-24 h-24 bg-blue-50/50 dark:bg-blue-900/20 rounded-full flex items-center justify-center mb-6">
+                <Search className="w-8 h-8 text-blue-300 dark:text-blue-400" strokeWidth={2.5} />
               </div>
               <h3 className="text-base font-bold text-slate-800 dark:text-slate-100 mb-2">No Data Found</h3>
               <p className="text-[13px] text-slate-500 max-w-xs mb-6 leading-relaxed">
@@ -268,7 +268,7 @@ export default function ActivitiesTab({ lead }) {
               </p>
               <button
                 onClick={() => setIsAddActivityOpen(true)}
-                className="flex items-center gap-2 text-[13px] font-bold text-white bg-blue-600 dark:bg-purple-600 rounded-md px-6 py-2 hover:bg-blue-700 dark:hover:bg-purple-700 transition-colors shadow-md shadow-blue-200 dark:shadow-none"
+                className="flex items-center gap-2 text-[13px] font-bold text-white bg-blue-600 dark:bg-blue-600 rounded-md px-6 py-2 hover:bg-blue-700 dark:hover:bg-blue-700 transition-colors shadow-md shadow-blue-200 dark:shadow-none"
               >
                 <Plus className="w-4 h-4" />
                 Add Activity

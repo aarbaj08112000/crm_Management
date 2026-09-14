@@ -1,0 +1,438 @@
+2026-09-14T15:16:22.067Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=917935485984&Status=&StartTime=2026-09-14+20%3A46%3A15&EndTime=&CallSid=1789398975.973599&Direction=WEBOBD&call_group=
+2026-09-14T15:16:22.067Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=917935485984&Status=&StartTime=2026-09-14+20%3A46%3A15&EndTime=&CallSid=1789398975.973599&Direction=WEBOBD&call_group=
+2026-09-14T15:16:22.067Z body: {}
+2026-09-14T15:16:22.067Z Extracted: type=transferring_call_to_agent, callSid=1789398975.973599
+2026-09-14T15:16:51.264Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=08485835691&CallDuration=25&coins=1&Status=Unavailable&StartTime=2026-09-14+20%3A46%3A15.000000&EndTime=2026-09-14+20%3A46%3A40.000000&CallSid=1789398975.973599&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F14%2F11892%2F5691-5984-1789398975.973599.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-14+20%3A46%3A15.000000&LegB_Start_time=2026-09-14+20%3A46%3A15.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-14T15:16:51.264Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=08485835691&CallDuration=25&coins=1&Status=Unavailable&StartTime=2026-09-14+20%3A46%3A15.000000&EndTime=2026-09-14+20%3A46%3A40.000000&CallSid=1789398975.973599&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F14%2F11892%2F5691-5984-1789398975.973599.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-14+20%3A46%3A15.000000&LegB_Start_time=2026-09-14+20%3A46%3A15.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-14T15:16:51.264Z body: {}
+2026-09-14T15:16:51.264Z Extracted: type=call_report, callSid=1789398975.973599
+2026-09-14T15:16:51.264Z Looking up user for DialWhomNumber: 08485835691
+2026-09-14T15:16:51.265Z Assigned userId: 1
+2026-09-14T15:16:51.265Z Inserting new log for callSid: 1789398975.973599
+2026-09-14T15:16:51.283Z Successfully processed webhook.
+2026-09-14T15:20:22.501Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08485835691&DestinationNumber=917935485984&DialWhomNumber=08485835691&CallDuration=1&coins=1&Status=cancel-customer&StartTime=2026-09-14+20%3A50%3A18.000000&EndTime=2026-09-14+20%3A50%3A19.000000&CallSid=1789399218.973681&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F14%2F11892%2F5691-5984-1789399218.973681.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-14+20%3A50%3A18.000000&LegB_Start_time=2026-09-14+20%3A50%3A18.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-14T15:20:22.501Z searchParams: type=call_report&SourceNumber=08485835691&DestinationNumber=917935485984&DialWhomNumber=08485835691&CallDuration=1&coins=1&Status=cancel-customer&StartTime=2026-09-14+20%3A50%3A18.000000&EndTime=2026-09-14+20%3A50%3A19.000000&CallSid=1789399218.973681&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F14%2F11892%2F5691-5984-1789399218.973681.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-14+20%3A50%3A18.000000&LegB_Start_time=2026-09-14+20%3A50%3A18.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-14T15:20:22.501Z body: {}
+2026-09-14T15:20:22.501Z Extracted: type=call_report, callSid=1789399218.973681
+2026-09-14T15:20:22.501Z Looking up user for DialWhomNumber: 08485835691
+2026-09-14T15:20:22.502Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=917935485984&Status=&StartTime=2026-09-14+20%3A50%3A18&EndTime=&CallSid=1789399218.973681&Direction=WEBOBD&call_group=
+2026-09-14T15:20:22.502Z searchParams: type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=917935485984&Status=&StartTime=2026-09-14+20%3A50%3A18&EndTime=&CallSid=1789399218.973681&Direction=WEBOBD&call_group=
+2026-09-14T15:20:22.502Z body: {}
+2026-09-14T15:20:22.502Z Extracted: type=transferring_call_to_agent, callSid=1789399218.973681
+2026-09-14T15:20:22.502Z Looking up user for DialWhomNumber: 917935485984
+2026-09-14T15:20:22.506Z Assigned userId: 1
+2026-09-14T15:20:22.507Z Inserting new log for callSid: 1789399218.973681
+2026-09-14T15:20:22.507Z Assigned userId: null
+2026-09-14T15:20:22.507Z Could not find user. Defaulting to user_id=1
+2026-09-14T15:20:22.508Z Inserting new log for callSid: 1789399218.973681
+2026-09-14T15:20:22.531Z Inserting into call_events for callLogId: 5
+2026-09-14T15:20:22.532Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-14T15:20:22.543Z Inserting into call_events for callLogId: 6
+2026-09-14T15:20:22.543Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-14T15:21:01.697Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=917935485984&Status=&StartTime=2026-09-14+20%3A51%3A00&EndTime=&CallSid=1789399259.973710&Direction=WEBOBD&call_group=
+2026-09-14T15:21:01.698Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=917935485984&Status=&StartTime=2026-09-14+20%3A51%3A00&EndTime=&CallSid=1789399259.973710&Direction=WEBOBD&call_group=
+2026-09-14T15:21:01.698Z body: {}
+2026-09-14T15:21:01.698Z Extracted: type=transferring_call_to_agent, callSid=1789399259.973710
+2026-09-14T15:21:01.698Z Looking up user for DialWhomNumber: 917935485984
+2026-09-14T15:21:01.700Z Assigned userId: null
+2026-09-14T15:21:01.700Z Could not find user. Defaulting to user_id=1
+2026-09-14T15:21:01.701Z Inserting new log for callSid: 1789399259.973710
+2026-09-14T15:21:01.718Z Inserting into call_events for callLogId: 1
+2026-09-14T15:21:01.719Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-14T15:21:11.494Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=08485835691&CallDuration=5&coins=1&Status=cancel-agent&StartTime=2026-09-14+20%3A50%3A59.000000&EndTime=2026-09-14+20%3A51%3A04.000000&CallSid=1789399259.973710&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F14%2F11892%2F5691-5984-1789399259.973710.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-14+20%3A50%3A59.000000&LegB_Start_time=2026-09-14+20%3A51%3A00.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-14T15:21:11.494Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=08485835691&CallDuration=5&coins=1&Status=cancel-agent&StartTime=2026-09-14+20%3A50%3A59.000000&EndTime=2026-09-14+20%3A51%3A04.000000&CallSid=1789399259.973710&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F14%2F11892%2F5691-5984-1789399259.973710.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-14+20%3A50%3A59.000000&LegB_Start_time=2026-09-14+20%3A51%3A00.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-14T15:21:11.494Z body: {}
+2026-09-14T15:21:11.494Z Extracted: type=call_report, callSid=1789399259.973710
+2026-09-14T15:21:11.494Z Looking up user for DialWhomNumber: 08485835691
+2026-09-14T15:21:11.495Z Assigned userId: 1
+2026-09-14T15:21:11.496Z Updating existing log for callSid: 1789399259.973710
+2026-09-14T15:21:11.504Z Inserting into call_events for callLogId: 1
+2026-09-14T15:21:11.505Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-14T15:40:32.752Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=917935485984&Status=&StartTime=2026-09-14+21%3A10%3A29&EndTime=&CallSid=1789400429.974317&Direction=WEBOBD&call_group=
+2026-09-14T15:40:32.752Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=917935485984&Status=&StartTime=2026-09-14+21%3A10%3A29&EndTime=&CallSid=1789400429.974317&Direction=WEBOBD&call_group=
+2026-09-14T15:40:32.752Z body: {}
+2026-09-14T15:40:32.752Z Extracted: type=transferring_call_to_agent, callSid=1789400429.974317
+2026-09-14T15:40:32.752Z Looking up user for DialWhomNumber: 917935485984
+2026-09-14T15:40:32.760Z Assigned userId: null
+2026-09-14T15:40:32.760Z Could not find user. Defaulting to user_id=1
+2026-09-14T15:40:32.761Z Inserting new log for callSid: 1789400429.974317
+2026-09-14T15:40:32.778Z Inserting into call_events for callLogId: 3
+2026-09-14T15:40:32.778Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-14T15:40:43.506Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=live_call&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-14+21%3A10%3A35&EndTime=&CallSid=1789400429.974317&Direction=WEBOBD&call_group=
+2026-09-14T15:40:43.506Z searchParams: type=live_call&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-14+21%3A10%3A35&EndTime=&CallSid=1789400429.974317&Direction=WEBOBD&call_group=
+2026-09-14T15:40:43.506Z body: {}
+2026-09-14T15:40:43.506Z Extracted: type=live_call, callSid=1789400429.974317
+2026-09-14T15:40:43.506Z Looking up user for DialWhomNumber: 08485835691
+2026-09-14T15:40:43.508Z Assigned userId: 1
+2026-09-14T15:40:43.513Z Updating existing log for callSid: 1789400429.974317
+2026-09-14T15:40:43.568Z Inserting into call_events for callLogId: 3
+2026-09-14T15:40:43.569Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-14T15:40:54.119Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=08485835691&CallDuration=20&coins=1&Status=ANSWER&StartTime=2026-09-14+21%3A10%3A29.000000&EndTime=2026-09-14+21%3A10%3A49.000000&CallSid=1789400429.974317&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F14%2F11892%2F5691-5984-1789400429.974317.wav&Direction=WEBOBD&campid=&TalkDuration=14&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-14+21%3A10%3A29.000000&LegB_Start_time=2026-09-14+21%3A10%3A29.000000&LegB_Picked_time=2026-09-14+21%3A10%3A35.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-14T15:40:54.119Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=08485835691&CallDuration=20&coins=1&Status=ANSWER&StartTime=2026-09-14+21%3A10%3A29.000000&EndTime=2026-09-14+21%3A10%3A49.000000&CallSid=1789400429.974317&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F14%2F11892%2F5691-5984-1789400429.974317.wav&Direction=WEBOBD&campid=&TalkDuration=14&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-14+21%3A10%3A29.000000&LegB_Start_time=2026-09-14+21%3A10%3A29.000000&LegB_Picked_time=2026-09-14+21%3A10%3A35.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-14T15:40:54.119Z body: {}
+2026-09-14T15:40:54.119Z Extracted: type=call_report, callSid=1789400429.974317
+2026-09-14T15:40:54.119Z Looking up user for DialWhomNumber: 08485835691
+2026-09-14T15:40:54.125Z Assigned userId: 1
+2026-09-14T15:40:54.126Z Updating existing log for callSid: 1789400429.974317
+2026-09-14T15:40:54.142Z Inserting into call_events for callLogId: 3
+2026-09-14T15:40:54.142Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-14T15:44:12.835Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=917935485984&Status=&StartTime=2026-09-14+21%3A14%3A03&EndTime=&CallSid=1789400643.974436&Direction=WEBOBD&call_group=
+2026-09-14T15:44:12.835Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=917935485984&Status=&StartTime=2026-09-14+21%3A14%3A03&EndTime=&CallSid=1789400643.974436&Direction=WEBOBD&call_group=
+2026-09-14T15:44:12.835Z body: {}
+2026-09-14T15:44:12.835Z Extracted: type=transferring_call_to_agent, callSid=1789400643.974436
+2026-09-14T15:44:12.835Z Looking up user for DialWhomNumber: 917935485984
+2026-09-14T15:44:12.836Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=live_call&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-14+21%3A14%3A08&EndTime=&CallSid=1789400643.974436&Direction=WEBOBD&call_group=
+2026-09-14T15:44:12.836Z searchParams: type=live_call&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-14+21%3A14%3A08&EndTime=&CallSid=1789400643.974436&Direction=WEBOBD&call_group=
+2026-09-14T15:44:12.836Z body: {}
+2026-09-14T15:44:12.836Z Extracted: type=live_call, callSid=1789400643.974436
+2026-09-14T15:44:12.836Z Looking up user for DialWhomNumber: 08485835691
+2026-09-14T15:44:12.848Z Assigned userId: 1
+2026-09-14T15:44:12.850Z Assigned userId: null
+2026-09-14T15:44:12.850Z Could not find user. Defaulting to user_id=1
+2026-09-14T15:44:12.851Z Inserting new log for callSid: 1789400643.974436
+2026-09-14T15:44:12.852Z Inserting new log for callSid: 1789400643.974436
+2026-09-14T15:44:12.863Z Inserting into call_events for callLogId: 5
+2026-09-14T15:44:12.864Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-14T15:44:12.874Z Inserting into call_events for callLogId: 6
+2026-09-14T15:44:12.874Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-14T15:44:32.129Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=08485835691&CallDuration=22&coins=1&Status=ANSWER&StartTime=2026-09-14+21%3A14%3A03.000000&EndTime=2026-09-14+21%3A14%3A25.000000&CallSid=1789400643.974436&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F14%2F11892%2F5691-5984-1789400643.974436.wav&Direction=WEBOBD&campid=&TalkDuration=17&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-14+21%3A14%3A03.000000&LegB_Start_time=2026-09-14+21%3A14%3A03.000000&LegB_Picked_time=2026-09-14+21%3A14%3A08.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-14T15:44:32.129Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=08485835691&CallDuration=22&coins=1&Status=ANSWER&StartTime=2026-09-14+21%3A14%3A03.000000&EndTime=2026-09-14+21%3A14%3A25.000000&CallSid=1789400643.974436&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F14%2F11892%2F5691-5984-1789400643.974436.wav&Direction=WEBOBD&campid=&TalkDuration=17&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-14+21%3A14%3A03.000000&LegB_Start_time=2026-09-14+21%3A14%3A03.000000&LegB_Picked_time=2026-09-14+21%3A14%3A08.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-14T15:44:32.129Z body: {}
+2026-09-14T15:44:32.129Z Extracted: type=call_report, callSid=1789400643.974436
+2026-09-14T15:44:32.129Z Looking up user for DialWhomNumber: 08485835691
+2026-09-14T15:44:32.133Z Assigned userId: 1
+2026-09-14T15:44:32.145Z Updating existing log for callSid: 1789400643.974436
+2026-09-14T15:44:32.474Z Inserting into call_events for callLogId: 5
+2026-09-14T15:44:32.475Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-14T15:45:12.003Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_initated&SourceNumber=08381058482&DestinationNumber=&DialWhomNumber=917935485984&Status=&StartTime=2026-09-14+21%3A15%3A07&EndTime=&CallSid=1789400707.22127755&Direction=IVR&call_group=
+2026-09-14T15:45:12.003Z searchParams: type=call_initated&SourceNumber=08381058482&DestinationNumber=&DialWhomNumber=917935485984&Status=&StartTime=2026-09-14+21%3A15%3A07&EndTime=&CallSid=1789400707.22127755&Direction=IVR&call_group=
+2026-09-14T15:45:12.003Z body: {}
+2026-09-14T15:45:12.003Z Extracted: type=call_initated, callSid=1789400707.22127755
+2026-09-14T15:45:12.003Z Looking up user for DialWhomNumber: 917935485984
+2026-09-14T15:45:12.014Z Assigned userId: null
+2026-09-14T15:45:12.014Z Could not find user. Defaulting to user_id=1
+2026-09-14T15:45:12.014Z Inserting new log for callSid: 1789400707.22127755
+2026-09-14T15:45:12.036Z Inserting into call_events for callLogId: 7
+2026-09-14T15:45:12.036Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-14T15:45:12.349Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=&CallDuration=1&coins=1&Status=cancel-customer&StartTime=2026-09-14+21%3A15%3A07.000000&EndTime=2026-09-14+21%3A15%3A07.000000&CallSid=1789400707.22127755&CallRecordingUrl=&Direction=IVR&campid=&TalkDuration=0&call_group=callgroup1&receiver_name=&error_code=&LegA_Picked_time=0000%3A00%3A00+00%3A00%3A00&LegB_Start_time=0000%3A00%3A00+00%3A00%3A00&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-14T15:45:12.349Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=&CallDuration=1&coins=1&Status=cancel-customer&StartTime=2026-09-14+21%3A15%3A07.000000&EndTime=2026-09-14+21%3A15%3A07.000000&CallSid=1789400707.22127755&CallRecordingUrl=&Direction=IVR&campid=&TalkDuration=0&call_group=callgroup1&receiver_name=&error_code=&LegA_Picked_time=0000%3A00%3A00+00%3A00%3A00&LegB_Start_time=0000%3A00%3A00+00%3A00%3A00&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-14T15:45:12.349Z body: {}
+2026-09-14T15:45:12.349Z Extracted: type=call_report, callSid=1789400707.22127755
+2026-09-14T15:45:12.349Z Assigned userId: null
+2026-09-14T15:45:12.349Z Could not find user. Defaulting to user_id=1
+2026-09-14T15:45:12.350Z Updating existing log for callSid: 1789400707.22127755
+2026-09-14T15:45:12.368Z Inserting into call_events for callLogId: 7
+2026-09-14T15:45:12.368Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-14T15:45:52.038Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=&CallDuration=1&coins=1&Status=cancel-customer&StartTime=2026-09-14+21%3A15%3A43.000000&EndTime=2026-09-14+21%3A15%3A44.000000&CallSid=1789400743.22127761&CallRecordingUrl=&Direction=IVR&campid=&TalkDuration=0&call_group=callgroup1&receiver_name=&error_code=&LegA_Picked_time=0000%3A00%3A00+00%3A00%3A00&LegB_Start_time=0000%3A00%3A00+00%3A00%3A00&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-14T15:45:52.038Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=917935485984&DialWhomNumber=&CallDuration=1&coins=1&Status=cancel-customer&StartTime=2026-09-14+21%3A15%3A43.000000&EndTime=2026-09-14+21%3A15%3A44.000000&CallSid=1789400743.22127761&CallRecordingUrl=&Direction=IVR&campid=&TalkDuration=0&call_group=callgroup1&receiver_name=&error_code=&LegA_Picked_time=0000%3A00%3A00+00%3A00%3A00&LegB_Start_time=0000%3A00%3A00+00%3A00%3A00&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-14T15:45:52.038Z body: {}
+2026-09-14T15:45:52.038Z Extracted: type=call_report, callSid=1789400743.22127761
+2026-09-14T15:45:52.038Z Assigned userId: null
+2026-09-14T15:45:52.038Z Could not find user. Defaulting to user_id=1
+2026-09-14T15:45:52.040Z Inserting new log for callSid: 1789400743.22127761
+2026-09-14T15:45:52.066Z Inserting into call_events for callLogId: 8
+2026-09-14T15:45:52.067Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-14T15:45:52.291Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_initated&SourceNumber=08381058482&DestinationNumber=&DialWhomNumber=917935485984&Status=&StartTime=2026-09-14+21%3A15%3A43&EndTime=&CallSid=1789400743.22127761&Direction=IVR&call_group=
+2026-09-14T15:45:52.291Z searchParams: type=call_initated&SourceNumber=08381058482&DestinationNumber=&DialWhomNumber=917935485984&Status=&StartTime=2026-09-14+21%3A15%3A43&EndTime=&CallSid=1789400743.22127761&Direction=IVR&call_group=
+2026-09-14T15:45:52.291Z body: {}
+2026-09-14T15:45:52.291Z Extracted: type=call_initated, callSid=1789400743.22127761
+2026-09-14T15:45:52.291Z Looking up user for DialWhomNumber: 917935485984
+2026-09-14T15:45:52.301Z Assigned userId: null
+2026-09-14T15:45:52.301Z Could not find user. Defaulting to user_id=1
+2026-09-14T15:45:52.303Z Updating existing log for callSid: 1789400743.22127761
+2026-09-14T15:45:52.345Z Inserting into call_events for callLogId: 8
+2026-09-14T15:45:52.346Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)

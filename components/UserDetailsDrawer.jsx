@@ -153,7 +153,7 @@ export default function UserDetailsDrawer({ isOpen, onClose, userId, onEdit }) {
                         let Icon = Activity;
                         let color = "text-blue-500 bg-blue-50";
                         
-                        if (act.module === 'Auth') { Icon = UserCircle2; color = "text-purple-500 bg-purple-50"; }
+                        if (act.module === 'Auth') { Icon = UserCircle2; color = "text-blue-500 bg-blue-50"; }
                         else if (act.module === 'Enquiry') { Icon = ListOrdered; color = "text-amber-500 bg-amber-50"; }
                         else if (act.module === 'Email') { Icon = Mail; color = "text-indigo-500 bg-indigo-50"; }
                         else if (act.module === 'WhatsApp') { Icon = MessageSquare; color = "text-emerald-500 bg-emerald-50"; }

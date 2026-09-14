@@ -47,7 +47,7 @@ export default function AddPage() {
             className={cn(
               "flex items-center gap-3 px-10 py-4 rounded-[1.5rem] font-black tracking-tight transition-all duration-300",
               tab === 'manual'
-                ? "bg-white dark:bg-[#1A1A1A] text-blue-600 dark:text-purple-400 shadow-xl shadow-blue-500/10 dark:shadow-none"
+                ? "bg-white dark:bg-[#1A1A1A] text-blue-600 dark:text-blue-400 shadow-xl shadow-blue-500/10 dark:shadow-none"
                 : "text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
             )}
           >
@@ -59,7 +59,7 @@ export default function AddPage() {
             className={cn(
               "flex items-center gap-3 px-10 py-4 rounded-[1.5rem] font-black tracking-tight transition-all duration-300",
               tab === 'excel'
-                ? "bg-white dark:bg-[#1A1A1A] text-blue-600 dark:text-purple-400 shadow-xl shadow-blue-500/10 dark:shadow-none"
+                ? "bg-white dark:bg-[#1A1A1A] text-blue-600 dark:text-blue-400 shadow-xl shadow-blue-500/10 dark:shadow-none"
                 : "text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
             )}
           >
@@ -69,9 +69,9 @@ export default function AddPage() {
         </div>
         <button
           onClick={downloadSample}
-          className="flex items-center gap-3 px-8 py-4 bg-white dark:bg-[#1A1A1A] border-2 border-slate-100 dark:border-[#27272A] text-slate-700 dark:text-slate-200 font-black rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none hover:bg-slate-50 dark:hover:bg-[#27272A] hover:border-blue-500/20 dark:hover:border-purple-500/20 hover:shadow-blue-500/10 dark:hover:shadow-none transition-all group active:scale-95"
+          className="flex items-center gap-3 px-8 py-4 bg-white dark:bg-[#1A1A1A] border-2 border-slate-100 dark:border-[#27272A] text-slate-700 dark:text-slate-200 font-black rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none hover:bg-slate-50 dark:hover:bg-[#27272A] hover:border-blue-500/20 dark:hover:border-blue-500/20 hover:shadow-blue-500/10 dark:hover:shadow-none transition-all group active:scale-95"
         >
-          <Download className="w-5 h-5 text-blue-600 dark:text-purple-400 group-hover:translate-y-1 transition-transform" />
+          <Download className="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:translate-y-1 transition-transform" />
           SAMPLE EXCEL
         </button>
       </div>

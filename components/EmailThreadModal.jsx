@@ -71,7 +71,7 @@ export default function EmailThreadModal({ enquiryId, enquiryName, enquiryEmail,
       return <FileText className="w-8 h-8 text-blue-600" />;
     }
     if (['mp4', 'webm', 'mov', 'avi'].includes(ext)) {
-      return <Film className="w-8 h-8 text-purple-500" />;
+      return <Film className="w-8 h-8 text-blue-500" />;
     }
     if (['zip', 'rar', '7z', 'tar', 'gz'].includes(ext)) {
       return <FileArchive className="w-8 h-8 text-yellow-600" />;
@@ -402,7 +402,7 @@ export default function EmailThreadModal({ enquiryId, enquiryName, enquiryEmail,
                                     {getFileIcon(att)}
                                   </div>
                                   <div className="flex flex-col flex-1 min-w-0 justify-center">
-                                    <span className="text-sm font-semibold text-slate-800 dark:text-slate-200 truncate group-hover:text-purple-600 transition-colors">{att.filename}</span>
+                                    <span className="text-sm font-semibold text-slate-800 dark:text-slate-200 truncate group-hover:text-blue-600 transition-colors">{att.filename}</span>
                                     {att.size && (
                                       <span className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                                         {(att.size / 1024).toFixed(1)} KB

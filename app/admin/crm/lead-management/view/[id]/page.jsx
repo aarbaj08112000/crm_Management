@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter, useParams } from 'next/navigation';
 import { cn, formatLeadCode, formatDate } from '@/lib/utils';
+import { useApp } from '@/context/AppContext';
 import LeadSidebar from '@/components/lead-details/LeadSidebar';
 import ActivitiesTab from '@/components/lead-details/ActivitiesTab';
 import EmailsTab from '@/components/lead-details/EmailsTab';
@@ -12,6 +13,7 @@ import { ChevronLeft, ChevronRight, Menu, Edit } from 'lucide-react';
 
 export default function LeadDetailsPage() {
   const router = useRouter();
+  const { companySettings } = useApp();
   const searchParams = useSearchParams();
   const params = useParams();
   const [lead, setLead] = useState(null);
@@ -70,7 +72,7 @@ export default function LeadDetailsPage() {
   const displayLead = lead ? {
     ...lead,
     id: lead.enquiry_id,
-    formatted_id: formatLeadCode(lead.enquiry_id, lead.added_date),
+    formatted_id: formatLeadCode(lead.enquiry_id, lead.added_date, companySettings),
     issues: lead.issues,
     status: lead.status,
     score: lead.score,
@@ -95,23 +97,17 @@ export default function LeadDetailsPage() {
 
   return (
     <div className="flex flex-col h-screen bg-slate-50 dark:bg-[#0A0A0A] max-h-[calc(100vh-64px)]">
-      {/* Top Breadcrumb & Action Bar */}
-      <div className="h-16 flex-shrink-0 bg-white dark:bg-[#121212] border-b border-slate-200 dark:border-[#27272A] flex items-center justify-between px-6 shadow-sm z-10 relative">
+      {/* Top Header */}
+      <div className="flex-shrink-0 flex items-center justify-between px-6 pt-6 pb-4 z-10 relative bg-transparent">
         <div>
-          <h1 className="text-lg font-black text-slate-800 dark:text-slate-100">Details</h1>
-          <div className="text-xs font-semibold text-slate-500 flex items-center gap-2 mt-0.5">
-            <span className="text-blue-600 hover:underline cursor-pointer">Leads</span>
-            <span>&raquo;</span>
-            <span className="text-blue-600 hover:underline cursor-pointer">Lead Management</span>
-            <span>&raquo;</span>
-            <span className="text-slate-600 dark:text-slate-300">{displayLead?.id}</span>
-          </div>
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">Enquiry Details</h1>
+          <p className="text-sm text-slate-500 font-medium">Manage and view details for {displayLead?.formatted_id || params.id}</p>
         </div>
 
         <div className="flex items-center gap-3">
           <button
             onClick={() => setShowEditModal(true)}
-            className="flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-purple-400 border border-blue-200 dark:border-[#27272A] bg-white dark:bg-[#1A1A1A] rounded-md px-4 py-2 hover:bg-blue-50 dark:hover:bg-[#27272A] transition-colors shadow-sm"
+            className="flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-[#27272A] bg-white dark:bg-[#1A1A1A] rounded-md px-4 py-2 hover:bg-blue-50 dark:hover:bg-[#27272A] transition-colors shadow-sm"
           >
             <Edit className="w-3.5 h-3.5" />
             Edit
@@ -120,7 +116,7 @@ export default function LeadDetailsPage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden border-t border-[#ebe5e5]">
         {/* Left Sidebar */}
         <LeadSidebar lead={displayLead} />
 
@@ -135,14 +131,14 @@ export default function LeadDetailsPage() {
                 className={cn(
                   "px-5 py-3 text-xs font-bold whitespace-nowrap transition-all border-b-2 relative",
                   activeTab === tab.id
-                    ? "text-blue-600 dark:text-purple-400 border-blue-600 dark:border-purple-500 bg-white dark:bg-[#1A1A1A] shadow-[0_-2px_4px_rgba(0,0,0,0.02)] rounded-t-lg"
+                    ? "text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-500 bg-white dark:bg-[#1A1A1A] shadow-[0_-2px_4px_rgba(0,0,0,0.02)] rounded-t-lg"
                     : "text-slate-500 border-transparent hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100/50 dark:hover:bg-[#1A1A1A] rounded-t-lg"
                 )}
               >
                 <div className="flex items-center gap-2">
                   {tab.label}
                   {tab.badge && (
-                    <span className="flex items-center justify-center w-4 h-4 bg-blue-600 dark:bg-purple-600 text-white rounded-full text-[9px] shadow-sm">
+                    <span className="flex items-center justify-center w-4 h-4 bg-blue-600 dark:bg-blue-600 text-white rounded-full text-[9px] shadow-sm">
                       {tab.badge}
                     </span>
                   )}

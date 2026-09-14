@@ -24,7 +24,7 @@ const getFileIcon = (att) => {
       return <FileText className="w-8 h-8 text-blue-600" />;
     }
     if (['mp4', 'webm', 'mov', 'avi'].includes(ext)) {
-      return <Film className="w-8 h-8 text-purple-500" />;
+      return <Film className="w-8 h-8 text-blue-500" />;
     }
     if (['zip', 'rar', '7z', 'tar', 'gz'].includes(ext)) {
       return <FileArchive className="w-8 h-8 text-yellow-600" />;
@@ -106,8 +106,8 @@ export default function ScheduledEmailsTab({ lead }) {
           </div>
         ) : emails.length === 0 ? (
           <div className="flex flex-col items-center justify-center text-center p-12 bg-white dark:bg-[#1A1A1A] rounded-2xl border border-slate-200 dark:border-[#27272A] border-dashed">
-            <div className="w-16 h-16 bg-purple-50 dark:bg-purple-900/20 rounded-full flex items-center justify-center mb-4">
-              <Calendar className="w-6 h-6 text-purple-400" />
+            <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center mb-4">
+              <Calendar className="w-6 h-6 text-blue-400" />
             </div>
             <h3 className="text-base font-bold text-slate-800 dark:text-slate-100 mb-2">No Scheduled Emails</h3>
             <p className="text-[13px] text-slate-500 max-w-xs mx-auto">
@@ -146,7 +146,7 @@ export default function ScheduledEmailsTab({ lead }) {
                   <div className="text-[13px] font-medium text-slate-700 dark:text-slate-200">{date}</div>
                   <div className="flex items-center gap-3">
                     <div className="text-[13px] text-slate-700 dark:text-slate-200">
-                      Lead : <span className="text-blue-600 font-semibold cursor-pointer hover:underline">{lead?.enquiry_id || lead?.id}</span>
+                      Enquiry : <span className="text-blue-600 font-semibold cursor-pointer hover:underline">{lead?.formatted_id || lead?.enquiry_id || lead?.id}</span>
                     </div>
                     {email.status === 'Pending' ? (
                       <span className="bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded text-[11px] flex items-center gap-1">
@@ -161,7 +161,7 @@ export default function ScheduledEmailsTab({ lead }) {
                         ✕ Failed
                       </span>
                     )}
-                    <span className="flex items-center gap-1.5 text-xs font-bold text-white bg-purple-600 rounded px-3 py-1">
+                    <span className="flex items-center gap-1.5 text-xs font-bold text-white bg-blue-600 rounded px-3 py-1">
                       <Clock className="w-3.5 h-3.5" />
                       Sch: {scheduledDate}
                     </span>

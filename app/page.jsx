@@ -67,7 +67,7 @@ export default function Dashboard() {
         </div>
         <Link 
           href="/add" 
-          className="flex items-center gap-2 bg-purple-600 dark:bg-[#A855F7] text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-purple-600/20 hover:bg-purple-500 transition-all active:translate-y-0 text-sm"
+          className="flex items-center gap-2 bg-blue-600 dark:bg-[#A855F7] text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-blue-600/20 hover:bg-blue-500 transition-all active:translate-y-0 text-sm"
         >
           <Plus className="w-4 h-4" />
           NEW ENQUIRY
@@ -102,7 +102,7 @@ export default function Dashboard() {
               <h3 className="text-lg font-black text-slate-900 dark:text-slate-100 tracking-tight">Recent Activity</h3>
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Latest Lead updates</p>
             </div>
-            <Link href="/list" className="bg-slate-50 dark:bg-slate-800 text-purple-600 dark:text-[#A855F7] px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-purple-50 dark:hover:bg-purple-900/30 transition-colors flex items-center gap-1.5">
+            <Link href="/list" className="bg-slate-50 dark:bg-slate-800 text-blue-600 dark:text-[#A855F7] px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors flex items-center gap-1.5">
               View Database <ArrowUpRight className="w-3 h-3" />
             </Link>
           </div>
@@ -117,10 +117,10 @@ export default function Dashboard() {
                   <div key={enquiry.enquiry_id} className="flex items-start gap-4 group">
                     <div className={cn(
                       "w-2 h-2 rounded-full mt-1.5 shrink-0 shadow-sm transition-transform group-hover:scale-125",
-                      enquiry.status === 'Converted' ? "bg-emerald-500" : "bg-purple-500 dark:bg-[#A855F7]"
+                      enquiry.status === 'Converted' ? "bg-emerald-500" : "bg-blue-500 dark:bg-[#A855F7]"
                     )} />
                     <div className="flex-1">
-                      <p className="text-slate-800 dark:text-slate-100 font-bold text-sm leading-tight group-hover:text-purple-600 dark:group-hover:text-[#A855F7] transition-colors">
+                      <p className="text-slate-800 dark:text-slate-100 font-bold text-sm leading-tight group-hover:text-blue-600 dark:group-hover:text-[#A855F7] transition-colors">
                         {enquiry.status === 'Converted' ? 'Success! ' : 'New lead: '}
                         <span>{enquiry.name}</span>
                       </p>
@@ -130,7 +130,7 @@ export default function Dashboard() {
                         <span>{enquiry.status}</span>
                       </div>
                     </div>
-                    <Link href="/list" className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-300 hover:text-purple-600 dark:hover:text-[#A855F7]">
+                    <Link href="/list" className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-300 hover:text-blue-600 dark:hover:text-[#A855F7]">
                       <ArrowRight className="w-4 h-4" />
                     </Link>
                   </div>
@@ -146,8 +146,8 @@ export default function Dashboard() {
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Quick workflows</p>
           </div>
           <CardContent className="p-6 space-y-4">
-            <Link href="/add" className="block p-5 rounded-xl border-2 border-slate-50 dark:border-slate-800 hover:border-purple-500/20 hover:bg-purple-50/50 dark:hover:bg-purple-900/20 transition-all group">
-              <p className="font-black text-slate-900 dark:text-slate-100 group-hover:text-purple-600 dark:group-hover:text-[#A855F7] text-sm tracking-tight">Bulk Import</p>
+            <Link href="/add" className="block p-5 rounded-xl border-2 border-slate-50 dark:border-slate-800 hover:border-blue-500/20 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-all group">
+              <p className="font-black text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-[#A855F7] text-sm tracking-tight">Bulk Import</p>
               <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Upload Excel database of leads</p>
             </Link>
             <Link href="/list" className="block p-5 rounded-xl border-2 border-slate-50 dark:border-slate-800 hover:border-emerald-500/20 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 transition-all group">

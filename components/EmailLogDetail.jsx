@@ -25,7 +25,7 @@ const getFileIcon = (att) => {
       return <FileText className="w-8 h-8 text-blue-600" />;
     }
     if (['mp4', 'webm', 'mov', 'avi'].includes(ext)) {
-      return <Film className="w-8 h-8 text-purple-500" />;
+      return <Film className="w-8 h-8 text-blue-500" />;
     }
     if (['zip', 'rar', '7z', 'tar', 'gz'].includes(ext)) {
       return <FileArchive className="w-8 h-8 text-yellow-600" />;

@@ -12,7 +12,8 @@ import {
   User as UserIcon,
   ChevronRight,
   KeyRound,
-  UserPen
+  UserPen,
+  RefreshCw
 } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { Card, CardContent } from '@/components/Card';
@@ -59,6 +60,25 @@ export default function UsersPage() {
       showToast('Error loading users', 'error');
     } finally {
       setLoading(false);
+      showLoader(false);
+    }
+  };
+
+  const handleSyncUser = async (userId) => {
+    showLoader(true);
+    try {
+      const res = await fetch(`/api/users/${userId}/sync`, { method: 'POST' });
+      const data = await res.json();
+      if (res.ok) {
+        showToast('User synced successfully', 'success');
+        fetchUsers(); // Refresh list to update is_synced flag
+      } else {
+        showToast(data.error || 'Failed to sync user', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Error syncing user', 'error');
+    } finally {
       showLoader(false);
     }
   };
@@ -128,6 +148,14 @@ export default function UsersPage() {
                   >
                     <KeyRound className="w-4 h-4" /> Change Password
                   </button>
+                  {!user.is_synced && (
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); setActiveDropdown(null); handleSyncUser(user.user_id); }}
+                      className="w-full px-4 py-2 text-sm text-left font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:bg-slate-800 hover:text-emerald-600 flex items-center gap-3 transition-colors cursor-pointer"
+                    >
+                      <RefreshCw className="w-4 h-4" /> Sync to Calling API
+                    </button>
+                  )}
                 </div>
               )}
             </div>
@@ -147,6 +175,9 @@ export default function UsersPage() {
                       <span className="bg-emerald-50 text-emerald-600 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Active</span>
                     ) : (
                       <span className="bg-rose-50 text-rose-600 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Inactive</span>
+                    )}
+                    {!user.is_synced && (
+                      <span className="ml-2 bg-amber-50 text-amber-600 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider" title="Not synced to CloudTelephony API">Not Synced</span>
                     )}
                   </div>
                 </div>

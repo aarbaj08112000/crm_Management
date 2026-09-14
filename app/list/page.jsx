@@ -31,6 +31,7 @@ import AssignModal from '@/components/AssignModal';
 import StatusModal from '@/components/StatusModal';
 import WhatsAppModal from '@/components/WhatsAppModal';
 import EmailThreadModal from '@/components/EmailThreadModal';
+import CallButton from '@/components/calling/CallButton';
 
 const statusColors = {
   'Pending': 'text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-900/50 dark:bg-amber-900/20',
@@ -43,7 +44,7 @@ const msgSentColors = {
   'No': 'text-slate-400 dark:text-slate-500 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900',
   'Email': 'text-blue-600 dark:text-blue-400 border-blue-100 dark:border-blue-900/30 bg-white dark:bg-blue-900/10',
   'WhatsApp': 'text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900/30 bg-white dark:bg-emerald-900/10',
-  'Both': 'text-purple-600 dark:text-purple-400 border-purple-100 dark:border-purple-900/30 bg-white dark:bg-purple-900/10',
+  'Both': 'text-blue-600 dark:text-blue-400 border-blue-100 dark:border-blue-900/30 bg-white dark:bg-blue-900/10',
   'Sent': 'text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/30 bg-white dark:bg-emerald-900/10',
   '1': 'text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/30 bg-white dark:bg-emerald-900/10',
 };
@@ -137,7 +138,7 @@ export default function ListPage() {
       if (openEmailThreadId) {
         // clear the URL so it doesn't re-open on manual refresh
         window.history.replaceState({}, document.title, window.location.pathname);
-        
+
         // fetch the specific enquiry to populate the modal
         fetch(`/api/enquiries/${openEmailThreadId}`)
           .then(r => r.json())
@@ -349,7 +350,7 @@ export default function ListPage() {
                 enquiries.map((enquiry, index) => (
                   <tr key={enquiry.enquiry_id} className="hover:bg-blue-50/30 dark:hover:bg-[#1C1C1C] transition-colors group">
                     <td className="px-4 py-3 text-blue-600 dark:text-blue-400 text-[13px] font-black tracking-wider font-mono">
-                      <a 
+                      <a
                         href={`/admin/crm/lead-management/view/${enquiry.enquiry_id}`}
                         className="hover:underline hover:text-blue-700 transition-colors cursor-pointer"
                       >
@@ -445,70 +446,67 @@ export default function ListPage() {
                                 <CheckCircle2 className="w-4 h-4" /> View Details
                               </a>
                               <button
-                                onClick={() => { setSelectedEnquiry(enquiry); setShowStatusModal(true); }}
+                                onClick={() => { setOpenActionId(null); setSelectedEnquiry(enquiry); setShowStatusModal(true); }}
                                 className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:bg-slate-800 transition-colors"
                               >
                                 <Check className="w-4 h-4" /> Update Msg Sent
                               </button>
                               {currentUser?.role === 'admin' && (
                                 <button
-                                  onClick={() => { setSelectedEnquiry(enquiry); setShowAssignModal(true); }}
+                                  onClick={() => { setOpenActionId(null); setSelectedEnquiry(enquiry); setShowAssignModal(true); }}
                                   className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                                 >
                                   <UserPlus className="w-4 h-4" /> Assign Lead
                                 </button>
                               )}
                               <button
-                                onClick={() => { setSelectedEnquiry(enquiry); setShowEditModal(true); }}
+                                onClick={() => { setOpenActionId(null); setSelectedEnquiry(enquiry); setShowEditModal(true); }}
                                 className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-amber-50 dark:hover:bg-amber-900/30 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
                               >
                                 <Pencil className="w-4 h-4" /> Edit Details
                               </button>
                               <button
-                                onClick={() => { setSelectedEnquiry(enquiry); setShowEmailModal(true); }}
+                                onClick={() => { setOpenActionId(null); setSelectedEnquiry(enquiry); setShowEmailModal(true); }}
                                 className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                               >
                                 <Mail className="w-4 h-4" /> Send Email
                               </button>
                               <button
-                                onClick={() => { setSelectedEnquiry(enquiry); setShowEmailThreadModal(true); }}
-                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-purple-50 dark:hover:bg-purple-900/30 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                                onClick={() => { setOpenActionId(null); setSelectedEnquiry(enquiry); setShowEmailThreadModal(true); }}
+                                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                               >
                                 <Mail className="w-4 h-4" /> View Email Thread
                               </button>
                               {!enquiry.whatsapp_number ? (
                                 <button
-                                  onClick={() => handleAddWhatsappNumber(enquiry)}
+                                  onClick={() => { setOpenActionId(null); handleAddWhatsappNumber(enquiry); }}
                                   className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
                                 >
                                   <Plus className="w-4 h-4" /> Add WA Number
                                 </button>
                               ) : (
                                 <button
-                                  onClick={() => redirectToWhatsAppModule(enquiry)}
+                                  onClick={() => { setOpenActionId(null); redirectToWhatsAppModule(enquiry); }}
                                   className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
                                 >
                                   <MessageSquare className="w-4 h-4" /> WhatsApp
                                 </button>
                               )}
-                              <button
-                                onClick={() => makeCall(enquiry.mobile_number, 'LEAD', enquiry.enquiry_id)}
-                                disabled={!enquiry.mobile_number}
-                                className="!hidden w-full flex items-center gap-3 px-4 py-2.5 text-sm text-indigo-700 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors disabled:opacity-50"
-                              >
-                                <PhoneCall className="w-4 h-4" /> Call Lead
-                              </button>
-                              <button
-                                onClick={() => handleVonageCall(enquiry.mobile_number, 'LEAD', enquiry.enquiry_id)}
-                                disabled={!enquiry.mobile_number}
-                                className="!hidden w-full flex items-center gap-3 px-4 py-2.5 text-sm text-purple-700 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/30 transition-colors disabled:opacity-50"
-                              >
-                                <PhoneCall className="w-4 h-4" /> Call 2
-                              </button>
+                              {currentUser?.calling_enabled && (
+                                <CallButton
+                                  onClick={() => setOpenActionId(null)}
+                                  number={enquiry.mobile_number}
+                                  sourceType="LEAD"
+                                  sourceId={enquiry.enquiry_id}
+                                  className="w-full px-4 py-2.5 text-indigo-700 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30"
+                                >
+                                  Call Lead
+                                </CallButton>
+                              )}
                               <div className="border-t border-slate-50 dark:border-slate-800 my-1"></div>
                               {currentUser?.role === 'admin' && (
                                 <button
-                                  onClick={() => { setSelectedEnquiry(enquiry); setShowDeleteModal(true); }}
+                                  onClick={() => { setOpenActionId(null); setSelectedEnquiry(enquiry); setShowDeleteModal(true); }}
                                   className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/30 transition-colors"
                                 >
                                   <Trash2 className="w-4 h-4" /> Delete

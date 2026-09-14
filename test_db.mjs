@@ -1,13 +1,11 @@
 import { pool } from './lib/db.js';
-async function check() {
+async function run() {
   try {
-    const [rows] = await pool.query('SHOW TABLES');
+    const [rows] = await pool.query("DESCRIBE call_logs");
     console.log(rows);
-    const [cols] = await pool.query('DESCRIBE activity_logs');
-    console.log(cols);
   } catch (e) {
     console.error(e);
   }
   process.exit(0);
 }
-check();
+run();

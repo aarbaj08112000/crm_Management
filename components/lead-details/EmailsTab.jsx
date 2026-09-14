@@ -24,7 +24,7 @@ const getFileIcon = (att) => {
       return <FileText className="w-8 h-8 text-blue-600" />;
     }
     if (['mp4', 'webm', 'mov', 'avi'].includes(ext)) {
-      return <Film className="w-8 h-8 text-purple-500" />;
+      return <Film className="w-8 h-8 text-blue-500" />;
     }
     if (['zip', 'rar', '7z', 'tar', 'gz'].includes(ext)) {
       return <FileArchive className="w-8 h-8 text-yellow-600" />;
@@ -154,7 +154,7 @@ export default function EmailsTab({ lead }) {
                   <div className="text-[13px] font-medium text-slate-700 dark:text-slate-200">{date}</div>
                   <div className="flex items-center gap-3">
                     <div className="text-[13px] text-slate-700 dark:text-slate-200">
-                      Lead : <span className="text-blue-600 font-semibold cursor-pointer hover:underline">{lead?.id}</span>
+                      Enquiry : <span className="text-blue-600 font-semibold cursor-pointer hover:underline">{lead?.formatted_id || lead?.id}</span>
                     </div>
                     {type === 'Inbound' ? (
                       <span className="bg-[#e1f0ff] text-blue-700 font-bold px-2 py-0.5 rounded text-[11px] flex items-center gap-1">

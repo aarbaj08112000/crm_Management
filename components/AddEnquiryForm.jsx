@@ -83,7 +83,7 @@ export default function AddEnquiryForm() {
               <input
                 {...register('name')}
                 className={cn(
-                  "w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm",
+                  "w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-blue-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm",
                   errors.name && "border-rose-200 bg-rose-50"
                 )}
                 placeholder="Enter company or person name"
@@ -99,7 +99,7 @@ export default function AddEnquiryForm() {
               <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-blue-600 transition-colors" />
               <input
                 {...register('contact_person')}
-                className="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm"
+                className="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-blue-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm"
                 placeholder="Name of contact"
               />
             </div>
@@ -120,7 +120,7 @@ export default function AddEnquiryForm() {
                     inputProps={{
                       required: true,
                       className: cn(
-                        "w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm",
+                        "w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-blue-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm",
                         errors.mobile && "border-rose-200 bg-rose-50"
                       )
                     }}
@@ -138,10 +138,10 @@ export default function AddEnquiryForm() {
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-700 dark:text-slate-200 ml-1">Email Address</label>
             <div className="relative group">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-purple-500 transition-colors" />
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-blue-500 transition-colors" />
               <input
                 {...register('email')}
-                className="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm"
+                className="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-blue-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm"
                 placeholder="example@email.com"
               />
             </div>
@@ -154,7 +154,7 @@ export default function AddEnquiryForm() {
               <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-amber-500 transition-colors" />
               <input
                 {...register('type')}
-                className="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm"
+                className="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-blue-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm"
                 placeholder="e.g. School, Office"
               />
             </div>
@@ -167,7 +167,7 @@ export default function AddEnquiryForm() {
               <CheckCircle2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-blue-600 transition-colors pointer-events-none" />
               <select
                 {...register('status')}
-                className="w-full pl-11 pr-10 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm appearance-none cursor-pointer"
+                className="w-full pl-11 pr-10 py-3 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-blue-500 outline-none text-sm font-medium text-slate-800 dark:text-slate-100 shadow-sm appearance-none cursor-pointer"
               >
                 <option value="Pending">Pending</option>
                 <option value="In Progress">In Progress</option>
@@ -200,7 +200,7 @@ export default function AddEnquiryForm() {
                 />
                 <div className={cn(
                   "px-6 py-2 rounded-xl border border-slate-200 dark:border-[#27272A] font-bold text-xs uppercase tracking-wider transition-all duration-300",
-                  "bg-white dark:bg-[#1A1A1A] text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#27272A] peer-checked:bg-slate-900 dark:peer-checked:bg-[#27272A] peer-checked:text-white dark:peer-checked:text-slate-100 peer-checked:border-slate-900 dark:peer-checked:border-purple-500 peer-checked:shadow-lg dark:peer-checked:shadow-none"
+                  "bg-white dark:bg-[#1A1A1A] text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#27272A] peer-checked:bg-slate-900 dark:peer-checked:bg-[#27272A] peer-checked:text-white dark:peer-checked:text-slate-100 peer-checked:border-slate-900 dark:peer-checked:border-blue-500 peer-checked:shadow-lg dark:peer-checked:shadow-none"
                 )}>
                   {option.label}
                 </div>
@@ -216,7 +216,7 @@ export default function AddEnquiryForm() {
             <textarea
               {...register('address')}
               rows={4}
-              className="w-full px-5 py-4 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 resize-none shadow-sm"
+              className="w-full px-5 py-4 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-blue-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 resize-none shadow-sm"
               placeholder="Enter full address..."
             />
           </div>
@@ -227,7 +227,7 @@ export default function AddEnquiryForm() {
             <textarea
               {...register('comment')}
               rows={4}
-              className="w-full px-5 py-4 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-purple-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 resize-none shadow-sm"
+              className="w-full px-5 py-4 bg-slate-50 dark:bg-[#121212] border-2 border-slate-50 dark:border-[#27272A] rounded-2xl focus:bg-white dark:focus:bg-[#1A1A1A] focus:border-blue-600 dark:focus:border-blue-500 outline-none transition-all text-sm font-medium text-slate-800 dark:text-slate-100 resize-none shadow-sm"
               placeholder="Private comments..."
             />
           </div>
@@ -237,7 +237,7 @@ export default function AddEnquiryForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full md:w-auto md:min-w-[300px] py-4 px-10 bg-blue-600 dark:bg-purple-600 text-white font-black rounded-2xl shadow-xl shadow-blue-600/20 dark:shadow-none hover:bg-blue-500 dark:hover:bg-purple-500 hover:-translate-y-1 active:translate-y-0 transition-all flex items-center justify-center gap-3 group disabled:opacity-70 disabled:hover:translate-y-0 mx-auto"
+            className="w-full md:w-auto md:min-w-[300px] py-4 px-10 bg-blue-600 dark:bg-blue-600 text-white font-black rounded-2xl shadow-xl shadow-blue-600/20 dark:shadow-none hover:bg-blue-500 dark:hover:bg-blue-500 hover:-translate-y-1 active:translate-y-0 transition-all flex items-center justify-center gap-3 group disabled:opacity-70 disabled:hover:translate-y-0 mx-auto"
           >
             {loading ? (
               <Loader2 className="w-5 h-5 animate-spin" />

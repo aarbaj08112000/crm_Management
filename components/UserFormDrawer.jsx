@@ -19,7 +19,10 @@ export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
     role: 'user',
     status: 1,
     image: '',
-    emailVerified: false
+    emailVerified: false,
+    sip_username: '',
+    sip_password: '',
+    calling_enabled: false
   });
   
   const [preview, setPreview] = useState(null);
@@ -35,12 +38,15 @@ export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
         role: user.role || 'user',
         status: user.status === undefined ? 1 : user.status,
         image: user.image || '',
-        emailVerified: true
+        emailVerified: true,
+        sip_username: user.sip_username || '',
+        sip_password: user.sip_password || '',
+        calling_enabled: user.calling_enabled === 1 || user.calling_enabled === true
       });
       setPreview(user.image || null);
     } else {
       setFormData({
-        name: '', email: '', username: '', mobile: '', password: '', role: 'user', status: 1, image: '', emailVerified: false
+        name: '', email: '', username: '', mobile: '', password: '', role: 'user', status: 1, image: '', emailVerified: false, sip_username: '', sip_password: '', calling_enabled: false
       });
       setPreview(null);
     }
@@ -191,6 +197,17 @@ export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
+                  <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase mb-1">SIP Username / Ext</label>
+                  <input type="text" placeholder="e.g. 08485835691" className="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.sip_username} onChange={e => setFormData({...formData, sip_username: e.target.value})} />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase mb-1">SIP Password / Token</label>
+                  <input type="text" placeholder="Enter SIP Token" className="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.sip_password} onChange={e => setFormData({...formData, sip_password: e.target.value})} />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
                   <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase mb-1">Group <span className="text-rose-500">*</span></label>
                   <select className="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})}>
                     <option value="user">User</option>
@@ -215,6 +232,16 @@ export default function UserFormDrawer({ isOpen, onClose, user, onSaved }) {
                   onClick={() => setFormData(prev => ({...prev, emailVerified: !prev.emailVerified}))}
                 >
                   <div className={cn("bg-white dark:bg-slate-900 w-4 h-4 rounded-full shadow-sm transform transition-transform", formData.emailVerified ? "translate-x-4" : "translate-x-0")} />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-2">
+                <label className="text-sm font-semibold text-slate-700 dark:text-slate-200">Calling Enabled</label>
+                <div 
+                  className={cn("w-10 h-6 rounded-full cursor-pointer flex items-center p-1 transition-colors", formData.calling_enabled ? "bg-emerald-500" : "bg-slate-300")}
+                  onClick={() => setFormData(prev => ({...prev, calling_enabled: !prev.calling_enabled}))}
+                >
+                  <div className={cn("bg-white dark:bg-slate-900 w-4 h-4 rounded-full shadow-sm transform transition-transform", formData.calling_enabled ? "translate-x-4" : "translate-x-0")} />
                 </div>
               </div>
 

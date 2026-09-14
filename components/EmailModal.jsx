@@ -373,13 +373,13 @@ export default function EmailModal({ enquiry, onClose }) {
               <div className="flex bg-slate-100 dark:bg-[#121212] p-1 rounded-lg border border-slate-200 dark:border-[#27272A]">
                 <button 
                   onClick={() => setSendType('Instant')} 
-                  className={cn("px-4 py-1.5 text-xs font-bold rounded-md transition-colors", sendType === 'Instant' ? "bg-white dark:bg-[#1A1A1A] text-blue-600 dark:text-purple-400 shadow-sm" : "text-slate-500 hover:text-slate-700 dark:text-slate-300")}
+                  className={cn("px-4 py-1.5 text-xs font-bold rounded-md transition-colors", sendType === 'Instant' ? "bg-white dark:bg-[#1A1A1A] text-blue-600 dark:text-blue-400 shadow-sm" : "text-slate-500 hover:text-slate-700 dark:text-slate-300")}
                 >
                   Instant
                 </button>
                 <button 
                   onClick={() => setSendType('Schedule')} 
-                  className={cn("px-4 py-1.5 text-xs font-bold rounded-md transition-colors", sendType === 'Schedule' ? "bg-white dark:bg-[#1A1A1A] text-blue-600 dark:text-purple-400 shadow-sm" : "text-slate-500 hover:text-slate-700 dark:text-slate-300")}
+                  className={cn("px-4 py-1.5 text-xs font-bold rounded-md transition-colors", sendType === 'Schedule' ? "bg-white dark:bg-[#1A1A1A] text-blue-600 dark:text-blue-400 shadow-sm" : "text-slate-500 hover:text-slate-700 dark:text-slate-300")}
                 >
                   Schedule
                 </button>
@@ -392,7 +392,7 @@ export default function EmailModal({ enquiry, onClose }) {
                   type="datetime-local" 
                   value={scheduledAt}
                   onChange={(e) => setScheduledAt(e.target.value)}
-                  className="px-3 py-1.5 text-sm bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#27272A] rounded-md outline-none focus:border-blue-500 dark:focus:border-purple-500 text-slate-700 dark:text-slate-200"
+                  className="px-3 py-1.5 text-sm bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#27272A] rounded-md outline-none focus:border-blue-500 dark:focus:border-blue-500 text-slate-700 dark:text-slate-200"
                 />
               </div>
             )}

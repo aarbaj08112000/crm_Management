@@ -6,7 +6,7 @@ import { useApp } from '@/context/AppContext';
 import { useCalling } from '@/context/CallingContext';
 
 export default function ContactsPage() {
-    const { showToast, hasPermission } = useApp();
+    const { showToast, hasPermission, currentUser } = useApp();
     const { makeCall } = useCalling();
     const [contacts, setContacts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -186,14 +186,16 @@ export default function ContactsPage() {
                                                 </button>
                                             )}
                                             
-                                            <button 
-                                                onClick={() => makeCall(contact.phone, 'CONTACT', contact.id)}
-                                                disabled={!contact.phone}
-                                                className="hidden flex-1 flex items-center justify-center gap-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed py-2 rounded-xl font-medium transition-colors text-sm"
-                                            >
-                                                <PhoneCall className="w-4 h-4" />
-                                                Call
-                                            </button>
+                                            {currentUser?.calling_enabled && (
+                                                <button 
+                                                    onClick={() => makeCall(contact.phone, 'CONTACT', contact.id)}
+                                                    disabled={!contact.phone}
+                                                    className="flex-1 flex items-center justify-center gap-1 bg-blue-50 hover:bg-blue-100 text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed py-2 rounded-xl font-medium transition-colors text-sm"
+                                                >
+                                                    <PhoneCall className="w-4 h-4" />
+                                                    Call
+                                                </button>
+                                            )}
 
 
                                             <button

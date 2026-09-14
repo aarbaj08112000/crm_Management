@@ -63,7 +63,9 @@ export default function Header({ isCollapsed, setIsCollapsed, user }) {
   const triggerBackgroundSync = () => {
     fetch('/api/email/sync', { method: 'POST' })
       .then(() => fetchNotifications())
-      .catch(err => console.error(err));
+      .catch(() => {
+        // Silently ignore network errors to prevent Next.js dev overlay from popping up on intermittent connections
+      });
   };
 
   useEffect(() => {

@@ -7,7 +7,7 @@ export async function GET(req, { params }) {
     const { id } = await params;
     
     // Get basic user info
-    const [userRows] = await pool.query('SELECT user_id, user_name as name, email, mobile, role, status, image, added_date, updated_date FROM user_master WHERE user_id = ?', [id]);
+    const [userRows] = await pool.query('SELECT user_id, user_name as name, email, mobile, role, status, image, added_date, updated_date, sip_username, sip_password, calling_enabled FROM user_master WHERE user_id = ?', [id]);
     if (userRows.length === 0) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
@@ -30,7 +30,7 @@ export async function PATCH(req, { params }) {
   try {
     const { id } = await params;
     const body = await req.json();
-    const { name, email, mobile, role, status, image, password } = body;
+    const { name, email, mobile, role, status, image, password, sip_username, sip_password, calling_enabled } = body;
     let roleId = null;
     if (role) {
       const [roles] = await pool.query('SELECT id FROM roles WHERE LOWER(name) = LOWER(?)', [role]);
@@ -41,13 +41,13 @@ export async function PATCH(req, { params }) {
 
     if (password && password.trim() !== '') {
       await pool.query(
-        'UPDATE user_master SET user_name = ?, email = ?, mobile = ?, role = ?, role_id = ?, status = ?, image = ?, password = ? WHERE user_id = ?',
-        [name, email, mobile, role, roleId, status, image || null, password, id]
+        'UPDATE user_master SET user_name = ?, email = ?, mobile = ?, role = ?, role_id = ?, status = ?, image = ?, password = ?, sip_username = ?, sip_password = ?, calling_enabled = ? WHERE user_id = ?',
+        [name, email, mobile, role, roleId, status, image || null, password, sip_username || null, sip_password || null, calling_enabled ? 1 : 0, id]
       );
     } else {
       await pool.query(
-        'UPDATE user_master SET user_name = ?, email = ?, mobile = ?, role = ?, role_id = ?, status = ?, image = ? WHERE user_id = ?',
-        [name, email, mobile, role, roleId, status, image || null, id]
+        'UPDATE user_master SET user_name = ?, email = ?, mobile = ?, role = ?, role_id = ?, status = ?, image = ?, sip_username = ?, sip_password = ?, calling_enabled = ? WHERE user_id = ?',
+        [name, email, mobile, role, roleId, status, image || null, sip_username || null, sip_password || null, calling_enabled ? 1 : 0, id]
       );
     }
 
