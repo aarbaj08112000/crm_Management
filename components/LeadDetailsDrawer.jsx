@@ -1,14 +1,22 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, User, Phone, Mail, MapPin, Briefcase } from 'lucide-react';
 import { cn, formatLeadCode } from '@/lib/utils';
 import SidePanelHeader from './SidePanelHeader';
 
 export default function LeadDetailsDrawer({ enquiry, onClose }) {
-  if (!enquiry) return null;
+  const [mounted, setMounted] = useState(false);
 
-  return (
-    <div className="fixed inset-0 z-[100] flex justify-end overflow-hidden">
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!enquiry || !mounted) return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex justify-end overflow-hidden">
       {/* Backdrop */}
       <div 
         className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity animate-in fade-in duration-300"
@@ -50,10 +58,10 @@ export default function LeadDetailsDrawer({ enquiry, onClose }) {
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1 md:col-span-2">
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Email</label>
-                  <div className="font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-2 break-all">
-                    <Mail className="w-4 h-4 text-indigo-500 min-w-4" />
+                  <div className="font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-2 break-words">
+                    <Mail className="w-4 h-4 text-indigo-500 min-w-4 shrink-0" />
                     {enquiry.email || '-'}
                   </div>
                 </div>
@@ -107,6 +115,7 @@ export default function LeadDetailsDrawer({ enquiry, onClose }) {
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

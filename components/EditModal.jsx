@@ -1,5 +1,7 @@
 'use client';
-// Force refresh: 2026-05-12T01:40:00
+
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -73,11 +75,11 @@ export default function EditModal({ enquiry, onClose, onSaved }) {
   return (
     <div className="fixed inset-0 z-[100] flex justify-end overflow-hidden">
       {/* Backdrop */}
-      <div 
+      <div
         className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity animate-in fade-in duration-300"
         onClick={onClose}
       />
-      
+
       {/* Side Menu Panel */}
       <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500 ease-out">
         {/* Header */}
@@ -93,7 +95,7 @@ export default function EditModal({ enquiry, onClose, onSaved }) {
           <div className="space-y-8">
             <div className="space-y-6">
               <h4 className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em]">Primary Information</h4>
-              
+
               {/* Name */}
               <div className="space-y-2">
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1.5">Company / Full Name</label>
@@ -149,7 +151,7 @@ export default function EditModal({ enquiry, onClose, onSaved }) {
 
             <div className="space-y-6 pt-4 border-t border-slate-100">
               <h4 className="text-[10px] font-black text-amber-600 uppercase tracking-[0.2em]">Secondary Details</h4>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1.5">Contact Person</label>
