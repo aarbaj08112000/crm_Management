@@ -19,7 +19,7 @@ export async function GET(req) {
 
     // Role-based access check
     const permissions = await query(
-      `SELECT p.can_view
+      `SELECT p.can_view, u.role
        FROM role_permissions p
        JOIN menus m ON p.menu_id = m.id
        JOIN user_master u ON u.role_id = p.role_id
@@ -31,13 +31,21 @@ export async function GET(req) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    const emails = await query(
-      `SELECT se.*, u.user_name as created_by_name, e.name as lead_name
+    const userRole = (permissions[0].role || '').toString().toLowerCase();
+    let emailsQuery = `SELECT se.*, u.user_name as created_by_name, e.name as lead_name
        FROM scheduled_emails se
        LEFT JOIN user_master u ON se.created_by = u.user_id
-       LEFT JOIN enquiries e ON se.enquiry_id = e.enquiry_id
-       ORDER BY se.scheduled_at DESC`
-    );
+       LEFT JOIN enquiries e ON se.enquiry_id = e.enquiry_id`;
+    
+    const queryParams = [];
+    if (userRole !== 'admin') {
+      emailsQuery += ` WHERE se.created_by = ?`;
+      queryParams.push(userId);
+    }
+    
+    emailsQuery += ` ORDER BY se.scheduled_at DESC`;
+
+    const emails = await query(emailsQuery, queryParams);
 
     return NextResponse.json(emails);
   } catch (error) {

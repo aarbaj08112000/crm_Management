@@ -1,8 +1,10 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { RefreshCcw, Loader2, File, FileText, Film, FileArchive, FileType, Clock, Calendar } from 'lucide-react';
+import { RefreshCcw, Loader2, File, FileText, Film, FileArchive, FileType, Clock, Calendar, Edit, Trash2 } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import EmailLogDetail from '../EmailLogDetail';
+import EditScheduledEmailModal from '../EditScheduledEmailModal';
+import ConfirmModal from '../ConfirmModal';
 
 const getFileIcon = (att) => {
     if (!att || !att.filename) return <File className="w-8 h-8 text-slate-500" />;
@@ -45,6 +47,33 @@ export default function ScheduledEmailsTab({ lead }) {
   const [viewerFiles, setViewerFiles] = useState([]);
   const [viewerIndex, setViewerIndex] = useState(0);
   const [selectedLog, setSelectedLog] = useState(null);
+  const [emailToEdit, setEmailToEdit] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState(null);
+
+  const executeDelete = async () => {
+    if (!deleteConfirmId) return;
+    setDeletingId(deleteConfirmId);
+    try {
+      const res = await fetch(`/api/scheduled-emails/${deleteConfirmId}`, { method: 'DELETE' });
+      if (res.ok) {
+        showToast('Scheduled email deleted', 'success');
+        fetchScheduledEmails();
+      } else {
+        const err = await res.json();
+        showToast(err.error || 'Failed to delete', 'error');
+      }
+    } catch (e) {
+      showToast('Failed to delete', 'error');
+    } finally {
+      setDeletingId(null);
+      setDeleteConfirmId(null);
+    }
+  };
+
+  const handleDeleteClick = (id) => {
+    setDeleteConfirmId(id);
+  };
 
   const handleEmailClick = (email) => {
     setSelectedLog({
@@ -161,23 +190,44 @@ export default function ScheduledEmailsTab({ lead }) {
                         ✕ Failed
                       </span>
                     )}
-                    <span className="flex items-center gap-1.5 text-xs font-bold text-white bg-blue-600 rounded px-3 py-1">
-                      <Clock className="w-3.5 h-3.5" />
-                      Sch: {scheduledDate}
-                    </span>
+                      <span className="flex items-center gap-1.5 text-xs font-bold text-white bg-blue-600 rounded px-3 py-1">
+                        <Clock className="w-3.5 h-3.5" />
+                        Sch: {scheduledDate}
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="mb-2">
-                  <div className="flex justify-between items-start mb-2 gap-4">
-                    <h3 
-                      className="text-[14.5px] font-semibold text-blue-700 leading-snug cursor-pointer hover:underline"
-                      onClick={() => handleEmailClick(email)}
-                    >
-                      {email.subject || '(No Subject)'}
-                    </h3>
-                    <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap">{emailId}</span>
-                  </div>
+                  <div className="mb-2">
+                    <div className="flex justify-between items-start mb-2 gap-4">
+                      <h3 
+                        className="text-[14.5px] font-semibold text-blue-700 leading-snug cursor-pointer hover:underline"
+                        onClick={() => handleEmailClick(email)}
+                      >
+                        {email.subject || '(No Subject)'}
+                      </h3>
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap">{emailId}</span>
+                        {email.status === 'Pending' && (
+                          <div className="flex items-center gap-1">
+                            <button 
+                              onClick={() => setEmailToEdit(email)}
+                              className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                              title="Edit Scheduled Email"
+                            >
+                              <Edit className="w-3.5 h-3.5" />
+                            </button>
+                            <button 
+                              onClick={() => handleDeleteClick(email.id)}
+                              disabled={deletingId === email.id}
+                              className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors disabled:opacity-50"
+                              title="Delete Scheduled Email"
+                            >
+                              {deletingId === email.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   
                   {preview && (
                     <p className="text-[13px] text-slate-700 dark:text-slate-200 leading-relaxed line-clamp-2">
@@ -284,6 +334,26 @@ export default function ScheduledEmailsTab({ lead }) {
         <EmailLogDetail
           log={selectedLog}
           onClose={() => setSelectedLog(null)}
+        />
+      )}
+
+      {/* Edit Modal */}
+      {emailToEdit && (
+        <EditScheduledEmailModal 
+          email={emailToEdit} 
+          onClose={() => setEmailToEdit(null)} 
+          onSaved={fetchScheduledEmails} 
+        />
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirmId && (
+        <ConfirmModal
+          title="Delete Scheduled Email"
+          message="Are you sure you want to delete this scheduled email? This action cannot be undone."
+          onConfirm={executeDelete}
+          onCancel={() => setDeleteConfirmId(null)}
+          loading={deletingId === deleteConfirmId}
         />
       )}
     </div>

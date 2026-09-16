@@ -176,6 +176,20 @@ export async function POST(req) {
 
     if (scheduledAtStr) {
       const scheduledAtDate = new Date(scheduledAtStr);
+
+      // Check if there is already a pending scheduled email for this lead/address
+      if (parsedEnquiryId) {
+        const existingPending = await query('SELECT id FROM scheduled_emails WHERE enquiry_id = ? AND status = ?', [parsedEnquiryId, 'Pending']);
+        if (existingPending.length > 0) {
+          return NextResponse.json({ error: 'A scheduled email is already pending for this lead. Please wait until it is sent or delete it.' }, { status: 400 });
+        }
+      } else if (to) {
+        const existingPending = await query('SELECT id FROM scheduled_emails WHERE `to` = ? AND status = ? AND enquiry_id IS NULL', [to, 'Pending']);
+        if (existingPending.length > 0) {
+          return NextResponse.json({ error: 'A scheduled email is already pending for this address. Please wait until it is sent or delete it.' }, { status: 400 });
+        }
+      }
+
       // It's a scheduled email, so save it to the scheduled_emails table and don't send immediately.
       try {
         await query(
@@ -203,6 +217,13 @@ export async function POST(req) {
           description: `Scheduled email to ${to} for ${scheduledAtDate.toLocaleString()}`
         });
 
+        if (parsedEnquiryId) {
+          const existingEnquiry = await query('SELECT msg_sent FROM enquiries WHERE enquiry_id = ?', [parsedEnquiryId]);
+          if (existingEnquiry.length > 0) {
+            await query('UPDATE enquiries SET msg_sent = ? WHERE enquiry_id = ?', ['Scheduled Email', parsedEnquiryId]);
+          }
+        }
+
         return NextResponse.json({ message: 'Email scheduled successfully' });
       } catch (dbErr) {
         console.error('Failed to insert scheduled email:', dbErr);
@@ -227,8 +248,20 @@ export async function POST(req) {
           'INSERT INTO email_logs (user_id, recipient_email, subject, body, sent_at, direction, enquiry_id, attachments) VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)',
           [userId, to, subject, html || text || '', 'sent', parsedEnquiryId, attachmentsJson]
         );
+
+        if (parsedEnquiryId) {
+          const existingEnquiry = await query('SELECT msg_sent FROM enquiries WHERE enquiry_id = ?', [parsedEnquiryId]);
+          if (existingEnquiry.length > 0) {
+            const currentStatus = existingEnquiry[0].msg_sent;
+            let newStatus = 'Email';
+            if (currentStatus === 'WhatsApp' || currentStatus === 'Both') {
+              newStatus = 'Both';
+            }
+            await query('UPDATE enquiries SET msg_sent = ? WHERE enquiry_id = ?', [newStatus, parsedEnquiryId]);
+          }
+        }
       } catch (dbErr) {
-        console.error('Failed to insert email log:', dbErr);
+        console.error('Failed to insert email log or update enquiry status:', dbErr);
       }
     }
 

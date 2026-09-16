@@ -174,8 +174,20 @@ export async function POST(req) {
           'INSERT INTO email_logs (user_id, recipient_email, subject, body, sent_at, direction, enquiry_id, attachments) VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)',
           [userId, to, subject, html || text || '', 'sent', enquiryId || null, attachmentsJson]
         );
+        
+        if (enquiryId) {
+          const existingEnquiry = await query('SELECT msg_sent FROM enquiries WHERE enquiry_id = ?', [enquiryId]);
+          if (existingEnquiry.length > 0) {
+            const currentStatus = existingEnquiry[0].msg_sent;
+            let newStatus = 'Email';
+            if (currentStatus === 'WhatsApp' || currentStatus === 'Both') {
+              newStatus = 'Both';
+            }
+            await query('UPDATE enquiries SET msg_sent = ? WHERE enquiry_id = ?', [newStatus, enquiryId]);
+          }
+        }
       } catch (dbErr) {
-        console.error('Failed to insert email log:', dbErr);
+        console.error('Failed to insert email log or update enquiry status:', dbErr);
       }
     }
 

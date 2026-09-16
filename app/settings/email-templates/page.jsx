@@ -7,7 +7,11 @@ import { Card, CardContent } from '@/components/Card';
 import { cn } from '@/lib/utils';
 
 export default function EmailTemplatesPage() {
-  const { showToast } = useApp();
+  const { showToast, hasPermission } = useApp();
+  
+  const canAdd = hasPermission('Email Templates', 'can_add');
+  const canUpdate = hasPermission('Email Templates', 'can_update');
+  const canDelete = hasPermission('Email Templates', 'can_delete');
   
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -129,13 +133,15 @@ export default function EmailTemplatesPage() {
               >
                 <RefreshCcw className={cn("w-4 h-4", loading && "animate-spin")} />
               </button>
-              <button
-                onClick={handleCreateNew}
-                className="px-4 py-2 bg-[#5145f6] text-white text-sm font-bold rounded-lg shadow-lg shadow-[#5145f6]/20 hover:bg-[#4135e6] transition-all flex items-center gap-2"
-              >
-                <Plus className="w-4 h-4" />
-                Create Template
-              </button>
+              {canAdd && (
+                <button
+                  onClick={handleCreateNew}
+                  className="px-4 py-2 bg-[#5145f6] text-white text-sm font-bold rounded-lg shadow-lg shadow-[#5145f6]/20 hover:bg-[#4135e6] transition-all flex items-center gap-2"
+                >
+                  <Plus className="w-4 h-4" />
+                  Create Template
+                </button>
+              )}
             </div>
           </div>
         </CardContent>
@@ -210,20 +216,24 @@ export default function EmailTemplatesPage() {
                         >
                           <Eye className="w-4 h-4" />
                         </button>
-                        <button
-                          onClick={() => handleEdit(template)}
-                          className="p-2 text-slate-400 hover:text-amber-500 hover:bg-amber-50 rounded-lg transition-colors border border-transparent hover:border-amber-200"
-                          title="Edit Template"
-                        >
-                          <Edit className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => { setTemplateToDelete(template); setShowDeleteModal(true); }}
-                          className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors border border-transparent hover:border-rose-200"
-                          title="Delete Template"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                        {canUpdate && (
+                          <button
+                            onClick={() => handleEdit(template)}
+                            className="p-2 text-slate-400 hover:text-amber-500 hover:bg-amber-50 rounded-lg transition-colors border border-transparent hover:border-amber-200"
+                            title="Edit Template"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </button>
+                        )}
+                        {canDelete && (
+                          <button
+                            onClick={() => { setTemplateToDelete(template); setShowDeleteModal(true); }}
+                            className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors border border-transparent hover:border-rose-200"
+                            title="Delete Template"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>

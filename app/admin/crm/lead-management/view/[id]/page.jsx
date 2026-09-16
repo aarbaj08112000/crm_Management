@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useRouter, useParams } from 'next/navigation';
 import { cn, formatLeadCode, formatDate } from '@/lib/utils';
 import { useApp } from '@/context/AppContext';
@@ -64,36 +64,38 @@ export default function LeadDetailsPage() {
     }
   }, [params.id]);
 
+  // Format real lead data to match component expectations
+  const displayLead = useMemo(() => {
+    return lead ? {
+      ...lead,
+      id: lead.enquiry_id,
+      formatted_id: formatLeadCode(lead.enquiry_id, lead.added_date, companySettings),
+      issues: lead.issues,
+      status: lead.status,
+      score: lead.score,
+      age: lead.age,
+      contact_person: lead.contact_person,
+      company: lead.name,
+      industry: lead.industry,
+      owner: lead.assignee_name,
+      requirement_type: lead.type,
+      channel: lead.channel,
+      source: lead.source,
+      partner: lead.partner,
+      partner_user: lead.partner_user,
+      lead_type: lead.lead_type || 'Direct',
+      project_type: lead.project_type,
+      client_type: lead.client_type || 'New',
+      country: lead.country,
+      received_date: formatDate(lead.added_date, false),
+      rating: lead.rating,
+      added_date: formatDate(lead.added_date, true)
+    } : null;
+  }, [lead, companySettings]);
+
   if (loading) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>;
   }
-
-  // Format real lead data to match component expectations
-  const displayLead = lead ? {
-    ...lead,
-    id: lead.enquiry_id,
-    formatted_id: formatLeadCode(lead.enquiry_id, lead.added_date, companySettings),
-    issues: lead.issues,
-    status: lead.status,
-    score: lead.score,
-    age: lead.age,
-    contact_person: lead.contact_person,
-    company: lead.name,
-    industry: lead.industry,
-    owner: lead.assignee_name,
-    requirement_type: lead.type,
-    channel: lead.channel,
-    source: lead.source,
-    partner: lead.partner,
-    partner_user: lead.partner_user,
-    lead_type: lead.lead_type || 'Direct',
-    project_type: lead.project_type,
-    client_type: lead.client_type || 'New',
-    country: lead.country,
-    received_date: formatDate(lead.added_date, false),
-    rating: lead.rating,
-    added_date: formatDate(lead.added_date, true)
-  } : null;
 
   return (
     <div className="flex flex-col h-screen bg-slate-50 dark:bg-[#0A0A0A] max-h-[calc(100vh-64px)]">
@@ -149,9 +151,15 @@ export default function LeadDetailsPage() {
 
           {/* Tab Content */}
           <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-white dark:bg-[#121212]">
-            {activeTab === 'activities' && <ActivitiesTab lead={displayLead} />}
-            {activeTab === 'emails' && <EmailsTab lead={displayLead} />}
-            {activeTab === 'scheduled-emails' && <ScheduledEmailsTab lead={displayLead} />}
+            <div className={cn("flex-1 min-h-0 flex-col", activeTab === 'activities' ? "flex" : "hidden")}>
+              {displayLead && <ActivitiesTab lead={displayLead} />}
+            </div>
+            <div className={cn("flex-1 min-h-0 flex-col", activeTab === 'emails' ? "flex" : "hidden")}>
+              {displayLead && <EmailsTab lead={displayLead} />}
+            </div>
+            <div className={cn("flex-1 min-h-0 flex-col", activeTab === 'scheduled-emails' ? "flex" : "hidden")}>
+              {displayLead && <ScheduledEmailsTab lead={displayLead} />}
+            </div>
             {!['activities', 'emails', 'scheduled-emails'].includes(activeTab) && (
               <div className="flex flex-col items-center justify-center h-full p-8 text-slate-500">
                 <p className="text-sm font-semibold mb-2">This tab is currently under construction.</p>

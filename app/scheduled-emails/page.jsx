@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { CalendarClock, RefreshCw, Send, Clock, Search, Filter, AlertCircle, CheckCircle } from 'lucide-react';
+import { CalendarClock, RefreshCw, Send, Clock, Search, Filter, AlertCircle, CheckCircle, Edit, Trash2, Loader2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/Card';
 import { cn, formatLeadCode } from '@/lib/utils';
 import { useApp } from '@/context/AppContext';
 import EmailLogDetail from '@/components/EmailLogDetail';
+import EditScheduledEmailModal from '@/components/EditScheduledEmailModal';
+import ConfirmModal from '@/components/ConfirmModal';
 
 export default function ScheduledEmailsPage() {
   const [emails, setEmails] = useState([]);
@@ -13,7 +15,10 @@ export default function ScheduledEmailsPage() {
   const [search, setSearch] = useState('');
   const [selectedLog, setSelectedLog] = useState(null);
   const [error, setError] = useState(null);
-  const { companySettings } = useApp();
+  const [emailToEdit, setEmailToEdit] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState(null);
+  const { companySettings, showToast } = useApp();
 
   const fetchScheduledEmails = async () => {
     setLoading(true);
@@ -69,6 +74,32 @@ export default function ScheduledEmailsPage() {
       user_name: log.created_by_name,
       sent_at: log.scheduled_at, // Display scheduled time in the modal's timestamp
     });
+  };
+
+  const executeDelete = async () => {
+    if (!deleteConfirmId) return;
+    setDeletingId(deleteConfirmId);
+    try {
+      const res = await fetch(`/api/scheduled-emails/${deleteConfirmId}`, { method: 'DELETE' });
+      if (res.ok) {
+        if (showToast) showToast('Scheduled email deleted', 'success');
+        fetchScheduledEmails();
+      } else {
+        const err = await res.json();
+        if (showToast) showToast(err.error || 'Failed to delete', 'error');
+        else alert(err.error || 'Failed to delete');
+      }
+    } catch (err) {
+      if (showToast) showToast('Failed to delete', 'error');
+    } finally {
+      setDeletingId(null);
+      setDeleteConfirmId(null);
+    }
+  };
+
+  const handleDeleteClick = (e, id) => {
+    e.stopPropagation();
+    setDeleteConfirmId(id);
   };
 
   if (error && !emails.length) {
@@ -140,6 +171,7 @@ export default function ScheduledEmailsPage() {
                 <th className="px-4 py-4 font-semibold text-slate-700 dark:text-slate-200">Subject</th>
                 <th className="px-4 py-4 font-semibold text-slate-700 dark:text-slate-200">Scheduled By</th>
                 <th className="px-4 py-4 font-semibold text-slate-700 dark:text-slate-200 text-right">Scheduled For</th>
+                <th className="px-4 py-4 font-semibold text-slate-700 dark:text-slate-200 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -200,6 +232,27 @@ export default function ScheduledEmailsPage() {
                          {formatDate(log.scheduled_at)}
                       </div>
                     </td>
+                    <td className="px-4 py-3 text-right">
+                      {log.status === 'Pending' && (
+                        <div className="flex items-center justify-end gap-1">
+                          <button 
+                            onClick={(e) => { e.stopPropagation(); setEmailToEdit(log); }}
+                            className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                            title="Edit"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </button>
+                          <button 
+                            onClick={(e) => handleDeleteClick(e, log.id)}
+                            disabled={deletingId === log.id}
+                            className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors disabled:opacity-50"
+                            title="Delete"
+                          >
+                            {deletingId === log.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                          </button>
+                        </div>
+                      )}
+                    </td>
                   </tr>
                 ))
               )}
@@ -213,6 +266,26 @@ export default function ScheduledEmailsPage() {
         <EmailLogDetail 
           log={selectedLog} 
           onClose={() => setSelectedLog(null)} 
+        />
+      )}
+
+      {/* Edit Modal */}
+      {emailToEdit && (
+        <EditScheduledEmailModal 
+          email={emailToEdit} 
+          onClose={() => setEmailToEdit(null)} 
+          onSaved={fetchScheduledEmails} 
+        />
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirmId && (
+        <ConfirmModal
+          title="Delete Scheduled Email"
+          message="Are you sure you want to delete this scheduled email? This action cannot be undone."
+          onConfirm={executeDelete}
+          onCancel={() => setDeleteConfirmId(null)}
+          loading={deletingId === deleteConfirmId}
         />
       )}
     </div>

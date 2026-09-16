@@ -12,6 +12,9 @@ import SidePanelHeader from './SidePanelHeader';
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
 export default function EmailModal({ enquiry, onClose }) {
+  const { showToast, showLoader, companySettings } = useApp();
+  const companyName = companySettings?.company_name || 'Code Crafter';
+
   const [loading, setLoading] = useState(false);
   const [to, setTo] = useState(enquiry.email || '');
   const [cc, setCc] = useState('');
@@ -19,8 +22,9 @@ export default function EmailModal({ enquiry, onClose }) {
   const [showCcBcc, setShowCcBcc] = useState(false);
   const [sendType, setSendType] = useState('Instant');
   const [scheduledAt, setScheduledAt] = useState('');
+  const [hasPendingSchedule, setHasPendingSchedule] = useState(false);
   const [subject, setSubject] = useState(`Follow up: Regarding your enquiry - ${enquiry.name}`);
-  const [message, setMessage] = useState(`<p>Hello ${enquiry.name},</p><p><br></p><p>Thank you for reaching out. We would like to follow up on your enquiry regarding ${enquiry.type || 'our services'}.</p><p><br></p><p>Please let us know if you have any questions.</p><p><br></p><p>Best regards,<br>Code Crafter Team</p>`);
+  const [message, setMessage] = useState(`<p>Hello ${enquiry.name},</p><p><br></p><p>Thank you for reaching out. We would like to follow up on your enquiry regarding ${enquiry.type || 'our services'}.</p><p><br></p><p>Please let us know if you have any questions.</p><p><br></p><p>Best regards,<br>${companyName} Team</p>`);
   const [attachments, setAttachments] = useState([]);
   const [templateAttachments, setTemplateAttachments] = useState([]);
   const [users, setUsers] = useState([]);
@@ -32,7 +36,6 @@ export default function EmailModal({ enquiry, onClose }) {
   const [showCcDropdown, setShowCcDropdown] = useState(false);
   const [bccSearch, setBccSearch] = useState('');
   const [showBccDropdown, setShowBccDropdown] = useState(false);
-  const { showToast, showLoader } = useApp();
   const fileInputRef = useRef(null);
   const templateDropdownRef = useRef(null);
   const ccDropdownRef = useRef(null);
@@ -53,6 +56,20 @@ export default function EmailModal({ enquiry, onClose }) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    const eId = enquiry?.enquiry_id || enquiry?.id;
+    if (eId) {
+      fetch(`/api/enquiries/${eId}/scheduled-emails`)
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) {
+            setHasPendingSchedule(data.some(e => e.status === 'Pending'));
+          }
+        })
+        .catch(err => console.error(err));
+    }
+  }, [enquiry]);
 
   useEffect(() => {
     // Fetch users for the email dropdown
@@ -82,6 +99,8 @@ export default function EmailModal({ enquiry, onClose }) {
 
     if (!tempId) {
       setTemplateAttachments([]);
+      setSubject(`Follow up: Regarding your enquiry - ${enquiry.name}`);
+      setMessage(`<p>Hello ${enquiry.name},</p><p><br></p><p>Thank you for reaching out. We would like to follow up on your enquiry regarding ${enquiry.type || 'our services'}.</p><p><br></p><p>Please let us know if you have any questions.</p><p><br></p><p>Best regards,<br>${companyName} Team</p>`);
       return;
     }
 
@@ -153,6 +172,10 @@ export default function EmailModal({ enquiry, onClose }) {
       showToast('Scheduled date and time is required', 'error');
       return;
     }
+    if (sendType === 'Schedule' && hasPendingSchedule) {
+      showToast('A scheduled email is already pending for this lead.', 'error');
+      return;
+    }
 
     setLoading(true);
     showLoader(true);
@@ -201,7 +224,6 @@ export default function EmailModal({ enquiry, onClose }) {
         showLoader(false);
         setTimeout(() => {
           onClose();
-          window.location.reload();
         }, 1500);
       } else {
         const errData = await response.json();
@@ -378,14 +400,25 @@ export default function EmailModal({ enquiry, onClose }) {
                   Instant
                 </button>
                 <button 
-                  onClick={() => setSendType('Schedule')} 
-                  className={cn("px-4 py-1.5 text-xs font-bold rounded-md transition-colors", sendType === 'Schedule' ? "bg-white dark:bg-[#1A1A1A] text-blue-600 dark:text-blue-400 shadow-sm" : "text-slate-500 hover:text-slate-700 dark:text-slate-300")}
+                  onClick={() => {
+                    if (hasPendingSchedule) return;
+                    setSendType('Schedule');
+                  }} 
+                  className={cn("px-4 py-1.5 text-xs font-bold rounded-md transition-colors", sendType === 'Schedule' ? "bg-white dark:bg-[#1A1A1A] text-blue-600 dark:text-blue-400 shadow-sm" : "text-slate-500 hover:text-slate-700 dark:text-slate-300", hasPendingSchedule && "opacity-50 cursor-not-allowed")}
+                  disabled={hasPendingSchedule}
+                  title={hasPendingSchedule ? "A scheduled email is already pending for this lead." : "Schedule for later"}
                 >
                   Schedule
                 </button>
               </div>
             </div>
-            {sendType === 'Schedule' && (
+            {hasPendingSchedule && sendType !== 'Schedule' && (
+              <div className="text-amber-600 dark:text-amber-500 text-xs flex items-center gap-1.5 animate-in fade-in duration-300 ml-auto">
+                <AlertCircle className="w-3.5 h-3.5" />
+                <span>A scheduled email is already pending.</span>
+              </div>
+            )}
+            {sendType === 'Schedule' && !hasPendingSchedule && (
               <div className="flex items-center gap-3 flex-1 animate-in fade-in duration-300">
                 <label className="text-xs font-semibold text-slate-700 dark:text-slate-200">Date & Time:</label>
                 <input 

@@ -47,6 +47,7 @@ const msgSentColors = {
   'Both': 'text-blue-600 dark:text-blue-400 border-blue-100 dark:border-blue-900/30 bg-white dark:bg-blue-900/10',
   'Sent': 'text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/30 bg-white dark:bg-emerald-900/10',
   '1': 'text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/30 bg-white dark:bg-emerald-900/10',
+  'Scheduled Email': 'text-purple-600 dark:text-purple-400 border-purple-100 dark:border-purple-900/30 bg-white dark:bg-purple-900/10',
 };
 
 const msgSentLabels = {
@@ -56,6 +57,7 @@ const msgSentLabels = {
   'Both': 'Both',
   'Sent': 'Sent',
   '1': 'Sent',
+  'Scheduled Email': 'Scheduled',
 };
 
 export default function ListPage() {
@@ -113,6 +115,7 @@ export default function ListPage() {
         assignedTo,
         page: page.toString(),
         limit: '10',
+        _t: Date.now().toString()
       });
       const response = await fetch(`/api/enquiries?${query}`);
       const data = await response.json();

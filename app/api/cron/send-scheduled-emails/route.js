@@ -109,6 +109,18 @@ export async function POST(req) {
           [email.created_by, email.to, email.subject, email.body || email.text_body || '', 'sent', email.enquiry_id, email.attachments]
         );
 
+        if (email.enquiry_id) {
+          const existingEnquiry = await query('SELECT msg_sent FROM enquiries WHERE enquiry_id = ?', [email.enquiry_id]);
+          if (existingEnquiry.length > 0) {
+            const currentStatus = existingEnquiry[0].msg_sent;
+            let newStatus = 'Email';
+            if (currentStatus === 'WhatsApp' || currentStatus === 'Both') {
+              newStatus = 'Both';
+            }
+            await query('UPDATE enquiries SET msg_sent = ? WHERE enquiry_id = ?', [newStatus, email.enquiry_id]);
+          }
+        }
+
         results.success++;
       } catch (sendErr) {
         console.error(`Failed to send scheduled email ${email.id}:`, sendErr);
