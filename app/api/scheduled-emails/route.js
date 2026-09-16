@@ -31,16 +31,32 @@ export async function GET(req) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
+    const { searchParams } = new URL(req.url);
+    const period = searchParams.get('period') || 'Total';
+
     const userRole = (permissions[0].role || '').toString().toLowerCase();
     let emailsQuery = `SELECT se.*, u.user_name as created_by_name, e.name as lead_name
        FROM scheduled_emails se
        LEFT JOIN user_master u ON se.created_by = u.user_id
-       LEFT JOIN enquiries e ON se.enquiry_id = e.enquiry_id`;
+       LEFT JOIN enquiries e ON se.enquiry_id = e.enquiry_id
+       WHERE 1=1`;
     
     const queryParams = [];
     if (userRole !== 'admin') {
-      emailsQuery += ` WHERE se.created_by = ?`;
+      emailsQuery += ` AND se.created_by = ?`;
       queryParams.push(userId);
+    }
+    
+    if (period === 'Today') {
+      emailsQuery += ' AND DATE(se.created_at) = CURDATE()';
+    } else if (period === 'Yesterday') {
+      emailsQuery += ' AND DATE(se.created_at) = CURDATE() - INTERVAL 1 DAY';
+    } else if (period === 'Week') {
+      emailsQuery += ' AND YEARWEEK(se.created_at, 1) = YEARWEEK(CURDATE(), 1)';
+    } else if (period === 'Month') {
+      emailsQuery += ' AND MONTH(se.created_at) = MONTH(CURDATE()) AND YEAR(se.created_at) = YEAR(CURDATE())';
+    } else if (period === 'Year') {
+      emailsQuery += ' AND YEAR(se.created_at) = YEAR(CURDATE())';
     }
     
     emailsQuery += ` ORDER BY se.scheduled_at DESC`;

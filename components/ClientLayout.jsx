@@ -38,7 +38,7 @@ export default function ClientLayout({ children }) {
 
         <div className={cn(
           "flex-1 flex flex-col min-w-0 transition-all duration-300",
-          isCollapsed ? "md:ml-20" : "md:ml-64"
+          isCollapsed ? "md:ml-20" : "md:ml-[292px]"
         )}>
           <Header isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} user={user} />
           <main className="flex-1 overflow-y-auto p-0">

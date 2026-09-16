@@ -13,6 +13,7 @@ export async function GET(req) {
     const type = searchParams.get('type') || '';
     const status = searchParams.get('status') || '';
     const assignedTo = searchParams.get('assignedTo') || '';
+    const period = searchParams.get('period') || 'Total';
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
     const offset = (page - 1) * limit;
@@ -65,6 +66,18 @@ export async function GET(req) {
       params.push(status);
     }
 
+    if (period === 'Today') {
+      sql += ' AND DATE(e.added_date) = CURDATE()';
+    } else if (period === 'Yesterday') {
+      sql += ' AND DATE(e.added_date) = CURDATE() - INTERVAL 1 DAY';
+    } else if (period === 'Week') {
+      sql += ' AND YEARWEEK(e.added_date, 1) = YEARWEEK(CURDATE(), 1)';
+    } else if (period === 'Month') {
+      sql += ' AND MONTH(e.added_date) = MONTH(CURDATE()) AND YEAR(e.added_date) = YEAR(CURDATE())';
+    } else if (period === 'Year') {
+      sql += ' AND YEAR(e.added_date) = YEAR(CURDATE())';
+    }
+
     sql += ` ORDER BY e.added_date DESC LIMIT ${limit} OFFSET ${offset}`;
 
     const [enquiries] = await pool.query(sql, params);
@@ -91,6 +104,18 @@ export async function GET(req) {
     if (status) {
       countSql += ' AND status = ?';
       countParams.push(status);
+    }
+    
+    if (period === 'Today') {
+      countSql += ' AND DATE(e.added_date) = CURDATE()';
+    } else if (period === 'Yesterday') {
+      countSql += ' AND DATE(e.added_date) = CURDATE() - INTERVAL 1 DAY';
+    } else if (period === 'Week') {
+      countSql += ' AND YEARWEEK(e.added_date, 1) = YEARWEEK(CURDATE(), 1)';
+    } else if (period === 'Month') {
+      countSql += ' AND MONTH(e.added_date) = MONTH(CURDATE()) AND YEAR(e.added_date) = YEAR(CURDATE())';
+    } else if (period === 'Year') {
+      countSql += ' AND YEAR(e.added_date) = YEAR(CURDATE())';
     }
     
     const [countResult] = await pool.query(countSql, countParams);
