@@ -336,7 +336,7 @@ export default function EmailThreadModal({ enquiryId, enquiryName, enquiryEmail,
         <div className="space-y-0 pb-16">
           {threadMessages.map((email, index) => {
             const isSent = email.direction === 'sent';
-            const senderName = isSent ? 'Enquiry System' : enquiryName || 'Customer';
+            const senderName = isSent ? (process.env.NEXT_PUBLIC_SYSTEM_NAME || 'Enquiry System') : enquiryName || 'Customer';
             const senderEmail = isSent ? 'codecrafter.help@gmail.com' : enquiryEmail;
             const receiverName = isSent ? enquiryName || 'Customer' : 'Enquiry';
             const isLast = index === threadMessages.length - 1;

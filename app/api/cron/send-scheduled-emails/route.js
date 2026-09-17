@@ -52,9 +52,10 @@ export async function POST(req) {
     }
 
     const transporter = nodemailer.createTransport(transporterOptions);
+    const systemName = process.env.NEXT_PUBLIC_SYSTEM_NAME || 'Enquiry System';
     const fromAddress = defaultAccount 
-      ? `"Enquiry System" <${defaultAccount.email}>`
-      : (process.env.EMAIL_FROM || '"Enquiry System" <codecrafter.help@gmail.com>');
+      ? `"${systemName}" <${defaultAccount.email}>`
+      : (process.env.EMAIL_FROM || `"${systemName}" <codecrafter.help@gmail.com>`);
 
     let results = { success: 0, failed: 0 };
 
