@@ -24,11 +24,12 @@ export function CallingProvider({ children, user }) {
   const [sipStatus, setSipStatus] = useState('connecting'); // connecting, registered, error
   const timerRef = useRef(null);
   const remoteAudioRef = useRef(null);
+  const ringbackRef = useRef(null); // Web Audio API context for ringback tone
 
   const [callingConfig, setCallingConfig] = useState(null);
   
   useEffect(() => {
-    if (!user || user.role === 'user') return; 
+    if (!user || user.calling_enabled === false) return;
 
     let ua;
     const initSip = async () => {
@@ -86,32 +87,98 @@ export function CallingProvider({ children, user }) {
     };
   }, [user]);
 
+  // ── Ringback tone — standard telephone ring (440Hz + 480Hz, 2s on / 4s off) ─
+  const startRingback = () => {
+    try {
+      stopRingback();
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      ringbackRef.current = ctx;
+      let playing = true;
+
+      const ring = () => {
+        if (!playing) return;
+
+        // Standard PSTN ringback: mix 440 Hz + 480 Hz at low gain
+        const gain = ctx.createGain();
+        gain.gain.setValueAtTime(0, ctx.currentTime);
+        gain.connect(ctx.destination);
+
+        const osc1 = ctx.createOscillator();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(440, ctx.currentTime);
+        osc1.connect(gain);
+
+        const osc2 = ctx.createOscillator();
+        osc2.type = 'sine';
+        osc2.frequency.setValueAtTime(480, ctx.currentTime);
+        osc2.connect(gain);
+
+        // Fade in slightly, hold for 2 s, fade out — then 4 s silence
+        gain.gain.linearRampToValueAtTime(0.12, ctx.currentTime + 0.05);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime + 1.95);
+        gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 2.0);
+
+        osc1.start(ctx.currentTime);
+        osc1.stop(ctx.currentTime + 2.0);
+        osc2.start(ctx.currentTime);
+        osc2.stop(ctx.currentTime + 2.0);
+
+        osc1.onended = () => { if (playing) setTimeout(ring, 4000); };
+      };
+
+      ring();
+      ctx._stopFn = () => { playing = false; };
+    } catch (e) { console.warn('Ringback tone error:', e); }
+  };
+
+  const stopRingback = () => {
+    try {
+      if (ringbackRef.current) {
+        if (ringbackRef.current._stopFn) ringbackRef.current._stopFn();
+        ringbackRef.current.close().catch(() => {});
+        ringbackRef.current = null;
+      }
+    } catch (e) {}
+  };
+
+  // ── Remote audio setup ────────────────────────────────────────────────────
   const setupRemoteMedia = (sdh) => {
     const pc = sdh.peerConnection;
     if (!pc) return;
 
-    // Create a new stream for remote audio
     const remoteStream = new MediaStream();
-    
-    // Add existing tracks (if any exist already)
-    pc.getReceivers().forEach(receiver => {
-      if (receiver.track && receiver.track.kind === 'audio') {
-        remoteStream.addTrack(receiver.track);
-      }
-    });
 
-    // Listen for future tracks as they are added by the WebRTC engine
+    const tryPlay = () => {
+      if (!remoteAudioRef.current) return;
+      // Only attach+play when we have at least one audio track
+      const audioTracks = pc.getReceivers()
+        .filter(r => r.track && r.track.kind === 'audio')
+        .map(r => r.track);
+      if (audioTracks.length > 0) {
+        const stream = new MediaStream(audioTracks);
+        remoteAudioRef.current.srcObject = stream;
+        remoteAudioRef.current.play().catch(e => console.error('Audio play error:', e));
+      }
+    };
+
+    // When a remote track arrives — attach it immediately and play
     pc.addEventListener('track', (e) => {
       if (e.track && e.track.kind === 'audio') {
         remoteStream.addTrack(e.track);
+        if (remoteAudioRef.current) {
+          // Use the full stream from the event if provided (most reliable)
+          const src = (e.streams && e.streams[0]) ? e.streams[0] : remoteStream;
+          remoteAudioRef.current.srcObject = src;
+          remoteAudioRef.current.play().catch(err => console.error('Audio play error:', err));
+        }
       }
     });
 
-    if (remoteAudioRef.current) {
-      remoteAudioRef.current.srcObject = remoteStream;
-      // Modern browsers require interaction, but since the user clicked "Call", this is allowed.
-      remoteAudioRef.current.play().catch(e => console.error("Audio play error:", e));
-    }
+    // Also check immediately in case tracks already exist
+    tryPlay();
+
+    // Expose for Established-state fallback
+    sdh._crm_tryPlay = tryPlay;
   };
 
   const makeCall = async (number, sourceType, sourceId) => {
@@ -131,10 +198,11 @@ export function CallingProvider({ children, user }) {
 
     try {
       // Remove +, spaces, and any other non-numeric characters before dialing
+      // Keep the full number including country code for proper SIP routing
       let cleanNumber = String(number).replace(/\D/g, '');
-      // If the number includes a country code (e.g. 91), extract the last 10 digits
-      if (cleanNumber.length > 10) {
-        cleanNumber = cleanNumber.slice(-10);
+      // Remove a leading 0 (trunk prefix) only if it's not already prefixed with a country code
+      if (cleanNumber.startsWith('0') && cleanNumber.length <= 11) {
+        cleanNumber = cleanNumber.slice(1);
       }
       const target = UserAgent.makeURI(`sip:${cleanNumber}@${callingConfig?.calling_asterisk_server || 'kenyavoice.rpdigitalphone.com'}`);
       
@@ -162,15 +230,22 @@ export function CallingProvider({ children, user }) {
         switch (state) {
           case SessionState.Establishing:
             setCallState('ringing');
+            startRingback(); // 🔔 Ringback tone for sales person
             break;
           case SessionState.Established:
             setCallState('connected');
-            // Media is already bound via delegate, just start timer
+            stopRingback(); // 🔇 Stop ringback when remote answers
             startTimer();
+            // Force-attach audio in case 'track' event fired before our listener
+            try {
+              const sdh = inviter.sessionDescriptionHandler;
+              if (sdh?._crm_tryPlay) setTimeout(() => sdh._crm_tryPlay(), 150);
+            } catch(e) { console.warn('Audio attach fallback error:', e); }
             break;
           case SessionState.Terminated:
             setCallState('idle');
             setActiveCall(null);
+            stopRingback();
             stopTimer();
             setDialerVisible(false);
             break;
@@ -180,25 +255,13 @@ export function CallingProvider({ children, user }) {
       await inviter.invite();
       setActiveCall(inviter);
       
-      // Update CRM context on the server log
-      try {
-        await fetch('/api/vonage/update-log', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            callSid: inviter.id || `sip-${Date.now()}`,
-            sourceType,
-            sourceId,
-            toNumber: number,
-            userId: user.userId || user.user_id || user.id
-          })
-        });
-      } catch(e) {
-        console.error('Failed to create call log:', e);
-      }
+      // Log call initiation to CRM call_logs via cloudtelephony webhook is handled server-side.
+      // Local optimistic log for UI tracking only.
+      console.log('[CRM] Call initiated:', { to: cleanNumber, sourceType, sourceId, userId: user.userId || user.user_id || user.id });
 
     } catch (e) {
       console.error('Error making call', e);
+      stopRingback();
       showToast('Error initiating call: ' + (e.message || String(e)), 'error');
       setCallState('idle');
     }
@@ -212,6 +275,7 @@ export function CallingProvider({ children, user }) {
         activeCall.cancel().catch(e => console.error("Cancel error:", e));
       }
     }
+    stopRingback();
     setCallState('idle');
     setActiveCall(null);
     stopTimer();
@@ -282,7 +346,8 @@ export function CallingProvider({ children, user }) {
       acceptCall,
       rejectCall
     }}>
-      <audio ref={remoteAudioRef} style={{ display: 'none' }} autoPlay />
+      {/* Must NOT be display:none — browsers block autoplay on hidden elements. Zero-size is the correct approach. */}
+      <audio ref={remoteAudioRef} autoPlay playsInline style={{ position: 'fixed', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }} />
       {children}
     </CallingContext.Provider>
   );

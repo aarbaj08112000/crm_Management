@@ -64,6 +64,7 @@ async function handleWebhook(request) {
     const status = getParam('Status');
     const callSid = getParam('CallSid');
     const callRecordingUrl = getParam('CallRecordingUrl');
+    const direction = getParam('Direction');
     
     logDebug(`Extracted: type=${type}, callSid=${callSid}`);
 
