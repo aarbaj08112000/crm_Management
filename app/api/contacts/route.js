@@ -7,6 +7,7 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1', 10);
     const limit = parseInt(searchParams.get('limit') || '50', 10);
+    const status = searchParams.get('status') || 'pending'; // default to pending
     const offset = (page - 1) * limit;
 
     const token = request.cookies.get('token')?.value;
@@ -17,14 +18,25 @@ export async function GET(request) {
     const userId = payload.userId;
     const role = (payload.role || '').toString().toLowerCase();
 
-    let countQuery = 'SELECT COUNT(*) as total FROM ai_contacts';
-    let dataQuery = 'SELECT * FROM ai_contacts';
+    let countQuery = 'SELECT COUNT(*) as total FROM ai_contacts WHERE 1=1';
+    let dataQuery = 'SELECT * FROM ai_contacts WHERE 1=1';
     const queryParams = [];
 
     if (role !== 'admin') {
-      countQuery += ' WHERE user_id = ?';
-      dataQuery += ' WHERE user_id = ?';
+      countQuery += ' AND user_id = ?';
+      dataQuery += ' AND user_id = ?';
       queryParams.push(userId);
+    }
+
+    if (status === 'added') {
+      countQuery += ' AND is_lead = 1';
+      dataQuery += ' AND is_lead = 1';
+    } else if (status === 'fake') {
+      countQuery += ' AND is_fake = 1';
+      dataQuery += ' AND is_fake = 1';
+    } else if (status === 'pending') {
+      countQuery += ' AND (is_lead IS NULL OR is_lead = 0) AND (is_fake IS NULL OR is_fake = 0)';
+      dataQuery += ' AND (is_lead IS NULL OR is_lead = 0) AND (is_fake IS NULL OR is_fake = 0)';
     }
 
     dataQuery += ' ORDER BY added_date DESC LIMIT ? OFFSET ?';

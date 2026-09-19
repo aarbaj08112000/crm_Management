@@ -15,15 +15,16 @@ export default function ContactsPage() {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [totalContacts, setTotalContacts] = useState(0);
+    const [filterStatus, setFilterStatus] = useState('pending');
 
     useEffect(() => {
-        fetchContacts(page);
-    }, [page]);
+        fetchContacts(page, filterStatus);
+    }, [page, filterStatus]);
 
-    const fetchContacts = async (currentPage) => {
+    const fetchContacts = async (currentPage, status) => {
         setLoading(true);
         try {
-            const response = await fetch(`/api/contacts?page=${currentPage}&limit=50`);
+            const response = await fetch(`/api/contacts?page=${currentPage}&limit=50&status=${status}`);
             const data = await response.json();
             if (!response.ok || !data.success) {
                 throw new Error(data.error || 'Failed to fetch contacts');
@@ -106,9 +107,21 @@ export default function ContactsPage() {
                         </h1>
                         <p className="text-gray-500 dark:text-gray-400 mt-1">Manage AI-scraped leads and convert them into your main CRM pipeline.</p>
                     </div>
-                    <div className="bg-indigo-50 dark:bg-indigo-900/30 px-4 py-2 rounded-lg border border-indigo-100 dark:border-indigo-800/50 flex flex-col items-end">
-                        <span className="text-indigo-700 dark:text-indigo-300 font-semibold">{totalContacts} Total Contacts</span>
-                        <span className="text-indigo-500 dark:text-indigo-400 text-xs text-right">Page {page} of {totalPages}</span>
+                    <div className="flex items-center gap-4">
+                        <select
+                            value={filterStatus}
+                            onChange={(e) => { setFilterStatus(e.target.value); setPage(1); }}
+                            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 min-w-[150px] font-medium"
+                        >
+                            <option value="pending">Pending</option>
+                            <option value="added">Add In Lead</option>
+                            <option value="fake">Fake Lead</option>
+                            <option value="all">All Contacts</option>
+                        </select>
+                        <div className="bg-indigo-50 dark:bg-indigo-900/30 px-4 py-2 rounded-lg border border-indigo-100 dark:border-indigo-800/50 flex flex-col items-end">
+                            <span className="text-indigo-700 dark:text-indigo-300 font-semibold">{totalContacts} Total Contacts</span>
+                            <span className="text-indigo-500 dark:text-indigo-400 text-xs text-right">Page {page} of {totalPages}</span>
+                        </div>
                     </div>
                 </div>
 

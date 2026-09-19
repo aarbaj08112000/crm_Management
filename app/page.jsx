@@ -15,7 +15,9 @@ import {
   MoreVertical,
   Phone,
   FileSpreadsheet,
-  Filter
+  Filter,
+  Activity,
+  CalendarCheck
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/Card';
 import Link from 'next/link';
@@ -45,6 +47,7 @@ export default function Dashboard() {
   const [filterPeriod, setFilterPeriod] = useState('Today');
   const [rawData, setRawData] = useState(null);
 
+  const [quickStats, setQuickStats] = useState({ calls: 0, emails: 0, scheduled: 0, users: 0 });
   const [stats, setStats] = useState({ total: 0, pending: 0, converted: 0, rejected: 0, newToday: 0, unassignedPending: 0, recentConverted: 0 });
   const [recentActivity, setRecentActivity] = useState([]);
   const [selectedLead, setSelectedLead] = useState(null);
@@ -59,12 +62,13 @@ export default function Dashboard() {
     async function fetchDashboardData() {
       try {
         setLoading(true);
-        const [enqRes, schEmailRes, emailLogRes, userRes, trendRes] = await Promise.all([
+        const [enqRes, schEmailRes, emailLogRes, userRes, trendRes, callsRes] = await Promise.all([
           fetch(`/api/enquiries?limit=1000&period=${filterPeriod}`),
           fetch(`/api/scheduled-emails?period=${filterPeriod}`),
           fetch(`/api/email-logs?period=${filterPeriod}`),
           fetch(`/api/users`),
-          fetch(`/api/enquiries?limit=1000&period=Week`) // Ensure trend chart always has 7 days of data
+          fetch(`/api/enquiries?limit=1000&period=Week`), // Ensure trend chart always has 7 days of data
+          fetch(`/api/smartoperator/logs?limit=1`)
         ]);
         
         const enqData = await enqRes.json();
@@ -72,6 +76,7 @@ export default function Dashboard() {
         const emailLogData = await emailLogRes.json();
         const userData = await userRes.json();
         const trendDataRes = await trendRes.json();
+        const callsData = await callsRes.json();
 
         const enquiries = enqData.enquiries || [];
         const scheduled = Array.isArray(schEmailData) ? schEmailData : (schEmailData.data || []);
@@ -80,6 +85,13 @@ export default function Dashboard() {
         const trendEnquiries = trendDataRes.enquiries || [];
 
         setRawData({ enquiries, scheduled, sentLogs, users });
+
+        setQuickStats({
+          calls: callsData.total || 0,
+          emails: sentLogs.length || 0,
+          scheduled: scheduled.length || 0,
+          users: users.length || 0
+        });
 
         // 1. Top Stats
         setStats({
@@ -186,7 +198,64 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Stats Cards */}
+      {/* Quick Stats Block */}
+      <Card className="border border-slate-100 dark:border-slate-700 shadow-sm rounded-2xl overflow-hidden bg-white dark:bg-slate-800">
+        <div className="p-5 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
+          <Activity className="w-5 h-5 text-indigo-500" />
+          <h3 className="text-base font-bold text-slate-800 dark:text-slate-100">Quick Stats</h3>
+        </div>
+        <CardContent className="p-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            {/* Phone Stats */}
+            <div className="bg-[#f9f5ff] dark:bg-purple-900/20 rounded-xl p-4 flex flex-col justify-between">
+              <div className="w-8 h-8 rounded-lg bg-[#f4ebff] dark:bg-purple-800/40 flex items-center justify-center mb-3">
+                <Phone className="w-4 h-4 text-[#9333ea] dark:text-purple-400" />
+              </div>
+              <div>
+                {loading ? <div className="h-6 w-12 bg-purple-200/50 dark:bg-purple-800/50 animate-pulse rounded mb-1"></div> : <p className="text-2xl font-black text-slate-900 dark:text-slate-100 mb-0.5">{quickStats.calls}</p>}
+                <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total Calls</p>
+              </div>
+            </div>
+
+            {/* Email Stats */}
+            <div className="bg-[#f0f9ff] dark:bg-blue-900/20 rounded-xl p-4 flex flex-col justify-between">
+              <div className="w-8 h-8 rounded-lg bg-[#e0f2fe] dark:bg-blue-800/40 flex items-center justify-center mb-3">
+                <Mail className="w-4 h-4 text-[#0284c7] dark:text-blue-400" />
+              </div>
+              <div>
+                {loading ? <div className="h-6 w-12 bg-blue-200/50 dark:bg-blue-800/50 animate-pulse rounded mb-1"></div> : <p className="text-2xl font-black text-slate-900 dark:text-slate-100 mb-0.5">{quickStats.emails}</p>}
+                <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Emails Sent</p>
+              </div>
+            </div>
+
+            {/* Scheduled Stats */}
+            <div className="bg-[#ecfdf5] dark:bg-emerald-900/20 rounded-xl p-4 flex flex-col justify-between">
+              <div className="w-8 h-8 rounded-lg bg-[#d1fae5] dark:bg-emerald-800/40 flex items-center justify-center mb-3">
+                <CalendarCheck className="w-4 h-4 text-[#059669] dark:text-emerald-400" />
+              </div>
+              <div>
+                {loading ? <div className="h-6 w-12 bg-emerald-200/50 dark:bg-emerald-800/50 animate-pulse rounded mb-1"></div> : <p className="text-2xl font-black text-slate-900 dark:text-slate-100 mb-0.5">{quickStats.scheduled}</p>}
+                <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Scheduled Tasks</p>
+              </div>
+            </div>
+
+            {/* Users Stats */}
+            <div className="bg-[#fffbeb] dark:bg-amber-900/20 rounded-xl p-4 flex flex-col justify-between">
+              <div className="w-8 h-8 rounded-lg bg-[#fef3c7] dark:bg-amber-800/40 flex items-center justify-center mb-3">
+                <Users className="w-4 h-4 text-[#d97706] dark:text-amber-400" />
+              </div>
+              <div>
+                {loading ? <div className="h-6 w-12 bg-amber-200/50 dark:bg-amber-800/50 animate-pulse rounded mb-1"></div> : <p className="text-2xl font-black text-slate-900 dark:text-slate-100 mb-0.5">{quickStats.users}</p>}
+                <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Active Users</p>
+              </div>
+            </div>
+
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Main Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {topCards.map((card, idx) => (
           <div key={card.label} className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.1)] dark:shadow-none border border-slate-100 dark:border-slate-700 relative overflow-hidden group">
