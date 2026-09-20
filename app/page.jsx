@@ -68,7 +68,7 @@ export default function Dashboard() {
           fetch(`/api/email-logs?period=${filterPeriod}`),
           fetch(`/api/users`),
           fetch(`/api/enquiries?limit=1000&period=Week`), // Ensure trend chart always has 7 days of data
-          fetch(`/api/smartoperator/logs?limit=1`)
+          fetch(`/api/smartoperator/logs?limit=1&period=${filterPeriod}`)
         ]);
         
         const enqData = await enqRes.json();
@@ -192,7 +192,7 @@ export default function Dashboard() {
               </button>
             ))}
           </div>
-          <Link href="/add" className="flex items-center gap-1.5 px-4 py-1.5 bg-[#5b21b6] text-white rounded-lg text-xs font-black uppercase tracking-widest hover:bg-[#4c1d95] transition-all shadow-md shadow-indigo-500/20">
+          <Link href="/add" className="flex items-center gap-1.5 px-4 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-black uppercase tracking-widest hover:bg-blue-700 transition-all shadow-md shadow-blue-500/20">
             <Plus className="w-4 h-4" /> New Enquiry
           </Link>
         </div>

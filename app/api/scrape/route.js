@@ -7,9 +7,18 @@ export async function POST(request) {
         
         // Assuming the scraper accepts some dynamic input from the request body
         const input = body.input || {};
+        const engine = body.engine || 'apify';
+        const apifyToken = body.apifyToken || null;
 
-        console.log('Initiating Apify scrape with input:', input);
-        const data = await runScraper(input);
+        console.log(`Initiating scrape with engine: ${engine}, input:`, input);
+        
+        let data;
+        if (engine === 'playwright') {
+            const { runLocalScraper } = require('@/lib/localScraper');
+            data = await runLocalScraper(input);
+        } else {
+            data = await runScraper(input, apifyToken);
+        }
 
         return NextResponse.json({ success: true, data });
     } catch (error) {

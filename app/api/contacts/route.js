@@ -8,6 +8,7 @@ export async function GET(request) {
     const page = parseInt(searchParams.get('page') || '1', 10);
     const limit = parseInt(searchParams.get('limit') || '50', 10);
     const status = searchParams.get('status') || 'pending'; // default to pending
+    const tag = searchParams.get('tag') || 'all';
     const offset = (page - 1) * limit;
 
     const token = request.cookies.get('token')?.value;
@@ -26,6 +27,12 @@ export async function GET(request) {
       countQuery += ' AND user_id = ?';
       dataQuery += ' AND user_id = ?';
       queryParams.push(userId);
+    }
+
+    if (tag !== 'all') {
+      countQuery += ' AND tag = ?';
+      dataQuery += ' AND tag = ?';
+      queryParams.push(tag);
     }
 
     if (status === 'added') {

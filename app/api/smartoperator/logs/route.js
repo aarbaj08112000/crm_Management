@@ -7,6 +7,7 @@ export async function GET(request) {
     const startDate = searchParams.get('startDate');
     const endDate = searchParams.get('endDate');
     const salespersonId = searchParams.get('salespersonId');
+    const period = searchParams.get('period');
 
     const page = parseInt(searchParams.get('page')) || 1;
     const limit = parseInt(searchParams.get('limit')) || 20;
@@ -15,7 +16,19 @@ export async function GET(request) {
     let whereClause = 'WHERE 1=1';
     const queryParams = [];
 
-    if (startDate && endDate) {
+    if (period) {
+      if (period === 'Today') {
+        whereClause += ' AND DATE(c.created_at) = CURDATE()';
+      } else if (period === 'Yesterday') {
+        whereClause += ' AND DATE(c.created_at) = CURDATE() - INTERVAL 1 DAY';
+      } else if (period === 'Week') {
+        whereClause += ' AND YEARWEEK(c.created_at, 1) = YEARWEEK(CURDATE(), 1)';
+      } else if (period === 'Month') {
+        whereClause += ' AND MONTH(c.created_at) = MONTH(CURDATE()) AND YEAR(c.created_at) = YEAR(CURDATE())';
+      } else if (period === 'Year') {
+        whereClause += ' AND YEAR(c.created_at) = YEAR(CURDATE())';
+      }
+    } else if (startDate && endDate) {
       whereClause += ` AND DATE(c.created_at) BETWEEN ? AND ?`;
       queryParams.push(startDate, endDate);
     } else if (startDate) {

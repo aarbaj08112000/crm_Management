@@ -16,15 +16,33 @@ export default function ContactsPage() {
     const [totalPages, setTotalPages] = useState(1);
     const [totalContacts, setTotalContacts] = useState(0);
     const [filterStatus, setFilterStatus] = useState('pending');
+    const [tags, setTags] = useState([]);
+    const [filterTag, setFilterTag] = useState('all');
 
     useEffect(() => {
-        fetchContacts(page, filterStatus);
-    }, [page, filterStatus]);
+        fetchContacts(page, filterStatus, filterTag);
+    }, [page, filterStatus, filterTag]);
 
-    const fetchContacts = async (currentPage, status) => {
+    useEffect(() => {
+        fetchTags();
+    }, []);
+
+    const fetchTags = async () => {
+        try {
+            const response = await fetch('/api/contacts/tags');
+            const data = await response.json();
+            if (response.ok && data.success) {
+                setTags(data.data || []);
+            }
+        } catch (err) {
+            console.error('Failed to fetch tags:', err);
+        }
+    };
+
+    const fetchContacts = async (currentPage, status, tag) => {
         setLoading(true);
         try {
-            const response = await fetch(`/api/contacts?page=${currentPage}&limit=50&status=${status}`);
+            const response = await fetch(`/api/contacts?page=${currentPage}&limit=50&status=${status}&tag=${encodeURIComponent(tag)}`);
             const data = await response.json();
             if (!response.ok || !data.success) {
                 throw new Error(data.error || 'Failed to fetch contacts');
@@ -86,7 +104,7 @@ export default function ContactsPage() {
         }
     };
 
-    if (loading) {
+    if (loading && contacts.length === 0) {
         return (
             <div className="flex items-center justify-center min-h-screen">
                 <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
@@ -108,6 +126,16 @@ export default function ContactsPage() {
                         <p className="text-gray-500 dark:text-gray-400 mt-1">Manage AI-scraped leads and convert them into your main CRM pipeline.</p>
                     </div>
                     <div className="flex items-center gap-4">
+                        <select
+                            value={filterTag}
+                            onChange={(e) => { setFilterTag(e.target.value); setPage(1); }}
+                            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 min-w-[150px] font-medium"
+                        >
+                            <option value="all">All Tags</option>
+                            {tags.map((t, idx) => (
+                                <option key={idx} value={t}>{t}</option>
+                            ))}
+                        </select>
                         <select
                             value={filterStatus}
                             onChange={(e) => { setFilterStatus(e.target.value); setPage(1); }}
@@ -161,20 +189,22 @@ export default function ContactsPage() {
                                         <Phone className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
                                         <span>{contact.phone || '-'}</span>
                                     </div>
-                                    {contact.email && (
-                                        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                                            <Mail className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
-                                            <span className="truncate" title={contact.email}>{contact.email}</span>
-                                        </div>
-                                    )}
-                                    {contact.website && (
-                                        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                                            <Globe className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
+                                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                                        <Mail className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
+                                        <span className={`truncate ${!contact.email ? 'text-gray-400 italic' : ''}`} title={contact.email || 'No email'}>
+                                            {contact.email || '-'}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                                        <Globe className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
+                                        {contact.website ? (
                                             <a href={contact.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline truncate" title={contact.website}>
                                                 {contact.website.replace(/^https?:\/\//, '')}
                                             </a>
-                                        </div>
-                                    )}
+                                        ) : (
+                                            <span className="text-gray-400 italic truncate" title="No website">-</span>
+                                        )}
+                                    </div>
                                     {contact.address && (
                                         <div className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
                                             <MapPin className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0 mt-0.5" />

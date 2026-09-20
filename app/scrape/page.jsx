@@ -16,6 +16,8 @@ export default function ScrapePage() {
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState('');
     const [contactTag, setContactTag] = useState('');
+    const [engine, setEngine] = useState('apify');
+    const [apifyToken, setApifyToken] = useState('');
 
     React.useEffect(() => {
         fetch('/api/users')
@@ -46,7 +48,7 @@ export default function ScrapePage() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ input: parsedInput }),
+                body: JSON.stringify({ input: parsedInput, engine, apifyToken }),
             });
 
             const data = await response.json();
@@ -114,6 +116,35 @@ export default function ScrapePage() {
                         <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Configuration</h2>
                         
                         <div className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Scraper Engine
+                                </label>
+                                <select
+                                    value={engine}
+                                    onChange={(e) => setEngine(e.target.value)}
+                                    className="w-full p-3 mb-4 border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm outline-none"
+                                >
+                                    <option value="apify">Apify (Cloud)</option>
+                                    <option value="playwright">Playwright (Free Local)</option>
+                                </select>
+                            </div>
+                            
+                            {engine === 'apify' && (
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Apify API Token (Optional if set in .env)
+                                    </label>
+                                    <input
+                                        type="password"
+                                        value={apifyToken}
+                                        onChange={(e) => setApifyToken(e.target.value)}
+                                        placeholder="apify_api_..."
+                                        className="w-full p-3 mb-4 border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm outline-none"
+                                    />
+                                </div>
+                            )}
+                            
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Input Parameters (JSON)
