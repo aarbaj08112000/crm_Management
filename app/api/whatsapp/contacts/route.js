@@ -20,6 +20,10 @@ export async function GET(req) {
     try {
        await query("ALTER TABLE whatsapp_contacts ADD COLUMN lid VARCHAR(100) DEFAULT NULL");
     } catch(e) {}
+    // Ensure enquiry_id column exists
+    try {
+       await query("ALTER TABLE whatsapp_contacts ADD COLUMN enquiry_id VARCHAR(50) DEFAULT NULL");
+    } catch(e) {}
 
     // Base query for whatsapp contacts
     let sql = `
