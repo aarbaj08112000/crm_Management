@@ -19,6 +19,7 @@ export async function middleware(request) {
     pathname.startsWith('/api/smartoperator/play') ||
     pathname.startsWith('/api/vonage/voice') ||
     pathname.startsWith('/_next') ||
+    pathname.startsWith('/socket.io') ||
     pathname === '/favicon.ico'
   ) {
     return NextResponse.next();
