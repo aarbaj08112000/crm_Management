@@ -24,9 +24,20 @@ const port = parseInt(process.env.PORT || '3000', 10);
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 
+let io;
+
 app.prepare().then(() => {
+  const { Server } = require('socket.io');
+  
   const server = createServer((req, res) => {
     try {
+      // Phusion Passenger (Hostinger) bypasses standard HTTP events.
+      // We MUST manually intercept Socket.IO requests here!
+      if (req.url.startsWith('/api/socket') && io) {
+        io.engine.handleRequest(req, res);
+        return;
+      }
+      
       const parsedUrl = parse(req.url, true);
       handle(req, res, parsedUrl);
     } catch (err) {
@@ -34,25 +45,34 @@ app.prepare().then(() => {
       res.statusCode = 500;
       res.end('internal server error');
     }
-  })
-    .once('error', (err) => {
+  });
+  
+  // Initialize Socket.IO
+  io = new Server(server, {
+    path: '/api/socket',
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"]
+    }
+  });
+
+  // Manually handle websocket upgrades for Passenger
+  server.on('upgrade', (req, socket, head) => {
+    if (req.url.startsWith('/api/socket') && io) {
+      io.engine.handleUpgrade(req, socket, head);
+    }
+  });
+
+  const whatsappService = require('./lib/whatsapp/whatsappService');
+  whatsappService.initializeWhatsApp(io);
+  
+  server.once('error', (err) => {
       console.error(err);
       process.exit(1);
     })
     .listen(port, () => {
       console.log(`> Ready on http://${hostname}:${port}`);
       
-      // Initialize Socket.IO and WhatsApp Service
-      const { Server } = require('socket.io');
-      const io = new Server(server, {
-        path: '/api/socket',
-        cors: {
-          origin: "*",
-          methods: ["GET", "POST"]
-        }
-      });
-      const whatsappService = require('./lib/whatsapp/whatsappService');
-      whatsappService.initializeWhatsApp(io);
       // Get base URL and ensure no trailing slash
       const rawAppUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.API_BASE_URL || `http://${hostname}:${port}`;
       const baseUrl = rawAppUrl.endsWith('/') ? rawAppUrl.slice(0, -1) : rawAppUrl;
