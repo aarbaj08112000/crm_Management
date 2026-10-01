@@ -20,6 +20,7 @@ export async function middleware(request) {
     pathname.startsWith('/api/vonage/voice') ||
     pathname.startsWith('/_next') ||
     pathname.startsWith('/socket.io') ||
+    pathname.startsWith('/api/socket') ||
     pathname === '/favicon.ico'
   ) {
     return NextResponse.next();
