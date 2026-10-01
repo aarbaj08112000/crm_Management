@@ -45,7 +45,7 @@ app.prepare().then(() => {
       // Initialize Socket.IO and WhatsApp Service
       const { Server } = require('socket.io');
       const io = new Server(server, {
-        
+        path: '/api/socket',
         cors: {
           origin: "*",
           methods: ["GET", "POST"]
