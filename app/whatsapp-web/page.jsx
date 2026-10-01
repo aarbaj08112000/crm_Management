@@ -99,11 +99,13 @@ export default function WhatsAppWebMessenger() {
 
   // ─── Socket initialisation (runs once) ────────────────────────────────
   useEffect(() => {
-    const socket = io({
-      path: '/api/socket',
-      transports: ['polling']
-    });
-    socketRef.current = socket;
+    // Initialize Socket.IO on the server first (works on Hostinger without custom server.js)
+    fetch('/api/socket').finally(() => {
+      const socket = io({
+        path: '/api/socket',
+        transports: ['polling']
+      });
+      socketRef.current = socket;
 
     socket.on('connect', () => console.log('[WA-Web] Socket connected'));
 
@@ -336,6 +338,7 @@ export default function WhatsAppWebMessenger() {
       socket.disconnect();
       socketRef.current = null;
     };
+    }); // end fetch().finally()
   }, []);
 
   // ─── Fetch chat history whenever active contact changes ────────────────
