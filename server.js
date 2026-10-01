@@ -4,6 +4,16 @@ const next = require('next');
 const cron = require('node-cron');
 const { loadEnvConfig } = require('@next/env');
 
+// Prevent Puppeteer "Server is not running" error from crashing the server
+process.on('uncaughtException', (err) => {
+  if (err.message && err.message.includes('Server is not running')) {
+    console.warn('Ignored harmless Puppeteer/net error:', err.message);
+    return;
+  }
+  console.error('Uncaught Exception:', err);
+  process.exit(1);
+});
+
 // Load environment variables manually for the custom server
 const projectDir = process.cwd();
 loadEnvConfig(projectDir);
