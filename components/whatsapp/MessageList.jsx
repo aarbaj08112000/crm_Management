@@ -101,7 +101,7 @@ function LazyMedia({ msg, contactPhone }) {
   const loadMedia = () => {
     if (loading || mediaData) return;
     setLoading(true);
-    const s = io({ path: '/api/socket' });
+    const s = io({ path: '/api/socket', transports: ['polling'] });
     s.emit('fetch_media', { messageId: msg.id, number: contactPhone });
     s.on('media_data', (data) => {
       if (data.messageId === msg.id) {

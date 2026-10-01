@@ -31,13 +31,22 @@ app.prepare().then(() => {
   
   const server = createServer((req, res) => {
     try {
-      // Phusion Passenger (Hostinger) bypasses standard HTTP events.
-      // We MUST manually intercept Socket.IO requests here!
-      if (req.url.startsWith('/api/socket') && io) {
-        io.engine.handleRequest(req, res);
-        return;
+      // Add CORS headers for all /api/socket requests (required for Hostinger)
+      if (req.url && req.url.startsWith('/api/socket')) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        if (req.method === 'OPTIONS') {
+          res.writeHead(204);
+          res.end();
+          return;
+        }
+        if (io) {
+          io.engine.handleRequest(req, res);
+          return;
+        }
       }
-      
+
       const parsedUrl = parse(req.url, true);
       handle(req, res, parsedUrl);
     } catch (err) {
@@ -47,12 +56,15 @@ app.prepare().then(() => {
     }
   });
   
-  // Initialize Socket.IO
+  // Initialize Socket.IO — force polling only (works on Hostinger/Passenger)
   io = new Server(server, {
     path: '/api/socket',
+    transports: ['polling'],
+    allowUpgrades: false,
     cors: {
       origin: "*",
-      methods: ["GET", "POST"]
+      methods: ["GET", "POST"],
+      credentials: false
     }
   });
 
