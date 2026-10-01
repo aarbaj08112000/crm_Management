@@ -18,9 +18,9 @@ function formatTime(ts) {
 function formatDateLabel(ts) {
   if (!ts) return '';
   const d = new Date(ts * 1000);
-  const today     = new Date();
+  const today = new Date();
   const yesterday = new Date(); yesterday.setDate(today.getDate() - 1);
-  if (d.toDateString() === today.toDateString())     return 'Today';
+  if (d.toDateString() === today.toDateString()) return 'Today';
   if (d.toDateString() === yesterday.toDateString()) return 'Yesterday';
   return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
 }
@@ -96,12 +96,12 @@ function getFileIcon(filename, type, mimetype) {
 
 function LazyMedia({ msg, contactPhone }) {
   const [mediaData, setMediaData] = useState(null);
-  const [loading, setLoading]     = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const loadMedia = () => {
     if (loading || mediaData) return;
     setLoading(true);
-    const s = io({ path: '/socket.io' });
+    const s = io({ path: '/api/socket' });
     s.emit('fetch_media', { messageId: msg.id, number: contactPhone });
     s.on('media_data', (data) => {
       if (data.messageId === msg.id) {
@@ -160,7 +160,7 @@ function LazyMedia({ msg, contactPhone }) {
           {displayName}
         </span>
         <span className="text-[11px]" style={{ color: '#8696a0' }}>
-          {loading ? 'Loading…' : (msg.fileSize ? `${(msg.fileSize/1024).toFixed(1)} KB • Tap to load` : 'Tap to load')}
+          {loading ? 'Loading…' : (msg.fileSize ? `${(msg.fileSize / 1024).toFixed(1)} KB • Tap to load` : 'Tap to load')}
         </span>
       </div>
       {loading && (
@@ -269,22 +269,22 @@ function MessageHoverActions({ hovered, isMe, msg, onReact, onReply, setHovered 
     >
       {/* Reply button */}
       {!msg.id?.toString().startsWith('temp_') && (
-      <button
-        onClick={() => { onReply(msg); setHovered(false); }}
-        title="Reply to message"
-        style={{
-          width: 30, height: 30, borderRadius: '50%',
-          background: '#fff', border: '1.5px solid #e9edef',
-          cursor: 'pointer', display: 'flex', alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
-          color: '#8696a0', padding: 0,
-        }}
-      >
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-          <path d="M19 11h-2v3c0 1.1-.9 2-2 2h-9.17l2.59-2.59L7 12l-5 5 5 5 1.41-1.41L5.83 18H15c2.21 0 4-1.79 4-4v-3z"/>
-        </svg>
-      </button>
+        <button
+          onClick={() => { onReply(msg); setHovered(false); }}
+          title="Reply to message"
+          style={{
+            width: 30, height: 30, borderRadius: '50%',
+            background: '#fff', border: '1.5px solid #e9edef',
+            cursor: 'pointer', display: 'flex', alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
+            color: '#8696a0', padding: 0,
+          }}
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M19 11h-2v3c0 1.1-.9 2-2 2h-9.17l2.59-2.59L7 12l-5 5 5 5 1.41-1.41L5.83 18H15c2.21 0 4-1.79 4-4v-3z" />
+          </svg>
+        </button>
       )}
 
       {/* React button */}
@@ -301,7 +301,7 @@ function MessageHoverActions({ hovered, isMe, msg, onReact, onReply, setHovered 
         }}
       >
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm-3.5-9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm7 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-3.5 7c2.623 0 4.875-1.692 5.701-4H6.299C7.125 15.308 9.377 17 12 17z"/>
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm-3.5-9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm7 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-3.5 7c2.623 0 4.875-1.692 5.701-4H6.299C7.125 15.308 9.377 17 12 17z" />
         </svg>
       </button>
 
@@ -341,17 +341,17 @@ function MessageAck({ msg }) {
   if (ack >= 3) {
     return (
       <svg viewBox="0 0 16 11" width="16" height="11" fill="none">
-        <path d="M11.071.653l-.553-.43a.42.42 0 00-.59.074L4.879 7.131 2.198 4.9a.42.42 0 00-.59.074l-.43.551a.42.42 0 00.073.59l3.135 2.43.43.428.43-.43L11.145 1.24a.42.42 0 00-.074-.588z" fill="#53bdeb"/>
-        <path d="M15.071.653l-.553-.43a.42.42 0 00-.59.074L8.879 7.131 8.3 6.663l-.43.551.709.55.43.428.43-.43L15.145 1.24a.42.42 0 00-.074-.588z" fill="#53bdeb"/>
+        <path d="M11.071.653l-.553-.43a.42.42 0 00-.59.074L4.879 7.131 2.198 4.9a.42.42 0 00-.59.074l-.43.551a.42.42 0 00.073.59l3.135 2.43.43.428.43-.43L11.145 1.24a.42.42 0 00-.074-.588z" fill="#53bdeb" />
+        <path d="M15.071.653l-.553-.43a.42.42 0 00-.59.074L8.879 7.131 8.3 6.663l-.43.551.709.55.43.428.43-.43L15.145 1.24a.42.42 0 00-.074-.588z" fill="#53bdeb" />
       </svg>
     );
   }
-  
+
   // Pending, Sent, Delivered (temp, ack=0,1,2) -> show double grey check
   return (
     <svg viewBox="0 0 16 11" width="16" height="11" fill="none">
-      <path d="M11.071.653l-.553-.43a.42.42 0 00-.59.074L4.879 7.131 2.198 4.9a.42.42 0 00-.59.074l-.43.551a.42.42 0 00.073.59l3.135 2.43.43.428.43-.43L11.145 1.24a.42.42 0 00-.074-.588z" fill="#8696a0"/>
-      <path d="M15.071.653l-.553-.43a.42.42 0 00-.59.074L8.879 7.131 8.3 6.663l-.43.551.709.55.43.428.43-.43L15.145 1.24a.42.42 0 00-.074-.588z" fill="#8696a0"/>
+      <path d="M11.071.653l-.553-.43a.42.42 0 00-.59.074L4.879 7.131 2.198 4.9a.42.42 0 00-.59.074l-.43.551a.42.42 0 00.073.59l3.135 2.43.43.428.43-.43L11.145 1.24a.42.42 0 00-.074-.588z" fill="#8696a0" />
+      <path d="M15.071.653l-.553-.43a.42.42 0 00-.59.074L8.879 7.131 8.3 6.663l-.43.551.709.55.43.428.43-.43L15.145 1.24a.42.42 0 00-.074-.588z" fill="#8696a0" />
     </svg>
   );
 }
@@ -361,15 +361,15 @@ function MessageBubble({ msg, isMedia, isMe, contactName, contactPhone, onReact,
   const [hovered, setHovered] = React.useState(false);
 
   const nonChatTypes = ['image', 'video', 'audio', 'ptt', 'document', 'sticker'];
-  const reactions    = msg.reactions || [];
-  const reactGroups  = reactions.reduce((acc, r) => {
+  const reactions = msg.reactions || [];
+  const reactGroups = reactions.reduce((acc, r) => {
     if (!r.emoji) return acc;
     const ex = acc.find(g => g.emoji === r.emoji);
     if (ex) ex.count++; else acc.push({ emoji: r.emoji, count: 1 });
     return acc;
   }, []);
 
-  const bubbleBg     = isMe ? '#d9fdd3' : '#fff';
+  const bubbleBg = isMe ? '#d9fdd3' : '#fff';
   const bubbleRadius = isMe ? '8px 8px 0 8px' : '8px 8px 8px 0';
 
   const Tail = () => isMe ? (
@@ -398,8 +398,8 @@ function MessageBubble({ msg, isMedia, isMe, contactName, contactPhone, onReact,
             {msg.isForwarded && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 12px 2px', color: '#8696a0' }}>
                 <svg viewBox="0 0 15 11" width="15" height="11" fill="currentColor">
-                  <path d="M.752 5.337L5.26 1.036a.5.5 0 01.74.673L2.248 5.5l3.752 3.791a.5.5 0 01-.74.673L.752 5.663a.232.232 0 010-.326z"/>
-                  <path d="M5.752 5.337L10.26 1.036a.5.5 0 01.74.673L7.248 5.5l3.752 3.791a.5.5 0 01-.74.673L5.752 5.663a.232.232 0 010-.326z"/>
+                  <path d="M.752 5.337L5.26 1.036a.5.5 0 01.74.673L2.248 5.5l3.752 3.791a.5.5 0 01-.74.673L.752 5.663a.232.232 0 010-.326z" />
+                  <path d="M5.752 5.337L10.26 1.036a.5.5 0 01.74.673L7.248 5.5l3.752 3.791a.5.5 0 01-.74.673L5.752 5.663a.232.232 0 010-.326z" />
                 </svg>
                 <span style={{ fontSize: 12, fontStyle: 'italic' }}>Forwarded</span>
               </div>
@@ -462,8 +462,8 @@ function MessageBubble({ msg, isMedia, isMe, contactName, contactPhone, onReact,
 // ── Main MessageList ──────────────────────────────────────────────────────────
 export default function MessageList({ messages, contactName, contactPhone, onReact, onReply, onLoadMore, loadingMore, hasMore }) {
   const containerRef = useRef(null);
-  const isNearBottomRef    = useRef(true);
-  const distFromBottomRef  = useRef(null);
+  const isNearBottomRef = useRef(true);
+  const distFromBottomRef = useRef(null);
 
   // Restore scroll after older messages prepended
   useLayoutEffect(() => {
@@ -483,7 +483,7 @@ export default function MessageList({ messages, contactName, contactPhone, onRea
     if (!c) return;
     c.scrollTop = c.scrollHeight;
     isNearBottomRef.current = true;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contactPhone]);
 
   // Detect scroll to top → trigger load more
@@ -578,7 +578,7 @@ export default function MessageList({ messages, contactName, contactPhone, onRea
         }
 
         const { msg } = item;
-        const isMe    = msg.fromMe;
+        const isMe = msg.fromMe;
         const isMedia = msg.hasMedia && nonChatTypes.includes(msg.type);
 
         return (
@@ -589,8 +589,8 @@ export default function MessageList({ messages, contactName, contactPhone, onRea
             isMedia={isMedia}
             contactName={contactName}
             contactPhone={contactPhone}
-            onReact={onReact || (() => {})}
-            onReply={onReply || (() => {})}
+            onReact={onReact || (() => { })}
+            onReply={onReply || (() => { })}
           />
         );
       })}
