@@ -16,9 +16,14 @@ export async function GET(req) {
     const userId = payload.userId;
     const role = (payload.role || '').toString().toLowerCase();
 
+    // Ensure lid column exists
+    try {
+       await query("ALTER TABLE whatsapp_contacts ADD COLUMN lid VARCHAR(100) DEFAULT NULL");
+    } catch(e) {}
+
     // Base query for whatsapp contacts
     let sql = `
-      SELECT DISTINCT c.id, c.name, c.phone, c.created_at, c.enquiry_id, c.added_by, u.user_name as added_by_name,
+      SELECT DISTINCT c.id, c.name, c.phone, c.lid, c.created_at, c.enquiry_id, c.added_by, u.user_name as added_by_name,
              enq.added_date as enquiry_date,
              (SELECT message FROM whatsapp_messages m WHERE m.contact_id = c.id ORDER BY timestamp DESC LIMIT 1) as last_message,
              (SELECT sender FROM whatsapp_messages m WHERE m.contact_id = c.id ORDER BY timestamp DESC LIMIT 1) as last_sender,
@@ -50,6 +55,7 @@ export async function GET(req) {
       id: c.id,
       name: c.name || `+${c.phone}`,
       phone: c.phone,
+      lid: c.lid,
       enquiry_id: displayEnquiryId,
       rawEnquiryId: c.enquiry_id,
       addedByName: c.added_by_name,

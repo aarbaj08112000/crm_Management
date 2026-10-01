@@ -10,6 +10,7 @@ export async function middleware(request) {
     pathname.startsWith('/login') ||
     pathname.startsWith('/api/auth') ||
     pathname.startsWith('/api/webhook') ||
+    pathname.startsWith('/api/whatsapp-rp/webhook') ||
     pathname.startsWith('/api/cron') ||
     pathname.startsWith('/api/debug-emails') ||
     pathname.startsWith('/api/smartoperator/voice') ||

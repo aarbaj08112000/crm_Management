@@ -215,13 +215,12 @@ export default function WhatsAppMessenger() {
   };
 
   const fetchTemplates = async () => {
-    if (!wabaId) return;
     setLoadingTemplates(true);
     try {
-      const res = await fetch(`/api/whatsapp/templates?waba_id=${wabaId}`);
+      const res = await fetch(`/api/whatsapp-rp/get_templates`);
       const data = await res.json();
-      if (res.ok) {
-        setTemplates(data.templates || []);
+      if (res.ok && data.success) {
+        setTemplates(data.data?.templates || []);
       }
     } catch (err) {
       console.error(err);
@@ -230,18 +229,23 @@ export default function WhatsAppMessenger() {
     }
   };
 
+  useEffect(() => {
+    if (showTemplateModal && templates.length === 0) {
+      fetchTemplates();
+    }
+  }, [showTemplateModal]);
+
   const handleSendTextMessage = async () => {
     if (!messageText.trim() || !activeContact) return;
     
     setSendingMessage(true);
     try {
-      const res = await fetch('/api/whatsapp/send', {
+      const res = await fetch('/api/whatsapp-rp/send_message', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          to: activeContact.phone,
-          type: 'text',
-          textOptions: { body: messageText.trim() }
+          numbers: activeContact.phone,
+          message: messageText.trim()
         })
       });
       const data = await res.json();
@@ -254,10 +258,11 @@ export default function WhatsAppMessenger() {
         await fetchMessages(activeChatId);
         setMessageText('');
       } else {
-        alert("Failed to send: " + (data.error || 'Unknown error'));
+        console.error("API Error Response:", data);
+        alert("Failed to send text message: " + (data.message || data.error || JSON.stringify(data)));
       }
     } catch (err) {
-      alert("Error sending message.");
+      alert("Error sending text message.");
     } finally {
       setSendingMessage(false);
     }
@@ -271,13 +276,12 @@ export default function WhatsAppMessenger() {
     const languageCode = templateDetails ? templateDetails.language : 'en_US';
 
     try {
-      const res = await fetch('/api/whatsapp/send', {
+      const res = await fetch('/api/whatsapp-rp/send_message', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          to: activeContact.phone,
-          type: 'template',
-          templateOptions: { name: selectedTemplate, languageCode }
+          numbers: activeContact.phone,
+          template_id: selectedTemplate
         })
       });
       const data = await res.json();
@@ -810,28 +814,6 @@ export default function WhatsAppMessenger() {
             </div>
             
             <div className="p-6 space-y-5">
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium text-gray-700 flex justify-between">
-                  <span>WABA ID</span>
-                  <span className="text-[10px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded">Required for fetch</span>
-                </label>
-                <div className="flex gap-2">
-                  <input 
-                    type="text" 
-                    value={wabaId}
-                    onChange={(e) => setWabaId(e.target.value)}
-                    placeholder="Enter Business Account ID"
-                    className="flex-1 border rounded-lg px-3 py-2 text-sm focus:border-green-500 outline-none"
-                  />
-                  <button 
-                    onClick={fetchTemplates}
-                    disabled={loadingTemplates}
-                    className="bg-gray-100 border text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 disabled:opacity-50 transition-colors cursor-pointer "
-                  >
-                    {loadingTemplates ? '...' : 'Fetch'}
-                  </button>
-                </div>
-              </div>
 
               <div className="space-y-1.5">
                 <label className="text-sm font-medium text-gray-700">Select Template</label>

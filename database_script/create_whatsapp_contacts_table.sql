@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS `whatsapp_contacts` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(255),
+  `phone` VARCHAR(50) NOT NULL,
+  `enquiry_id` VARCHAR(50),
+  `added_by` INT,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

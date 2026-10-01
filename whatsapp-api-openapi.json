@@ -1,0 +1,442 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "RP Digital WhatsApp Business REST API",
+        "description": "Official REST API for sending WhatsApp template messages to single or multiple numbers with dynamic variables, header media attachments, and wallet-based billing.\n\n### Authentication\nRequests must be authenticated using the **Client API Token** configured in the Admin or Client Portal. Supply the token via:\n- Header: `Authorization: Bearer <TOKEN>`\n- Header: `X-API-TOKEN: <TOKEN>`\n- JSON Payload: `\"token\": \"<TOKEN>\"`\n\n### IP Whitelist Validation\nIncoming API requests are verified against the **Client Allowed Server IPs** list configured in the Admin Portal. If *No IP Check* is enabled for the client account, IP verification is skipped.",
+        "version": "1.0.0",
+        "contact": {
+            "name": "RP Digital Phone Support",
+            "email": "rpdllp@rpdigital.com",
+            "url": "https://whatsapp.rpdigitalphone.com"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://whatsapp.rpdigitalphone.com/index.php",
+            "description": "Current Production Server"
+        }
+    ],
+    "security": [
+        {
+            "BearerAuth": []
+        },
+        {
+            "ApiKeyAuth": []
+        }
+    ],
+    "paths": {
+        "/apis/send_message": {
+            "post": {
+                "summary": "Send WhatsApp Template Message",
+                "description": "Send a pre-approved WhatsApp template message to single or multiple recipient phone numbers with dynamic variables and optional media header.\n\n**Authentication:**\nEnter your Client API Token in the top authorization bar (or click Authorize). All requests will automatically include your token via `X-API-TOKEN` header.",
+                "operationId": "sendMessage",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Send message parameters including recipient numbers, template ID/name, and variable values.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "numbers",
+                                    "template_id"
+                                ],
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "Client API Token (optional if entered in header)",
+                                        "example": "your_client_api_token"
+                                    },
+                                    "numbers": {
+                                        "oneOf": [
+                                            {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                },
+                                                "description": "Array of recipient phone numbers with country code",
+                                                "example": [
+                                                    "919958473344",
+                                                    "919876543210"
+                                                ]
+                                            },
+                                            {
+                                                "type": "string",
+                                                "description": "Single phone number or comma-separated numbers",
+                                                "example": "919958473344"
+                                            },
+                                            {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "number"
+                                                    ],
+                                                    "properties": {
+                                                        "number": {
+                                                            "type": "string",
+                                                            "example": "919958473344"
+                                                        },
+                                                        "variables": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "example": [
+                                                                "AWB67586",
+                                                                "Raju Mishra",
+                                                                "8527628022"
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "description": "Array of recipient objects with per-number custom variables"
+                                            }
+                                        ]
+                                    },
+                                    "template_id": {
+                                        "oneOf": [
+                                            {
+                                                "type": "integer",
+                                                "example": 382
+                                            },
+                                            {
+                                                "type": "string",
+                                                "example": "hello_test"
+                                            }
+                                        ],
+                                        "description": "Numeric database template ID or Meta template name"
+                                    },
+                                    "template_variables": {
+                                        "oneOf": [
+                                            {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                },
+                                                "description": "Indexed array of variable values corresponding to {{1}}, {{2}}, {{3}}",
+                                                "example": [
+                                                    "John Doe",
+                                                    "ORD-98234"
+                                                ]
+                                            },
+                                            {
+                                                "type": "object",
+                                                "description": "Key-value map of variables (e.g. {\"1\": \"val1\", \"2\": \"val2\"})",
+                                                "example": {
+                                                    "1": "John Doe",
+                                                    "2": "ORD-98234"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "media_url": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "description": "Public direct URL of image, video, or document (optional for media templates; defaults to template uploaded asset if omitted)",
+                                        "example": "https://whatsapp.rpdigitalphone.com/assets/uploads/templates/sample.pdf"
+                                    },
+                                    "media_filename": {
+                                        "type": "string",
+                                        "description": "Custom filename for document media headers (e.g. brochure.pdf)",
+                                        "example": "proposal.pdf"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Single Number": {
+                                    "summary": "Single Number (e.g. Template 382)",
+                                    "value": {
+                                        "numbers": "919958473344",
+                                        "template_id": 382
+                                    }
+                                },
+                                "Multiple Numbers": {
+                                    "summary": "Multiple Recipients",
+                                    "value": {
+                                        "numbers": [
+                                            "919958473344",
+                                            "919876543210"
+                                        ],
+                                        "template_id": 382
+                                    }
+                                },
+                                "With Dynamic Variables": {
+                                    "summary": "Template with Body Variables",
+                                    "value": {
+                                        "numbers": "919958473344",
+                                        "template_id": 375,
+                                        "template_variables": [
+                                            "AWB67586",
+                                            "Raju Mishra",
+                                            "8527628022"
+                                        ]
+                                    }
+                                },
+                                "Custom Document PDF": {
+                                    "summary": "Template with Custom PDF Document",
+                                    "value": {
+                                        "numbers": "919958473344",
+                                        "template_id": 382,
+                                        "media_url": "https://whatsapp.rpdigitalphone.com/assets/uploads/templates/tmpl_33_1790421820_6ab7ab3c7aaa3.pdf",
+                                        "media_filename": "Company_Profile.pdf"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "All messages sent or queued successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Processed 1 number(s): 1 sent, 0 failed."
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "template_id": {
+                                                    "type": "integer",
+                                                    "example": 375
+                                                },
+                                                "template_name": {
+                                                    "type": "string",
+                                                    "example": "shipment_update_ofd"
+                                                },
+                                                "total_numbers": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "sent_count": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "failed_count": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "currency": {
+                                                    "type": "string",
+                                                    "example": "USD"
+                                                },
+                                                "currency_symbol": {
+                                                    "type": "string",
+                                                    "example": "$"
+                                                },
+                                                "remaining_balance": {
+                                                    "type": "number",
+                                                    "example": 9999.91
+                                                },
+                                                "results": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "number": {
+                                                                "type": "string",
+                                                                "example": "918527628022"
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "example": "sent"
+                                                            },
+                                                            "message_id": {
+                                                                "type": "integer",
+                                                                "example": 14210
+                                                            },
+                                                            "whatsapp_message_id": {
+                                                                "type": "string",
+                                                                "example": "wamid.HBgLMjQ..."
+                                                            },
+                                                            "cost": {
+                                                                "type": "number",
+                                                                "example": 0.02
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request (missing required parameters, invalid template, or no valid phone numbers)"
+                    },
+                    "401": {
+                        "description": "Unauthorized (missing or invalid client token)"
+                    },
+                    "402": {
+                        "description": "Payment Required (insufficient wallet balance for requested message volume)"
+                    },
+                    "403": {
+                        "description": "Forbidden (caller server IP not in allowed list, or client account is inactive)"
+                    },
+                    "500": {
+                        "description": "Internal Server Error / WhatsApp Meta API communication failure"
+                    }
+                }
+            }
+        },
+        "/apis/get_templates": {
+            "get": {
+                "summary": "Get Approved WhatsApp Templates",
+                "description": "Retrieve all approved WhatsApp templates for the authenticated client along with variable slots and components.",
+                "operationId": "getTemplatesGet",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of approved templates retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "client_id": {
+                                                    "type": "integer",
+                                                    "example": 33
+                                                },
+                                                "templates": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string",
+                                                                "example": "382"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "inventory_management_sale"
+                                                            },
+                                                            "category": {
+                                                                "type": "string",
+                                                                "example": "MARKETING"
+                                                            },
+                                                            "language": {
+                                                                "type": "string",
+                                                                "example": "en"
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "example": "approved"
+                                                            },
+                                                            "variables": {
+                                                                "type": "string",
+                                                                "example": "[]"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized (invalid client token)"
+                    },
+                    "403": {
+                        "description": "Forbidden (caller IP not authorized)"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Get Approved WhatsApp Templates (POST)",
+                "description": "Alternative POST endpoint to retrieve approved WhatsApp templates with token in JSON body.",
+                "operationId": "getTemplatesPost",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "your_client_api_token"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "List of approved templates retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "Token",
+                "description": "Provide your Client API Token (from Client Portal or Admin Portal)"
+            },
+            "ApiKeyAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "X-API-TOKEN",
+                "description": "Alternative API Key header for client authentication"
+            }
+        }
+    }
+}

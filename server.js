@@ -15,7 +15,7 @@ const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-  createServer((req, res) => {
+  const server = createServer((req, res) => {
     try {
       const parsedUrl = parse(req.url, true);
       handle(req, res, parsedUrl);
@@ -32,6 +32,16 @@ app.prepare().then(() => {
     .listen(port, () => {
       console.log(`> Ready on http://${hostname}:${port}`);
       
+      // Initialize Socket.IO and WhatsApp Service
+      const { Server } = require('socket.io');
+      const io = new Server(server, {
+        cors: {
+          origin: "*",
+          methods: ["GET", "POST"]
+        }
+      });
+      const whatsappService = require('./lib/whatsapp/whatsappService');
+      whatsappService.initializeWhatsApp(io);
       // Get base URL and ensure no trailing slash
       const rawAppUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.API_BASE_URL || `http://${hostname}:${port}`;
       const baseUrl = rawAppUrl.endsWith('/') ? rawAppUrl.slice(0, -1) : rawAppUrl;

@@ -40,3 +40,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# WhatsApp Web JS
+.wwebjs_auth/
+.wwebjs_cache/
+webhook_debug.log

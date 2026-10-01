@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { CallingProvider } from '@/context/CallingContext';
 import CallDialer from '@/components/calling/CallDialer';
 import { useApp } from '@/context/AppContext';
+import ChatBot from '@/components/ChatBot';
 
 export default function ClientLayout({ children }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -47,6 +48,7 @@ export default function ClientLayout({ children }) {
         </div>
       </div>
       <CallDialer />
+      {/* <ChatBot /> */}
     </CallingProvider>
   );
 }
