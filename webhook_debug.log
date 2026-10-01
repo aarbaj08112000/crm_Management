@@ -436,3 +436,915 @@ ReferenceError: direction is not defined
     at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
     at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
     at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-19T09:29:03.545Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+14%3A58%3A55&EndTime=&CallSid=1789810135.692821&Direction=WEBOBD&call_group=
+2026-09-19T09:29:03.547Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+14%3A58%3A55&EndTime=&CallSid=1789810135.692821&Direction=WEBOBD&call_group=
+2026-09-19T09:29:03.547Z body: {}
+2026-09-19T09:29:03.547Z Extracted: type=transferring_call_to_agent, callSid=1789810135.692821
+2026-09-19T09:29:03.547Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:29:03.569Z Assigned userId: null
+2026-09-19T09:29:03.570Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:29:03.580Z Inserting new log for callSid: 1789810135.692821
+2026-09-19T09:29:03.592Z Inserting into call_events for callLogId: 15
+2026-09-19T09:29:03.593Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-19T09:29:31.100Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=31&coins=1&Status=cancel-customer&StartTime=2026-09-19+14%3A58%3A55.000000&EndTime=2026-09-19+14%3A59%3A25.000000&CallSid=1789810135.692821&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810135.692821.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+14%3A58%3A55.000000&LegB_Start_time=2026-09-19+14%3A58%3A55.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:29:31.100Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=31&coins=1&Status=cancel-customer&StartTime=2026-09-19+14%3A58%3A55.000000&EndTime=2026-09-19+14%3A59%3A25.000000&CallSid=1789810135.692821&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810135.692821.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+14%3A58%3A55.000000&LegB_Start_time=2026-09-19+14%3A58%3A55.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:29:31.100Z body: {}
+2026-09-19T09:29:31.100Z Extracted: type=call_report, callSid=1789810135.692821
+2026-09-19T09:29:31.100Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:29:31.101Z Assigned userId: 1
+2026-09-19T09:29:31.101Z Updating existing log for callSid: 1789810135.692821
+2026-09-19T09:29:31.111Z Inserting into call_events for callLogId: 15
+2026-09-19T09:29:31.111Z CRITICAL ERROR: direction is not defined
+ReferenceError: direction is not defined
+    at handleWebhook (webpack-internal:///(rsc)/./app/api/webhooks/cloudtelephony/route.js:157:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:5:45978)
+    at async responseGenerator (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:203:38)
+    at async AppRouteRouteModule.handleResponse (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:1:195304)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:265:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&page=%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fwebhooks%2Fcloudtelephony%2Froute.js&appDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2Fvar%2Fwww%2Fhtml%2Fextra_work%2Fcrm%2Fcrm_Management&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:317:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1430:9)
+    at async DevServer.renderPageComponent (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1522:32)
+    at async DevServer.pipeImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/base-server.js:917:17)
+    at async /var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:400:20
+    at async Span.traceAsyncFn (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async NextCustomServer.requestHandlerImpl (/var/www/html/extra_work/crm/crm_Management/node_modules/next/dist/server/lib/router-server.js:485:13)
+2026-09-19T09:30:51.488Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A00%3A42&EndTime=&CallSid=1789810241.693999&Direction=WEBOBD&call_group=
+2026-09-19T09:30:51.488Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A00%3A42&EndTime=&CallSid=1789810241.693999&Direction=WEBOBD&call_group=
+2026-09-19T09:30:51.488Z body: {}
+2026-09-19T09:30:51.488Z Extracted: type=transferring_call_to_agent, callSid=1789810241.693999
+2026-09-19T09:30:51.488Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:30:51.497Z Assigned userId: null
+2026-09-19T09:30:51.497Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:30:51.498Z Inserting new log for callSid: 1789810241.693999
+2026-09-19T09:30:51.530Z Inserting into call_events for callLogId: 17
+2026-09-19T09:30:51.562Z Successfully processed webhook.
+2026-09-19T09:31:21.520Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=31&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A00%3A41.000000&EndTime=2026-09-19+15%3A01%3A12.000000&CallSid=1789810241.693999&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810241.693999.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A00%3A41.000000&LegB_Start_time=2026-09-19+15%3A00%3A42.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:31:21.520Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=31&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A00%3A41.000000&EndTime=2026-09-19+15%3A01%3A12.000000&CallSid=1789810241.693999&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810241.693999.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A00%3A41.000000&LegB_Start_time=2026-09-19+15%3A00%3A42.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:31:21.520Z body: {}
+2026-09-19T09:31:21.520Z Extracted: type=call_report, callSid=1789810241.693999
+2026-09-19T09:31:21.520Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:31:21.521Z Assigned userId: 1
+2026-09-19T09:31:21.522Z Updating existing log for callSid: 1789810241.693999
+2026-09-19T09:31:21.531Z Inserting into call_events for callLogId: 17
+2026-09-19T09:31:21.543Z Successfully processed webhook.
+2026-09-19T09:33:03.101Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A02%3A59&EndTime=&CallSid=1789810378.695646&Direction=WEBOBD&call_group=
+2026-09-19T09:33:03.101Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A02%3A59&EndTime=&CallSid=1789810378.695646&Direction=WEBOBD&call_group=
+2026-09-19T09:33:03.101Z body: {}
+2026-09-19T09:33:03.101Z Extracted: type=transferring_call_to_agent, callSid=1789810378.695646
+2026-09-19T09:33:03.102Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:33:03.103Z Assigned userId: null
+2026-09-19T09:33:03.103Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:33:03.104Z Inserting new log for callSid: 1789810378.695646
+2026-09-19T09:33:03.117Z Inserting into call_events for callLogId: 18
+2026-09-19T09:33:03.129Z Successfully processed webhook.
+2026-09-19T09:33:21.420Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=18&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A02%3A58.000000&EndTime=2026-09-19+15%3A03%3A16.000000&CallSid=1789810378.695646&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810378.695646.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A02%3A58.000000&LegB_Start_time=2026-09-19+15%3A02%3A59.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:33:21.420Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=18&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A02%3A58.000000&EndTime=2026-09-19+15%3A03%3A16.000000&CallSid=1789810378.695646&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810378.695646.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A02%3A58.000000&LegB_Start_time=2026-09-19+15%3A02%3A59.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:33:21.420Z body: {}
+2026-09-19T09:33:21.420Z Extracted: type=call_report, callSid=1789810378.695646
+2026-09-19T09:33:21.420Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:33:21.421Z Assigned userId: 1
+2026-09-19T09:33:21.421Z Updating existing log for callSid: 1789810378.695646
+2026-09-19T09:33:21.439Z Inserting into call_events for callLogId: 18
+2026-09-19T09:33:21.452Z Successfully processed webhook.
+2026-09-19T09:35:31.238Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A05%3A22&EndTime=&CallSid=1789810522.697422&Direction=WEBOBD&call_group=
+2026-09-19T09:35:31.238Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A05%3A22&EndTime=&CallSid=1789810522.697422&Direction=WEBOBD&call_group=
+2026-09-19T09:35:31.238Z body: {}
+2026-09-19T09:35:31.238Z Extracted: type=transferring_call_to_agent, callSid=1789810522.697422
+2026-09-19T09:35:31.238Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:35:31.239Z Assigned userId: null
+2026-09-19T09:35:31.239Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:35:31.239Z Inserting new log for callSid: 1789810522.697422
+2026-09-19T09:35:31.256Z Inserting into call_events for callLogId: 19
+2026-09-19T09:35:31.265Z Successfully processed webhook.
+2026-09-19T09:35:44.537Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=13&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A05%3A22.000000&EndTime=2026-09-19+15%3A05%3A35.000000&CallSid=1789810522.697422&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810522.697422.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A05%3A22.000000&LegB_Start_time=2026-09-19+15%3A05%3A22.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:35:44.537Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=13&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A05%3A22.000000&EndTime=2026-09-19+15%3A05%3A35.000000&CallSid=1789810522.697422&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810522.697422.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A05%3A22.000000&LegB_Start_time=2026-09-19+15%3A05%3A22.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:35:44.537Z body: {}
+2026-09-19T09:35:44.538Z Extracted: type=call_report, callSid=1789810522.697422
+2026-09-19T09:35:44.538Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:35:44.539Z Assigned userId: 1
+2026-09-19T09:35:44.539Z Updating existing log for callSid: 1789810522.697422
+2026-09-19T09:35:44.807Z Inserting into call_events for callLogId: 19
+2026-09-19T09:35:44.824Z Successfully processed webhook.
+2026-09-19T09:36:01.248Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A05%3A52&EndTime=&CallSid=1789810552.697742&Direction=WEBOBD&call_group=
+2026-09-19T09:36:01.248Z searchParams: type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A05%3A52&EndTime=&CallSid=1789810552.697742&Direction=WEBOBD&call_group=
+2026-09-19T09:36:01.248Z body: {}
+2026-09-19T09:36:01.248Z Extracted: type=transferring_call_to_agent, callSid=1789810552.697742
+2026-09-19T09:36:01.248Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:36:01.250Z Assigned userId: null
+2026-09-19T09:36:01.250Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:36:01.251Z Inserting new log for callSid: 1789810552.697742
+2026-09-19T09:36:01.273Z Inserting into call_events for callLogId: 20
+2026-09-19T09:36:01.284Z Successfully processed webhook.
+2026-09-19T09:36:01.437Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A05%3A59&EndTime=&CallSid=1789810559.697839&Direction=WEBOBD&call_group=
+2026-09-19T09:36:01.437Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A05%3A59&EndTime=&CallSid=1789810559.697839&Direction=WEBOBD&call_group=
+2026-09-19T09:36:01.437Z body: {}
+2026-09-19T09:36:01.437Z Extracted: type=transferring_call_to_agent, callSid=1789810559.697839
+2026-09-19T09:36:01.437Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:36:01.439Z Assigned userId: null
+2026-09-19T09:36:01.439Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:36:01.439Z Inserting new log for callSid: 1789810559.697839
+2026-09-19T09:36:01.452Z Inserting into call_events for callLogId: 21
+2026-09-19T09:36:01.464Z Successfully processed webhook.
+2026-09-19T09:36:01.527Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=5&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A05%3A52.000000&EndTime=2026-09-19+15%3A05%3A57.000000&CallSid=1789810552.697742&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810552.697742.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A05%3A52.000000&LegB_Start_time=2026-09-19+15%3A05%3A52.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:36:01.527Z searchParams: type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=5&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A05%3A52.000000&EndTime=2026-09-19+15%3A05%3A57.000000&CallSid=1789810552.697742&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810552.697742.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A05%3A52.000000&LegB_Start_time=2026-09-19+15%3A05%3A52.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:36:01.527Z body: {}
+2026-09-19T09:36:01.527Z Extracted: type=call_report, callSid=1789810552.697742
+2026-09-19T09:36:01.527Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:36:01.528Z Assigned userId: 1
+2026-09-19T09:36:01.528Z Updating existing log for callSid: 1789810552.697742
+2026-09-19T09:36:01.537Z Inserting into call_events for callLogId: 20
+2026-09-19T09:36:01.546Z Successfully processed webhook.
+2026-09-19T09:36:21.380Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A06%3A12&EndTime=&CallSid=1789810572.698006&Direction=WEBOBD&call_group=
+2026-09-19T09:36:21.380Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A06%3A12&EndTime=&CallSid=1789810572.698006&Direction=WEBOBD&call_group=
+2026-09-19T09:36:21.380Z body: {}
+2026-09-19T09:36:21.380Z Extracted: type=transferring_call_to_agent, callSid=1789810572.698006
+2026-09-19T09:36:21.380Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:36:21.381Z Assigned userId: null
+2026-09-19T09:36:21.381Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:36:21.381Z Inserting new log for callSid: 1789810572.698006
+2026-09-19T09:36:21.402Z Inserting into call_events for callLogId: 22
+2026-09-19T09:36:21.411Z Successfully processed webhook.
+2026-09-19T09:36:31.441Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=07225054741&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A06%3A28&EndTime=&CallSid=1789810588.698203&Direction=WEBOBD&call_group=
+2026-09-19T09:36:31.441Z searchParams: type=transferring_call_to_agent&SourceNumber=07225054741&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A06%3A28&EndTime=&CallSid=1789810588.698203&Direction=WEBOBD&call_group=
+2026-09-19T09:36:31.441Z body: {}
+2026-09-19T09:36:31.441Z Extracted: type=transferring_call_to_agent, callSid=1789810588.698203
+2026-09-19T09:36:31.441Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:36:31.455Z Assigned userId: null
+2026-09-19T09:36:31.455Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:36:31.456Z Inserting new log for callSid: 1789810588.698203
+2026-09-19T09:36:31.476Z Inserting into call_events for callLogId: 23
+2026-09-19T09:36:31.491Z Successfully processed webhook.
+2026-09-19T09:36:31.639Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=9&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A06%3A12.000000&EndTime=2026-09-19+15%3A06%3A21.000000&CallSid=1789810572.698006&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810572.698006.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A06%3A12.000000&LegB_Start_time=2026-09-19+15%3A06%3A12.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:36:31.639Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=9&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A06%3A12.000000&EndTime=2026-09-19+15%3A06%3A21.000000&CallSid=1789810572.698006&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810572.698006.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A06%3A12.000000&LegB_Start_time=2026-09-19+15%3A06%3A12.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:36:31.639Z body: {}
+2026-09-19T09:36:31.639Z Extracted: type=call_report, callSid=1789810572.698006
+2026-09-19T09:36:31.639Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:36:31.640Z Assigned userId: 1
+2026-09-19T09:36:31.640Z Updating existing log for callSid: 1789810572.698006
+2026-09-19T09:36:31.661Z Inserting into call_events for callLogId: 22
+2026-09-19T09:36:31.670Z Successfully processed webhook.
+2026-09-19T09:36:31.871Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=30&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A05%3A59.000000&EndTime=2026-09-19+15%3A06%3A29.000000&CallSid=1789810559.697839&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810559.697839.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A05%3A59.000000&LegB_Start_time=2026-09-19+15%3A05%3A59.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:36:31.872Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=30&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A05%3A59.000000&EndTime=2026-09-19+15%3A06%3A29.000000&CallSid=1789810559.697839&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810559.697839.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A05%3A59.000000&LegB_Start_time=2026-09-19+15%3A05%3A59.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:36:31.872Z body: {}
+2026-09-19T09:36:31.872Z Extracted: type=call_report, callSid=1789810559.697839
+2026-09-19T09:36:31.872Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:36:31.882Z Assigned userId: 1
+2026-09-19T09:36:31.883Z Updating existing log for callSid: 1789810559.697839
+2026-09-19T09:36:31.892Z Inserting into call_events for callLogId: 21
+2026-09-19T09:36:31.905Z Successfully processed webhook.
+2026-09-19T09:36:51.320Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A06%3A45&EndTime=&CallSid=1789810605.698387&Direction=WEBOBD&call_group=
+2026-09-19T09:36:51.320Z searchParams: type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A06%3A45&EndTime=&CallSid=1789810605.698387&Direction=WEBOBD&call_group=
+2026-09-19T09:36:51.320Z body: {}
+2026-09-19T09:36:51.320Z Extracted: type=transferring_call_to_agent, callSid=1789810605.698387
+2026-09-19T09:36:51.320Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:36:51.321Z Assigned userId: null
+2026-09-19T09:36:51.321Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:36:51.322Z Inserting new log for callSid: 1789810605.698387
+2026-09-19T09:36:51.339Z Inserting into call_events for callLogId: 24
+2026-09-19T09:36:51.349Z Successfully processed webhook.
+2026-09-19T09:36:51.381Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=07225054741&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=14&coins=1&Status=Unavailable&StartTime=2026-09-19+15%3A06%3A28.000000&EndTime=2026-09-19+15%3A06%3A42.000000&CallSid=1789810588.698203&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810588.698203.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A06%3A28.000000&LegB_Start_time=2026-09-19+15%3A06%3A28.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:36:51.381Z searchParams: type=call_report&SourceNumber=07225054741&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=14&coins=1&Status=Unavailable&StartTime=2026-09-19+15%3A06%3A28.000000&EndTime=2026-09-19+15%3A06%3A42.000000&CallSid=1789810588.698203&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810588.698203.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A06%3A28.000000&LegB_Start_time=2026-09-19+15%3A06%3A28.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:36:51.381Z body: {}
+2026-09-19T09:36:51.381Z Extracted: type=call_report, callSid=1789810588.698203
+2026-09-19T09:36:51.381Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:36:51.382Z Assigned userId: 1
+2026-09-19T09:36:51.382Z Updating existing log for callSid: 1789810588.698203
+2026-09-19T09:36:51.391Z Inserting into call_events for callLogId: 23
+2026-09-19T09:36:51.414Z Successfully processed webhook.
+2026-09-19T09:37:01.372Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=live_call&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A06%3A56&EndTime=&CallSid=1789810605.698387&Direction=WEBOBD&call_group=
+2026-09-19T09:37:01.372Z searchParams: type=live_call&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A06%3A56&EndTime=&CallSid=1789810605.698387&Direction=WEBOBD&call_group=
+2026-09-19T09:37:01.372Z body: {}
+2026-09-19T09:37:01.372Z Extracted: type=live_call, callSid=1789810605.698387
+2026-09-19T09:37:01.372Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:37:01.373Z Assigned userId: 1
+2026-09-19T09:37:01.373Z Updating existing log for callSid: 1789810605.698387
+2026-09-19T09:37:01.395Z Inserting into call_events for callLogId: 24
+2026-09-19T09:37:01.407Z Successfully processed webhook.
+2026-09-19T09:37:11.373Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=17&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A06%3A45.000000&EndTime=2026-09-19+15%3A07%3A02.000000&CallSid=1789810605.698387&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810605.698387.wav&Direction=WEBOBD&campid=&TalkDuration=6&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A06%3A45.000000&LegB_Start_time=2026-09-19+15%3A06%3A45.000000&LegB_Picked_time=2026-09-19+15%3A06%3A56.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:37:11.373Z searchParams: type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=17&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A06%3A45.000000&EndTime=2026-09-19+15%3A07%3A02.000000&CallSid=1789810605.698387&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810605.698387.wav&Direction=WEBOBD&campid=&TalkDuration=6&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A06%3A45.000000&LegB_Start_time=2026-09-19+15%3A06%3A45.000000&LegB_Picked_time=2026-09-19+15%3A06%3A56.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:37:11.373Z body: {}
+2026-09-19T09:37:11.373Z Extracted: type=call_report, callSid=1789810605.698387
+2026-09-19T09:37:11.373Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:37:11.379Z Assigned userId: 1
+2026-09-19T09:37:11.380Z Updating existing log for callSid: 1789810605.698387
+2026-09-19T09:37:11.397Z Inserting into call_events for callLogId: 24
+2026-09-19T09:37:11.406Z Successfully processed webhook.
+2026-09-19T09:37:21.317Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A07%3A12&EndTime=&CallSid=1789810632.698673&Direction=WEBOBD&call_group=
+2026-09-19T09:37:21.317Z searchParams: type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A07%3A12&EndTime=&CallSid=1789810632.698673&Direction=WEBOBD&call_group=
+2026-09-19T09:37:21.317Z body: {}
+2026-09-19T09:37:21.317Z Extracted: type=transferring_call_to_agent, callSid=1789810632.698673
+2026-09-19T09:37:21.317Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:37:21.318Z Assigned userId: null
+2026-09-19T09:37:21.318Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:37:21.318Z Inserting new log for callSid: 1789810632.698673
+2026-09-19T09:37:21.338Z Inserting into call_events for callLogId: 25
+2026-09-19T09:37:21.349Z Successfully processed webhook.
+2026-09-19T09:37:21.397Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A07%3A14&EndTime=&CallSid=1789810634.698706&Direction=WEBOBD&call_group=
+2026-09-19T09:37:21.397Z searchParams: type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A07%3A14&EndTime=&CallSid=1789810634.698706&Direction=WEBOBD&call_group=
+2026-09-19T09:37:21.397Z body: {}
+2026-09-19T09:37:21.397Z Extracted: type=transferring_call_to_agent, callSid=1789810634.698706
+2026-09-19T09:37:21.397Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:37:21.398Z Assigned userId: null
+2026-09-19T09:37:21.398Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:37:21.398Z Inserting new log for callSid: 1789810634.698706
+2026-09-19T09:37:21.407Z Inserting into call_events for callLogId: 26
+2026-09-19T09:37:21.416Z Successfully processed webhook.
+2026-09-19T09:37:21.636Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=0&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A07%3A12.000000&EndTime=2026-09-19+15%3A07%3A12.000000&CallSid=1789810632.698673&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810632.698673.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A07%3A12.000000&LegB_Start_time=2026-09-19+15%3A07%3A12.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:37:21.636Z searchParams: type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=0&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A07%3A12.000000&EndTime=2026-09-19+15%3A07%3A12.000000&CallSid=1789810632.698673&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810632.698673.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A07%3A12.000000&LegB_Start_time=2026-09-19+15%3A07%3A12.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:37:21.636Z body: {}
+2026-09-19T09:37:21.636Z Extracted: type=call_report, callSid=1789810632.698673
+2026-09-19T09:37:21.636Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:37:21.636Z Assigned userId: 1
+2026-09-19T09:37:21.637Z Updating existing log for callSid: 1789810632.698673
+2026-09-19T09:37:21.650Z Inserting into call_events for callLogId: 25
+2026-09-19T09:37:21.663Z Successfully processed webhook.
+2026-09-19T09:37:21.693Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=1&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A07%3A14.000000&EndTime=2026-09-19+15%3A07%3A15.000000&CallSid=1789810634.698706&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810634.698706.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A07%3A14.000000&LegB_Start_time=2026-09-19+15%3A07%3A14.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:37:21.693Z searchParams: type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=1&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A07%3A14.000000&EndTime=2026-09-19+15%3A07%3A15.000000&CallSid=1789810634.698706&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810634.698706.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A07%3A14.000000&LegB_Start_time=2026-09-19+15%3A07%3A14.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:37:21.693Z body: {}
+2026-09-19T09:37:21.693Z Extracted: type=call_report, callSid=1789810634.698706
+2026-09-19T09:37:21.693Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:37:21.694Z Assigned userId: 1
+2026-09-19T09:37:21.694Z Updating existing log for callSid: 1789810634.698706
+2026-09-19T09:37:21.704Z Inserting into call_events for callLogId: 26
+2026-09-19T09:37:21.718Z Successfully processed webhook.
+2026-09-19T09:38:01.284Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A07%3A52&EndTime=&CallSid=1789810672.699114&Direction=WEBOBD&call_group=
+2026-09-19T09:38:01.284Z searchParams: type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A07%3A52&EndTime=&CallSid=1789810672.699114&Direction=WEBOBD&call_group=
+2026-09-19T09:38:01.284Z body: {}
+2026-09-19T09:38:01.284Z Extracted: type=transferring_call_to_agent, callSid=1789810672.699114
+2026-09-19T09:38:01.284Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:38:01.286Z Assigned userId: null
+2026-09-19T09:38:01.286Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:38:01.286Z Inserting new log for callSid: 1789810672.699114
+2026-09-19T09:38:01.302Z Inserting into call_events for callLogId: 27
+2026-09-19T09:38:01.317Z Successfully processed webhook.
+2026-09-19T09:38:01.518Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A07%3A57&EndTime=&CallSid=1789810677.699184&Direction=WEBOBD&call_group=
+2026-09-19T09:38:01.518Z searchParams: type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A07%3A57&EndTime=&CallSid=1789810677.699184&Direction=WEBOBD&call_group=
+2026-09-19T09:38:01.518Z body: {}
+2026-09-19T09:38:01.518Z Extracted: type=transferring_call_to_agent, callSid=1789810677.699184
+2026-09-19T09:38:01.518Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:38:01.519Z Assigned userId: null
+2026-09-19T09:38:01.519Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:38:01.519Z Inserting new log for callSid: 1789810677.699184
+2026-09-19T09:38:01.539Z Inserting into call_events for callLogId: 28
+2026-09-19T09:38:01.551Z Successfully processed webhook.
+2026-09-19T09:38:01.665Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=0&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A07%3A52.000000&EndTime=2026-09-19+15%3A07%3A52.000000&CallSid=1789810672.699114&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810672.699114.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A07%3A52.000000&LegB_Start_time=2026-09-19+15%3A07%3A52.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:38:01.665Z searchParams: type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=0&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A07%3A52.000000&EndTime=2026-09-19+15%3A07%3A52.000000&CallSid=1789810672.699114&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810672.699114.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A07%3A52.000000&LegB_Start_time=2026-09-19+15%3A07%3A52.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:38:01.665Z body: {}
+2026-09-19T09:38:01.665Z Extracted: type=call_report, callSid=1789810672.699114
+2026-09-19T09:38:01.665Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:38:01.667Z Assigned userId: 1
+2026-09-19T09:38:01.671Z Updating existing log for callSid: 1789810672.699114
+2026-09-19T09:38:01.674Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A07%3A59&EndTime=&CallSid=1789810679.699201&Direction=WEBOBD&call_group=
+2026-09-19T09:38:01.674Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A07%3A59&EndTime=&CallSid=1789810679.699201&Direction=WEBOBD&call_group=
+2026-09-19T09:38:01.675Z body: {}
+2026-09-19T09:38:01.675Z Extracted: type=transferring_call_to_agent, callSid=1789810679.699201
+2026-09-19T09:38:01.675Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:38:01.675Z Assigned userId: null
+2026-09-19T09:38:01.676Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:38:01.676Z Inserting new log for callSid: 1789810679.699201
+2026-09-19T09:38:01.680Z Inserting into call_events for callLogId: 27
+2026-09-19T09:38:01.691Z Successfully processed webhook.
+2026-09-19T09:38:01.697Z Inserting into call_events for callLogId: 29
+2026-09-19T09:38:01.709Z Successfully processed webhook.
+2026-09-19T09:38:01.775Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=1&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A07%3A57.000000&EndTime=2026-09-19+15%3A07%3A58.000000&CallSid=1789810677.699184&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810677.699184.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A07%3A57.000000&LegB_Start_time=2026-09-19+15%3A07%3A57.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:38:01.775Z searchParams: type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=1&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A07%3A57.000000&EndTime=2026-09-19+15%3A07%3A58.000000&CallSid=1789810677.699184&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810677.699184.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A07%3A57.000000&LegB_Start_time=2026-09-19+15%3A07%3A57.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:38:01.775Z body: {}
+2026-09-19T09:38:01.775Z Extracted: type=call_report, callSid=1789810677.699184
+2026-09-19T09:38:01.775Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:38:01.777Z Assigned userId: 1
+2026-09-19T09:38:01.777Z Updating existing log for callSid: 1789810677.699184
+2026-09-19T09:38:01.787Z Inserting into call_events for callLogId: 28
+2026-09-19T09:38:01.795Z Successfully processed webhook.
+2026-09-19T09:38:11.484Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=3&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A07%3A59.000000&EndTime=2026-09-19+15%3A08%3A02.000000&CallSid=1789810679.699201&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810679.699201.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A07%3A59.000000&LegB_Start_time=2026-09-19+15%3A08%3A00.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:38:11.484Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=3&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A07%3A59.000000&EndTime=2026-09-19+15%3A08%3A02.000000&CallSid=1789810679.699201&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810679.699201.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A07%3A59.000000&LegB_Start_time=2026-09-19+15%3A08%3A00.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:38:11.485Z body: {}
+2026-09-19T09:38:11.485Z Extracted: type=call_report, callSid=1789810679.699201
+2026-09-19T09:38:11.485Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:38:11.485Z Assigned userId: 1
+2026-09-19T09:38:11.485Z Updating existing log for callSid: 1789810679.699201
+2026-09-19T09:38:11.502Z Inserting into call_events for callLogId: 29
+2026-09-19T09:38:11.513Z Successfully processed webhook.
+2026-09-19T09:40:31.472Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A10%3A21&EndTime=&CallSid=1789810820.700675&Direction=WEBOBD&call_group=
+2026-09-19T09:40:31.472Z searchParams: type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A10%3A21&EndTime=&CallSid=1789810820.700675&Direction=WEBOBD&call_group=
+2026-09-19T09:40:31.472Z body: {}
+2026-09-19T09:40:31.472Z Extracted: type=transferring_call_to_agent, callSid=1789810820.700675
+2026-09-19T09:40:31.472Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:40:31.473Z Assigned userId: null
+2026-09-19T09:40:31.473Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:40:31.473Z Inserting new log for callSid: 1789810820.700675
+2026-09-19T09:40:31.490Z Inserting into call_events for callLogId: 30
+2026-09-19T09:40:31.500Z Successfully processed webhook.
+2026-09-19T09:40:31.767Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=1&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A10%3A20.000000&EndTime=2026-09-19+15%3A10%3A21.000000&CallSid=1789810820.700675&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810820.700675.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A10%3A20.000000&LegB_Start_time=2026-09-19+15%3A10%3A21.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:40:31.767Z searchParams: type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=1&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A10%3A20.000000&EndTime=2026-09-19+15%3A10%3A21.000000&CallSid=1789810820.700675&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810820.700675.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A10%3A20.000000&LegB_Start_time=2026-09-19+15%3A10%3A21.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:40:31.767Z body: {}
+2026-09-19T09:40:31.767Z Extracted: type=call_report, callSid=1789810820.700675
+2026-09-19T09:40:31.767Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:40:31.768Z Assigned userId: 1
+2026-09-19T09:40:31.768Z Updating existing log for callSid: 1789810820.700675
+2026-09-19T09:40:31.777Z Inserting into call_events for callLogId: 30
+2026-09-19T09:40:31.787Z Successfully processed webhook.
+2026-09-19T09:40:51.431Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A10%3A48&EndTime=&CallSid=1789810848.701013&Direction=WEBOBD&call_group=
+2026-09-19T09:40:51.431Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A10%3A48&EndTime=&CallSid=1789810848.701013&Direction=WEBOBD&call_group=
+2026-09-19T09:40:51.431Z body: {}
+2026-09-19T09:40:51.431Z Extracted: type=transferring_call_to_agent, callSid=1789810848.701013
+2026-09-19T09:40:51.431Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:40:51.432Z Assigned userId: null
+2026-09-19T09:40:51.432Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:40:51.441Z Inserting new log for callSid: 1789810848.701013
+2026-09-19T09:40:51.450Z Inserting into call_events for callLogId: 31
+2026-09-19T09:40:51.459Z Successfully processed webhook.
+2026-09-19T09:41:11.623Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=15&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A10%3A48.000000&EndTime=2026-09-19+15%3A11%3A03.000000&CallSid=1789810848.701013&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810848.701013.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A10%3A48.000000&LegB_Start_time=2026-09-19+15%3A10%3A48.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:41:11.623Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=15&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A10%3A48.000000&EndTime=2026-09-19+15%3A11%3A03.000000&CallSid=1789810848.701013&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810848.701013.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A10%3A48.000000&LegB_Start_time=2026-09-19+15%3A10%3A48.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:41:11.623Z body: {}
+2026-09-19T09:41:11.623Z Extracted: type=call_report, callSid=1789810848.701013
+2026-09-19T09:41:11.623Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:41:11.624Z Assigned userId: 1
+2026-09-19T09:41:11.633Z Updating existing log for callSid: 1789810848.701013
+2026-09-19T09:41:11.643Z Inserting into call_events for callLogId: 31
+2026-09-19T09:41:11.658Z Successfully processed webhook.
+2026-09-19T09:41:21.546Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A11%3A14&EndTime=&CallSid=1789810874.701308&Direction=WEBOBD&call_group=
+2026-09-19T09:41:21.546Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A11%3A14&EndTime=&CallSid=1789810874.701308&Direction=WEBOBD&call_group=
+2026-09-19T09:41:21.546Z body: {}
+2026-09-19T09:41:21.546Z Extracted: type=transferring_call_to_agent, callSid=1789810874.701308
+2026-09-19T09:41:21.546Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:41:21.555Z Assigned userId: null
+2026-09-19T09:41:21.555Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:41:21.556Z Inserting new log for callSid: 1789810874.701308
+2026-09-19T09:41:21.565Z Inserting into call_events for callLogId: 32
+2026-09-19T09:41:21.576Z Successfully processed webhook.
+2026-09-19T09:41:31.484Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A11%3A26&EndTime=&CallSid=1789810874.701308&Direction=WEBOBD&call_group=
+2026-09-19T09:41:31.485Z searchParams: type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A11%3A26&EndTime=&CallSid=1789810874.701308&Direction=WEBOBD&call_group=
+2026-09-19T09:41:31.485Z body: {}
+2026-09-19T09:41:31.485Z Extracted: type=live_call, callSid=1789810874.701308
+2026-09-19T09:41:31.485Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:41:31.485Z Assigned userId: 1
+2026-09-19T09:41:31.485Z Updating existing log for callSid: 1789810874.701308
+2026-09-19T09:41:31.502Z Inserting into call_events for callLogId: 32
+2026-09-19T09:41:31.513Z Successfully processed webhook.
+2026-09-19T09:42:35.749Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=67&coins=2&Status=ANSWER&StartTime=2026-09-19+15%3A11%3A14.000000&EndTime=2026-09-19+15%3A12%3A21.000000&CallSid=1789810874.701308&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810874.701308.wav&Direction=WEBOBD&campid=&TalkDuration=55&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A11%3A14.000000&LegB_Start_time=2026-09-19+15%3A11%3A14.000000&LegB_Picked_time=2026-09-19+15%3A11%3A26.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:42:35.749Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=67&coins=2&Status=ANSWER&StartTime=2026-09-19+15%3A11%3A14.000000&EndTime=2026-09-19+15%3A12%3A21.000000&CallSid=1789810874.701308&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789810874.701308.wav&Direction=WEBOBD&campid=&TalkDuration=55&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A11%3A14.000000&LegB_Start_time=2026-09-19+15%3A11%3A14.000000&LegB_Picked_time=2026-09-19+15%3A11%3A26.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:42:35.749Z body: {}
+2026-09-19T09:42:35.749Z Extracted: type=call_report, callSid=1789810874.701308
+2026-09-19T09:42:35.749Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:42:35.750Z Assigned userId: 1
+2026-09-19T09:42:36.056Z Updating existing log for callSid: 1789810874.701308
+2026-09-19T09:42:36.094Z Inserting into call_events for callLogId: 32
+2026-09-19T09:42:36.113Z Successfully processed webhook.
+2026-09-19T09:43:41.766Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A13%3A38&EndTime=&CallSid=1789811017.702951&Direction=WEBOBD&call_group=
+2026-09-19T09:43:41.767Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A13%3A38&EndTime=&CallSid=1789811017.702951&Direction=WEBOBD&call_group=
+2026-09-19T09:43:41.767Z body: {}
+2026-09-19T09:43:41.767Z Extracted: type=transferring_call_to_agent, callSid=1789811017.702951
+2026-09-19T09:43:41.767Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:43:41.768Z Assigned userId: null
+2026-09-19T09:43:41.768Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:43:41.769Z Inserting new log for callSid: 1789811017.702951
+2026-09-19T09:43:41.780Z Inserting into call_events for callLogId: 33
+2026-09-19T09:43:41.805Z Successfully processed webhook.
+2026-09-19T09:43:51.606Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A13%3A45&EndTime=&CallSid=1789811017.702951&Direction=WEBOBD&call_group=
+2026-09-19T09:43:51.607Z searchParams: type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A13%3A45&EndTime=&CallSid=1789811017.702951&Direction=WEBOBD&call_group=
+2026-09-19T09:43:51.607Z body: {}
+2026-09-19T09:43:51.607Z Extracted: type=live_call, callSid=1789811017.702951
+2026-09-19T09:43:51.607Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:43:51.610Z Assigned userId: 1
+2026-09-19T09:43:51.611Z Updating existing log for callSid: 1789811017.702951
+2026-09-19T09:43:51.632Z Inserting into call_events for callLogId: 33
+2026-09-19T09:43:51.645Z Successfully processed webhook.
+2026-09-19T09:44:01.703Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=17&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A13%3A37.000000&EndTime=2026-09-19+15%3A13%3A54.000000&CallSid=1789811017.702951&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811017.702951.wav&Direction=WEBOBD&campid=&TalkDuration=9&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A13%3A37.000000&LegB_Start_time=2026-09-19+15%3A13%3A38.000000&LegB_Picked_time=2026-09-19+15%3A13%3A45.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:44:01.703Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=17&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A13%3A37.000000&EndTime=2026-09-19+15%3A13%3A54.000000&CallSid=1789811017.702951&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811017.702951.wav&Direction=WEBOBD&campid=&TalkDuration=9&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A13%3A37.000000&LegB_Start_time=2026-09-19+15%3A13%3A38.000000&LegB_Picked_time=2026-09-19+15%3A13%3A45.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:44:01.703Z body: {}
+2026-09-19T09:44:01.703Z Extracted: type=call_report, callSid=1789811017.702951
+2026-09-19T09:44:01.703Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:44:01.704Z Assigned userId: 1
+2026-09-19T09:44:01.705Z Updating existing log for callSid: 1789811017.702951
+2026-09-19T09:44:01.721Z Inserting into call_events for callLogId: 33
+2026-09-19T09:44:01.730Z Successfully processed webhook.
+2026-09-19T09:45:53.170Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A15%3A46&EndTime=&CallSid=1789811146.704494&Direction=WEBOBD&call_group=
+2026-09-19T09:45:53.170Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A15%3A46&EndTime=&CallSid=1789811146.704494&Direction=WEBOBD&call_group=
+2026-09-19T09:45:53.170Z body: {}
+2026-09-19T09:45:53.170Z Extracted: type=transferring_call_to_agent, callSid=1789811146.704494
+2026-09-19T09:45:53.170Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:45:53.174Z Assigned userId: null
+2026-09-19T09:45:53.174Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:45:53.176Z Inserting new log for callSid: 1789811146.704494
+2026-09-19T09:45:53.189Z Inserting into call_events for callLogId: 34
+2026-09-19T09:45:53.201Z Successfully processed webhook.
+2026-09-19T09:46:11.829Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=15&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A15%3A46.000000&EndTime=2026-09-19+15%3A16%3A01.000000&CallSid=1789811146.704494&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811146.704494.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A15%3A46.000000&LegB_Start_time=2026-09-19+15%3A15%3A46.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:46:11.829Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=15&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A15%3A46.000000&EndTime=2026-09-19+15%3A16%3A01.000000&CallSid=1789811146.704494&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811146.704494.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A15%3A46.000000&LegB_Start_time=2026-09-19+15%3A15%3A46.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:46:11.829Z body: {}
+2026-09-19T09:46:11.829Z Extracted: type=call_report, callSid=1789811146.704494
+2026-09-19T09:46:11.829Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:46:11.830Z Assigned userId: 1
+2026-09-19T09:46:11.830Z Updating existing log for callSid: 1789811146.704494
+2026-09-19T09:46:11.848Z Inserting into call_events for callLogId: 34
+2026-09-19T09:46:11.861Z Successfully processed webhook.
+2026-09-19T09:46:21.799Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A16%3A16&EndTime=&CallSid=1789811176.704833&Direction=WEBOBD&call_group=
+2026-09-19T09:46:21.800Z searchParams: type=transferring_call_to_agent&SourceNumber=08485835691&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A16%3A16&EndTime=&CallSid=1789811176.704833&Direction=WEBOBD&call_group=
+2026-09-19T09:46:21.800Z body: {}
+2026-09-19T09:46:21.800Z Extracted: type=transferring_call_to_agent, callSid=1789811176.704833
+2026-09-19T09:46:21.800Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:46:21.801Z Assigned userId: null
+2026-09-19T09:46:21.801Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:46:21.801Z Inserting new log for callSid: 1789811176.704833
+2026-09-19T09:46:21.818Z Inserting into call_events for callLogId: 35
+2026-09-19T09:46:21.831Z Successfully processed webhook.
+2026-09-19T09:46:21.998Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=0&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A16%3A16.000000&EndTime=2026-09-19+15%3A16%3A16.000000&CallSid=1789811176.704833&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811176.704833.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A16%3A16.000000&LegB_Start_time=2026-09-19+15%3A16%3A16.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:46:21.998Z searchParams: type=call_report&SourceNumber=08485835691&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=0&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A16%3A16.000000&EndTime=2026-09-19+15%3A16%3A16.000000&CallSid=1789811176.704833&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811176.704833.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A16%3A16.000000&LegB_Start_time=2026-09-19+15%3A16%3A16.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:46:21.998Z body: {}
+2026-09-19T09:46:21.998Z Extracted: type=call_report, callSid=1789811176.704833
+2026-09-19T09:46:21.998Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:46:21.999Z Assigned userId: 1
+2026-09-19T09:46:21.999Z Updating existing log for callSid: 1789811176.704833
+2026-09-19T09:46:22.013Z Inserting into call_events for callLogId: 35
+2026-09-19T09:46:22.023Z Successfully processed webhook.
+2026-09-19T09:46:31.706Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=09112670700&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A16%3A26&EndTime=&CallSid=1789811186.704934&Direction=WEBOBD&call_group=
+2026-09-19T09:46:31.707Z searchParams: type=transferring_call_to_agent&SourceNumber=09112670700&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A16%3A26&EndTime=&CallSid=1789811186.704934&Direction=WEBOBD&call_group=
+2026-09-19T09:46:31.707Z body: {}
+2026-09-19T09:46:31.707Z Extracted: type=transferring_call_to_agent, callSid=1789811186.704934
+2026-09-19T09:46:31.707Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:46:31.716Z Assigned userId: null
+2026-09-19T09:46:31.716Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:46:31.716Z Inserting new log for callSid: 1789811186.704934
+2026-09-19T09:46:31.734Z Inserting into call_events for callLogId: 36
+2026-09-19T09:46:31.744Z Successfully processed webhook.
+2026-09-19T09:46:32.014Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=09112670700&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=3&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A16%3A26.000000&EndTime=2026-09-19+15%3A16%3A29.000000&CallSid=1789811186.704934&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811186.704934.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A16%3A26.000000&LegB_Start_time=2026-09-19+15%3A16%3A26.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:46:32.014Z searchParams: type=call_report&SourceNumber=09112670700&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=3&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A16%3A26.000000&EndTime=2026-09-19+15%3A16%3A29.000000&CallSid=1789811186.704934&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811186.704934.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A16%3A26.000000&LegB_Start_time=2026-09-19+15%3A16%3A26.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:46:32.014Z body: {}
+2026-09-19T09:46:32.014Z Extracted: type=call_report, callSid=1789811186.704934
+2026-09-19T09:46:32.014Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:46:32.015Z Assigned userId: 1
+2026-09-19T09:46:32.015Z Updating existing log for callSid: 1789811186.704934
+2026-09-19T09:46:32.025Z Inserting into call_events for callLogId: 36
+2026-09-19T09:46:32.054Z Successfully processed webhook.
+2026-09-19T09:46:41.809Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A16%3A37&EndTime=&CallSid=1789811197.705054&Direction=WEBOBD&call_group=
+2026-09-19T09:46:41.809Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A16%3A37&EndTime=&CallSid=1789811197.705054&Direction=WEBOBD&call_group=
+2026-09-19T09:46:41.809Z body: {}
+2026-09-19T09:46:41.809Z Extracted: type=transferring_call_to_agent, callSid=1789811197.705054
+2026-09-19T09:46:41.809Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:46:41.810Z Assigned userId: null
+2026-09-19T09:46:41.810Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:46:41.811Z Inserting new log for callSid: 1789811197.705054
+2026-09-19T09:46:41.827Z Inserting into call_events for callLogId: 37
+2026-09-19T09:46:41.844Z Successfully processed webhook.
+2026-09-19T09:47:11.931Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=30&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A16%3A37.000000&EndTime=2026-09-19+15%3A17%3A07.000000&CallSid=1789811197.705054&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811197.705054.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A16%3A37.000000&LegB_Start_time=2026-09-19+15%3A16%3A37.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:47:11.931Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=30&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A16%3A37.000000&EndTime=2026-09-19+15%3A17%3A07.000000&CallSid=1789811197.705054&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811197.705054.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A16%3A37.000000&LegB_Start_time=2026-09-19+15%3A16%3A37.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:47:11.931Z body: {}
+2026-09-19T09:47:11.931Z Extracted: type=call_report, callSid=1789811197.705054
+2026-09-19T09:47:11.931Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:47:11.932Z Assigned userId: 1
+2026-09-19T09:47:11.933Z Updating existing log for callSid: 1789811197.705054
+2026-09-19T09:47:11.950Z Inserting into call_events for callLogId: 37
+2026-09-19T09:47:11.959Z Successfully processed webhook.
+2026-09-19T09:48:42.221Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A18%3A31&EndTime=&CallSid=1789811310.706335&Direction=WEBOBD&call_group=
+2026-09-19T09:48:42.221Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A18%3A31&EndTime=&CallSid=1789811310.706335&Direction=WEBOBD&call_group=
+2026-09-19T09:48:42.221Z body: {}
+2026-09-19T09:48:42.221Z Extracted: type=transferring_call_to_agent, callSid=1789811310.706335
+2026-09-19T09:48:42.221Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:48:42.225Z Assigned userId: null
+2026-09-19T09:48:42.225Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:48:42.225Z Inserting new log for callSid: 1789811310.706335
+2026-09-19T09:48:42.233Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=2&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A18%3A30.000000&EndTime=2026-09-19+15%3A18%3A32.000000&CallSid=1789811310.706335&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811310.706335.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A18%3A30.000000&LegB_Start_time=2026-09-19+15%3A18%3A31.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:48:42.234Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=2&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A18%3A30.000000&EndTime=2026-09-19+15%3A18%3A32.000000&CallSid=1789811310.706335&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811310.706335.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A18%3A30.000000&LegB_Start_time=2026-09-19+15%3A18%3A31.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:48:42.234Z body: {}
+2026-09-19T09:48:42.234Z Extracted: type=call_report, callSid=1789811310.706335
+2026-09-19T09:48:42.234Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:48:42.234Z Assigned userId: 1
+2026-09-19T09:48:42.235Z Inserting new log for callSid: 1789811310.706335
+2026-09-19T09:48:42.239Z Inserting into call_events for callLogId: 38
+2026-09-19T09:48:42.250Z Inserting into call_events for callLogId: 39
+2026-09-19T09:48:42.258Z Successfully processed webhook.
+2026-09-19T09:48:42.269Z Successfully processed webhook.
+2026-09-19T09:50:21.926Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A20%3A14&EndTime=&CallSid=1789811414.707558&Direction=WEBOBD&call_group=
+2026-09-19T09:50:21.926Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A20%3A14&EndTime=&CallSid=1789811414.707558&Direction=WEBOBD&call_group=
+2026-09-19T09:50:21.926Z body: {}
+2026-09-19T09:50:21.926Z Extracted: type=transferring_call_to_agent, callSid=1789811414.707558
+2026-09-19T09:50:21.926Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:50:21.929Z Assigned userId: null
+2026-09-19T09:50:21.929Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:50:21.931Z Inserting new log for callSid: 1789811414.707558
+2026-09-19T09:50:21.942Z Inserting into call_events for callLogId: 40
+2026-09-19T09:50:21.953Z Successfully processed webhook.
+2026-09-19T09:50:51.229Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=30&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A20%3A14.000000&EndTime=2026-09-19+15%3A20%3A44.000000&CallSid=1789811414.707558&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811414.707558.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A20%3A14.000000&LegB_Start_time=2026-09-19+15%3A20%3A14.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:50:51.229Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=30&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A20%3A14.000000&EndTime=2026-09-19+15%3A20%3A44.000000&CallSid=1789811414.707558&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811414.707558.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A20%3A14.000000&LegB_Start_time=2026-09-19+15%3A20%3A14.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:50:51.229Z body: {}
+2026-09-19T09:50:51.229Z Extracted: type=call_report, callSid=1789811414.707558
+2026-09-19T09:50:51.229Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:50:51.230Z Assigned userId: 1
+2026-09-19T09:50:51.230Z Updating existing log for callSid: 1789811414.707558
+2026-09-19T09:50:51.247Z Inserting into call_events for callLogId: 40
+2026-09-19T09:50:51.260Z Successfully processed webhook.
+2026-09-19T09:52:11.094Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A22%3A09&EndTime=&CallSid=1789811529.708771&Direction=WEBOBD&call_group=
+2026-09-19T09:52:11.094Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A22%3A09&EndTime=&CallSid=1789811529.708771&Direction=WEBOBD&call_group=
+2026-09-19T09:52:11.094Z body: {}
+2026-09-19T09:52:11.094Z Extracted: type=transferring_call_to_agent, callSid=1789811529.708771
+2026-09-19T09:52:11.094Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:52:11.095Z Assigned userId: null
+2026-09-19T09:52:11.095Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:52:11.096Z Inserting new log for callSid: 1789811529.708771
+2026-09-19T09:52:11.112Z Inserting into call_events for callLogId: 41
+2026-09-19T09:52:11.122Z Successfully processed webhook.
+2026-09-19T09:52:42.005Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=30&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A22%3A09.000000&EndTime=2026-09-19+15%3A22%3A39.000000&CallSid=1789811529.708771&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811529.708771.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A22%3A09.000000&LegB_Start_time=2026-09-19+15%3A22%3A09.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:52:42.005Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=30&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A22%3A09.000000&EndTime=2026-09-19+15%3A22%3A39.000000&CallSid=1789811529.708771&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811529.708771.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A22%3A09.000000&LegB_Start_time=2026-09-19+15%3A22%3A09.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:52:42.005Z body: {}
+2026-09-19T09:52:42.005Z Extracted: type=call_report, callSid=1789811529.708771
+2026-09-19T09:52:42.005Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:52:42.006Z Assigned userId: 1
+2026-09-19T09:52:42.007Z Updating existing log for callSid: 1789811529.708771
+2026-09-19T09:52:42.020Z Inserting into call_events for callLogId: 41
+2026-09-19T09:52:42.031Z Successfully processed webhook.
+2026-09-19T09:55:42.678Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A25%3A37&EndTime=&CallSid=1789811737.711129&Direction=WEBOBD&call_group=
+2026-09-19T09:55:42.679Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A25%3A37&EndTime=&CallSid=1789811737.711129&Direction=WEBOBD&call_group=
+2026-09-19T09:55:42.679Z body: {}
+2026-09-19T09:55:42.679Z Extracted: type=transferring_call_to_agent, callSid=1789811737.711129
+2026-09-19T09:55:42.679Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:55:42.693Z Assigned userId: null
+2026-09-19T09:55:42.693Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:55:42.694Z Inserting new log for callSid: 1789811737.711129
+2026-09-19T09:55:42.717Z Inserting into call_events for callLogId: 42
+2026-09-19T09:55:42.730Z Successfully processed webhook.
+2026-09-19T09:56:11.570Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A26%3A02&EndTime=&CallSid=1789811737.711129&Direction=WEBOBD&call_group=
+2026-09-19T09:56:11.570Z searchParams: type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A26%3A02&EndTime=&CallSid=1789811737.711129&Direction=WEBOBD&call_group=
+2026-09-19T09:56:11.570Z body: {}
+2026-09-19T09:56:11.570Z Extracted: type=live_call, callSid=1789811737.711129
+2026-09-19T09:56:11.570Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:56:11.571Z Assigned userId: 1
+2026-09-19T09:56:11.571Z Updating existing log for callSid: 1789811737.711129
+2026-09-19T09:56:11.591Z Inserting into call_events for callLogId: 42
+2026-09-19T09:56:11.603Z Successfully processed webhook.
+2026-09-19T09:56:41.304Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=53&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A25%3A37.000000&EndTime=2026-09-19+15%3A26%3A30.000000&CallSid=1789811737.711129&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811737.711129.wav&Direction=WEBOBD&campid=&TalkDuration=28&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A25%3A37.000000&LegB_Start_time=2026-09-19+15%3A25%3A37.000000&LegB_Picked_time=2026-09-19+15%3A26%3A02.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:56:41.304Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=53&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A25%3A37.000000&EndTime=2026-09-19+15%3A26%3A30.000000&CallSid=1789811737.711129&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811737.711129.wav&Direction=WEBOBD&campid=&TalkDuration=28&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A25%3A37.000000&LegB_Start_time=2026-09-19+15%3A25%3A37.000000&LegB_Picked_time=2026-09-19+15%3A26%3A02.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:56:41.304Z body: {}
+2026-09-19T09:56:41.304Z Extracted: type=call_report, callSid=1789811737.711129
+2026-09-19T09:56:41.304Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:56:41.305Z Assigned userId: 1
+2026-09-19T09:56:41.305Z Updating existing log for callSid: 1789811737.711129
+2026-09-19T09:56:41.321Z Inserting into call_events for callLogId: 42
+2026-09-19T09:56:41.329Z Successfully processed webhook.
+2026-09-19T09:58:17.293Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A28%3A01&EndTime=&CallSid=1789811881.712691&Direction=WEBOBD&call_group=
+2026-09-19T09:58:17.293Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A28%3A01&EndTime=&CallSid=1789811881.712691&Direction=WEBOBD&call_group=
+2026-09-19T09:58:17.293Z body: {}
+2026-09-19T09:58:17.293Z Extracted: type=transferring_call_to_agent, callSid=1789811881.712691
+2026-09-19T09:58:17.293Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:58:17.294Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=2&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A28%3A01.000000&EndTime=2026-09-19+15%3A28%3A03.000000&CallSid=1789811881.712691&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811881.712691.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A28%3A01.000000&LegB_Start_time=2026-09-19+15%3A28%3A01.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:58:17.294Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=2&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A28%3A01.000000&EndTime=2026-09-19+15%3A28%3A03.000000&CallSid=1789811881.712691&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811881.712691.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A28%3A01.000000&LegB_Start_time=2026-09-19+15%3A28%3A01.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:58:17.294Z body: {}
+2026-09-19T09:58:17.294Z Extracted: type=call_report, callSid=1789811881.712691
+2026-09-19T09:58:17.294Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:58:17.346Z Assigned userId: 1
+2026-09-19T09:58:17.400Z Inserting new log for callSid: 1789811881.712691
+2026-09-19T09:58:17.401Z Assigned userId: null
+2026-09-19T09:58:17.401Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:58:17.425Z Inserting new log for callSid: 1789811881.712691
+2026-09-19T09:58:17.449Z Inserting into call_events for callLogId: 43
+2026-09-19T09:58:17.456Z Inserting into call_events for callLogId: 44
+2026-09-19T09:58:17.483Z Successfully processed webhook.
+2026-09-19T09:58:17.505Z Successfully processed webhook.
+2026-09-19T09:58:41.528Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A28%3A38&EndTime=&CallSid=1789811918.713134&Direction=WEBOBD&call_group=
+2026-09-19T09:58:41.528Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A28%3A38&EndTime=&CallSid=1789811918.713134&Direction=WEBOBD&call_group=
+2026-09-19T09:58:41.528Z body: {}
+2026-09-19T09:58:41.528Z Extracted: type=transferring_call_to_agent, callSid=1789811918.713134
+2026-09-19T09:58:41.528Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T09:58:41.530Z Assigned userId: null
+2026-09-19T09:58:41.531Z Could not find user. Defaulting to user_id=1
+2026-09-19T09:58:41.540Z Inserting new log for callSid: 1789811918.713134
+2026-09-19T09:58:41.559Z Inserting into call_events for callLogId: 45
+2026-09-19T09:58:41.570Z Successfully processed webhook.
+2026-09-19T09:58:51.429Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A28%3A47&EndTime=&CallSid=1789811918.713134&Direction=WEBOBD&call_group=
+2026-09-19T09:58:51.430Z searchParams: type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A28%3A47&EndTime=&CallSid=1789811918.713134&Direction=WEBOBD&call_group=
+2026-09-19T09:58:51.430Z body: {}
+2026-09-19T09:58:51.430Z Extracted: type=live_call, callSid=1789811918.713134
+2026-09-19T09:58:51.430Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:58:51.430Z Assigned userId: 1
+2026-09-19T09:58:51.431Z Updating existing log for callSid: 1789811918.713134
+2026-09-19T09:58:51.452Z Inserting into call_events for callLogId: 45
+2026-09-19T09:58:51.461Z Successfully processed webhook.
+2026-09-19T09:59:01.720Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=21&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A28%3A38.000000&EndTime=2026-09-19+15%3A28%3A58.000000&CallSid=1789811918.713134&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811918.713134.wav&Direction=WEBOBD&campid=&TalkDuration=11&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A28%3A38.000000&LegB_Start_time=2026-09-19+15%3A28%3A38.000000&LegB_Picked_time=2026-09-19+15%3A28%3A47.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:59:01.720Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=21&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A28%3A38.000000&EndTime=2026-09-19+15%3A28%3A58.000000&CallSid=1789811918.713134&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811918.713134.wav&Direction=WEBOBD&campid=&TalkDuration=11&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A28%3A38.000000&LegB_Start_time=2026-09-19+15%3A28%3A38.000000&LegB_Picked_time=2026-09-19+15%3A28%3A47.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T09:59:01.720Z body: {}
+2026-09-19T09:59:01.720Z Extracted: type=call_report, callSid=1789811918.713134
+2026-09-19T09:59:01.720Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T09:59:01.721Z Assigned userId: 1
+2026-09-19T09:59:01.721Z Updating existing log for callSid: 1789811918.713134
+2026-09-19T09:59:01.729Z Inserting into call_events for callLogId: 45
+2026-09-19T09:59:01.742Z Successfully processed webhook.
+2026-09-19T10:00:01.401Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A29%3A55&EndTime=&CallSid=1789811995.714019&Direction=WEBOBD&call_group=
+2026-09-19T10:00:01.402Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A29%3A55&EndTime=&CallSid=1789811995.714019&Direction=WEBOBD&call_group=
+2026-09-19T10:00:01.402Z body: {}
+2026-09-19T10:00:01.402Z Extracted: type=transferring_call_to_agent, callSid=1789811995.714019
+2026-09-19T10:00:01.402Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T10:00:01.405Z Assigned userId: null
+2026-09-19T10:00:01.405Z Could not find user. Defaulting to user_id=1
+2026-09-19T10:00:01.405Z Inserting new log for callSid: 1789811995.714019
+2026-09-19T10:00:01.420Z Inserting into call_events for callLogId: 46
+2026-09-19T10:00:01.428Z Successfully processed webhook.
+2026-09-19T10:00:11.587Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A30%3A07&EndTime=&CallSid=1789811995.714019&Direction=WEBOBD&call_group=
+2026-09-19T10:00:11.587Z searchParams: type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A30%3A07&EndTime=&CallSid=1789811995.714019&Direction=WEBOBD&call_group=
+2026-09-19T10:00:11.587Z body: {}
+2026-09-19T10:00:11.587Z Extracted: type=live_call, callSid=1789811995.714019
+2026-09-19T10:00:11.587Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:00:11.592Z Assigned userId: 1
+2026-09-19T10:00:11.592Z Updating existing log for callSid: 1789811995.714019
+2026-09-19T10:00:11.608Z Inserting into call_events for callLogId: 46
+2026-09-19T10:00:11.619Z Successfully processed webhook.
+2026-09-19T10:00:51.574Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=53&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A29%3A55.000000&EndTime=2026-09-19+15%3A30%3A48.000000&CallSid=1789811995.714019&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811995.714019.wav&Direction=WEBOBD&campid=&TalkDuration=41&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A29%3A55.000000&LegB_Start_time=2026-09-19+15%3A29%3A55.000000&LegB_Picked_time=2026-09-19+15%3A30%3A07.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:00:51.574Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=53&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A29%3A55.000000&EndTime=2026-09-19+15%3A30%3A48.000000&CallSid=1789811995.714019&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789811995.714019.wav&Direction=WEBOBD&campid=&TalkDuration=41&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A29%3A55.000000&LegB_Start_time=2026-09-19+15%3A29%3A55.000000&LegB_Picked_time=2026-09-19+15%3A30%3A07.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:00:51.574Z body: {}
+2026-09-19T10:00:51.574Z Extracted: type=call_report, callSid=1789811995.714019
+2026-09-19T10:00:51.574Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:00:51.575Z Assigned userId: 1
+2026-09-19T10:00:51.575Z Updating existing log for callSid: 1789811995.714019
+2026-09-19T10:00:51.602Z Inserting into call_events for callLogId: 46
+2026-09-19T10:00:51.614Z Successfully processed webhook.
+2026-09-19T10:01:11.764Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A31%3A05&EndTime=&CallSid=1789812065.714852&Direction=WEBOBD&call_group=
+2026-09-19T10:01:11.764Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A31%3A05&EndTime=&CallSid=1789812065.714852&Direction=WEBOBD&call_group=
+2026-09-19T10:01:11.764Z body: {}
+2026-09-19T10:01:11.764Z Extracted: type=transferring_call_to_agent, callSid=1789812065.714852
+2026-09-19T10:01:11.764Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T10:01:11.766Z Assigned userId: null
+2026-09-19T10:01:11.766Z Could not find user. Defaulting to user_id=1
+2026-09-19T10:01:11.766Z Inserting new log for callSid: 1789812065.714852
+2026-09-19T10:01:11.787Z Inserting into call_events for callLogId: 47
+2026-09-19T10:01:11.797Z Successfully processed webhook.
+2026-09-19T10:01:41.852Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=30&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A31%3A05.000000&EndTime=2026-09-19+15%3A31%3A35.000000&CallSid=1789812065.714852&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812065.714852.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A31%3A05.000000&LegB_Start_time=2026-09-19+15%3A31%3A05.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:01:41.852Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=30&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A31%3A05.000000&EndTime=2026-09-19+15%3A31%3A35.000000&CallSid=1789812065.714852&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812065.714852.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A31%3A05.000000&LegB_Start_time=2026-09-19+15%3A31%3A05.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:01:41.852Z body: {}
+2026-09-19T10:01:41.852Z Extracted: type=call_report, callSid=1789812065.714852
+2026-09-19T10:01:41.852Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:01:41.853Z Assigned userId: 1
+2026-09-19T10:01:41.854Z Updating existing log for callSid: 1789812065.714852
+2026-09-19T10:01:41.871Z Inserting into call_events for callLogId: 47
+2026-09-19T10:01:41.879Z Successfully processed webhook.
+2026-09-19T10:01:51.536Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A31%3A43&EndTime=&CallSid=1789812103.715366&Direction=WEBOBD&call_group=
+2026-09-19T10:01:51.536Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A31%3A43&EndTime=&CallSid=1789812103.715366&Direction=WEBOBD&call_group=
+2026-09-19T10:01:51.536Z body: {}
+2026-09-19T10:01:51.536Z Extracted: type=transferring_call_to_agent, callSid=1789812103.715366
+2026-09-19T10:01:51.536Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T10:01:51.538Z Assigned userId: null
+2026-09-19T10:01:51.538Z Could not find user. Defaulting to user_id=1
+2026-09-19T10:01:51.539Z Inserting new log for callSid: 1789812103.715366
+2026-09-19T10:01:51.555Z Inserting into call_events for callLogId: 48
+2026-09-19T10:01:51.564Z Successfully processed webhook.
+2026-09-19T10:02:01.726Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=9&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A31%3A43.000000&EndTime=2026-09-19+15%3A31%3A52.000000&CallSid=1789812103.715366&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812103.715366.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A31%3A43.000000&LegB_Start_time=2026-09-19+15%3A31%3A43.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:02:01.726Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=9&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A31%3A43.000000&EndTime=2026-09-19+15%3A31%3A52.000000&CallSid=1789812103.715366&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812103.715366.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A31%3A43.000000&LegB_Start_time=2026-09-19+15%3A31%3A43.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:02:01.726Z body: {}
+2026-09-19T10:02:01.726Z Extracted: type=call_report, callSid=1789812103.715366
+2026-09-19T10:02:01.726Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:02:01.728Z Assigned userId: 1
+2026-09-19T10:02:01.728Z Updating existing log for callSid: 1789812103.715366
+2026-09-19T10:02:01.746Z Inserting into call_events for callLogId: 48
+2026-09-19T10:02:01.763Z Successfully processed webhook.
+2026-09-19T10:02:11.492Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A32%3A02&EndTime=&CallSid=1789812122.715555&Direction=WEBOBD&call_group=
+2026-09-19T10:02:11.492Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A32%3A02&EndTime=&CallSid=1789812122.715555&Direction=WEBOBD&call_group=
+2026-09-19T10:02:11.492Z body: {}
+2026-09-19T10:02:11.492Z Extracted: type=transferring_call_to_agent, callSid=1789812122.715555
+2026-09-19T10:02:11.492Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T10:02:11.494Z Assigned userId: null
+2026-09-19T10:02:11.494Z Could not find user. Defaulting to user_id=1
+2026-09-19T10:02:11.494Z Inserting new log for callSid: 1789812122.715555
+2026-09-19T10:02:11.511Z Inserting into call_events for callLogId: 49
+2026-09-19T10:02:11.520Z Successfully processed webhook.
+2026-09-19T10:02:32.285Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=25&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A32%3A02.000000&EndTime=2026-09-19+15%3A32%3A27.000000&CallSid=1789812122.715555&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812122.715555.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A32%3A02.000000&LegB_Start_time=2026-09-19+15%3A32%3A03.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:02:32.285Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=25&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A32%3A02.000000&EndTime=2026-09-19+15%3A32%3A27.000000&CallSid=1789812122.715555&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812122.715555.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A32%3A02.000000&LegB_Start_time=2026-09-19+15%3A32%3A03.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:02:32.285Z body: {}
+2026-09-19T10:02:32.285Z Extracted: type=call_report, callSid=1789812122.715555
+2026-09-19T10:02:32.285Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:02:32.286Z Assigned userId: 1
+2026-09-19T10:02:32.286Z Updating existing log for callSid: 1789812122.715555
+2026-09-19T10:02:32.304Z Inserting into call_events for callLogId: 49
+2026-09-19T10:02:32.316Z Successfully processed webhook.
+2026-09-19T10:02:41.476Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A32%3A33&EndTime=&CallSid=1789812153.715914&Direction=WEBOBD&call_group=
+2026-09-19T10:02:41.476Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A32%3A33&EndTime=&CallSid=1789812153.715914&Direction=WEBOBD&call_group=
+2026-09-19T10:02:41.476Z body: {}
+2026-09-19T10:02:41.476Z Extracted: type=transferring_call_to_agent, callSid=1789812153.715914
+2026-09-19T10:02:41.476Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T10:02:41.477Z Assigned userId: null
+2026-09-19T10:02:41.477Z Could not find user. Defaulting to user_id=1
+2026-09-19T10:02:41.477Z Inserting new log for callSid: 1789812153.715914
+2026-09-19T10:02:41.494Z Inserting into call_events for callLogId: 50
+2026-09-19T10:02:41.503Z Successfully processed webhook.
+2026-09-19T10:02:51.588Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A32%3A49&EndTime=&CallSid=1789812153.715914&Direction=WEBOBD&call_group=
+2026-09-19T10:02:51.588Z searchParams: type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A32%3A49&EndTime=&CallSid=1789812153.715914&Direction=WEBOBD&call_group=
+2026-09-19T10:02:51.588Z body: {}
+2026-09-19T10:02:51.588Z Extracted: type=live_call, callSid=1789812153.715914
+2026-09-19T10:02:51.588Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:02:51.588Z Assigned userId: 1
+2026-09-19T10:02:51.589Z Updating existing log for callSid: 1789812153.715914
+2026-09-19T10:02:51.611Z Inserting into call_events for callLogId: 50
+2026-09-19T10:02:51.621Z Successfully processed webhook.
+2026-09-19T10:03:11.966Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=37&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A32%3A33.000000&EndTime=2026-09-19+15%3A33%3A10.000000&CallSid=1789812153.715914&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812153.715914.wav&Direction=WEBOBD&campid=&TalkDuration=21&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A32%3A33.000000&LegB_Start_time=2026-09-19+15%3A32%3A33.000000&LegB_Picked_time=2026-09-19+15%3A32%3A49.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:03:11.966Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=37&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A32%3A33.000000&EndTime=2026-09-19+15%3A33%3A10.000000&CallSid=1789812153.715914&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812153.715914.wav&Direction=WEBOBD&campid=&TalkDuration=21&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A32%3A33.000000&LegB_Start_time=2026-09-19+15%3A32%3A33.000000&LegB_Picked_time=2026-09-19+15%3A32%3A49.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:03:11.966Z body: {}
+2026-09-19T10:03:11.966Z Extracted: type=call_report, callSid=1789812153.715914
+2026-09-19T10:03:11.966Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:03:11.967Z Assigned userId: 1
+2026-09-19T10:03:11.968Z Updating existing log for callSid: 1789812153.715914
+2026-09-19T10:03:11.976Z Inserting into call_events for callLogId: 50
+2026-09-19T10:03:11.985Z Successfully processed webhook.
+2026-09-19T10:03:21.522Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A33%3A14&EndTime=&CallSid=1789812194.716488&Direction=WEBOBD&call_group=
+2026-09-19T10:03:21.522Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A33%3A14&EndTime=&CallSid=1789812194.716488&Direction=WEBOBD&call_group=
+2026-09-19T10:03:21.522Z body: {}
+2026-09-19T10:03:21.522Z Extracted: type=transferring_call_to_agent, callSid=1789812194.716488
+2026-09-19T10:03:21.522Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T10:03:21.523Z Assigned userId: null
+2026-09-19T10:03:21.523Z Could not find user. Defaulting to user_id=1
+2026-09-19T10:03:21.523Z Inserting new log for callSid: 1789812194.716488
+2026-09-19T10:03:21.544Z Inserting into call_events for callLogId: 51
+2026-09-19T10:03:21.552Z Successfully processed webhook.
+2026-09-19T10:03:31.592Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A33%3A25&EndTime=&CallSid=1789812194.716488&Direction=WEBOBD&call_group=
+2026-09-19T10:03:31.592Z searchParams: type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A33%3A25&EndTime=&CallSid=1789812194.716488&Direction=WEBOBD&call_group=
+2026-09-19T10:03:31.592Z body: {}
+2026-09-19T10:03:31.592Z Extracted: type=live_call, callSid=1789812194.716488
+2026-09-19T10:03:31.592Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:03:31.593Z Assigned userId: 1
+2026-09-19T10:03:31.594Z Updating existing log for callSid: 1789812194.716488
+2026-09-19T10:03:31.613Z Inserting into call_events for callLogId: 51
+2026-09-19T10:03:31.623Z Successfully processed webhook.
+2026-09-19T10:03:41.870Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=22&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A33%3A14.000000&EndTime=2026-09-19+15%3A33%3A36.000000&CallSid=1789812194.716488&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812194.716488.wav&Direction=WEBOBD&campid=&TalkDuration=11&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A33%3A14.000000&LegB_Start_time=2026-09-19+15%3A33%3A14.000000&LegB_Picked_time=2026-09-19+15%3A33%3A25.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:03:41.870Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=22&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A33%3A14.000000&EndTime=2026-09-19+15%3A33%3A36.000000&CallSid=1789812194.716488&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812194.716488.wav&Direction=WEBOBD&campid=&TalkDuration=11&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A33%3A14.000000&LegB_Start_time=2026-09-19+15%3A33%3A14.000000&LegB_Picked_time=2026-09-19+15%3A33%3A25.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:03:41.870Z body: {}
+2026-09-19T10:03:41.870Z Extracted: type=call_report, callSid=1789812194.716488
+2026-09-19T10:03:41.870Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:03:41.871Z Assigned userId: 1
+2026-09-19T10:03:41.871Z Updating existing log for callSid: 1789812194.716488
+2026-09-19T10:03:41.903Z Inserting into call_events for callLogId: 51
+2026-09-19T10:03:41.915Z Successfully processed webhook.
+2026-09-19T10:04:01.730Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A33%3A56&EndTime=&CallSid=1789812236.716963&Direction=WEBOBD&call_group=
+2026-09-19T10:04:01.730Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A33%3A56&EndTime=&CallSid=1789812236.716963&Direction=WEBOBD&call_group=
+2026-09-19T10:04:01.730Z body: {}
+2026-09-19T10:04:01.730Z Extracted: type=transferring_call_to_agent, callSid=1789812236.716963
+2026-09-19T10:04:01.730Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T10:04:01.731Z Assigned userId: null
+2026-09-19T10:04:01.731Z Could not find user. Defaulting to user_id=1
+2026-09-19T10:04:01.731Z Inserting new log for callSid: 1789812236.716963
+2026-09-19T10:04:01.751Z Inserting into call_events for callLogId: 52
+2026-09-19T10:04:01.766Z Successfully processed webhook.
+2026-09-19T10:04:31.856Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=30&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A33%3A56.000000&EndTime=2026-09-19+15%3A34%3A26.000000&CallSid=1789812236.716963&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812236.716963.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A33%3A56.000000&LegB_Start_time=2026-09-19+15%3A33%3A56.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:04:31.856Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=30&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A33%3A56.000000&EndTime=2026-09-19+15%3A34%3A26.000000&CallSid=1789812236.716963&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812236.716963.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A33%3A56.000000&LegB_Start_time=2026-09-19+15%3A33%3A56.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:04:31.856Z body: {}
+2026-09-19T10:04:31.856Z Extracted: type=call_report, callSid=1789812236.716963
+2026-09-19T10:04:31.856Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:04:31.856Z Assigned userId: 1
+2026-09-19T10:04:31.857Z Updating existing log for callSid: 1789812236.716963
+2026-09-19T10:04:31.872Z Inserting into call_events for callLogId: 52
+2026-09-19T10:04:31.881Z Successfully processed webhook.
+2026-09-19T10:05:11.681Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A35%3A03&EndTime=&CallSid=1789812303.717763&Direction=WEBOBD&call_group=
+2026-09-19T10:05:11.681Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A35%3A03&EndTime=&CallSid=1789812303.717763&Direction=WEBOBD&call_group=
+2026-09-19T10:05:11.681Z body: {}
+2026-09-19T10:05:11.681Z Extracted: type=transferring_call_to_agent, callSid=1789812303.717763
+2026-09-19T10:05:11.681Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T10:05:11.682Z Assigned userId: null
+2026-09-19T10:05:11.682Z Could not find user. Defaulting to user_id=1
+2026-09-19T10:05:11.683Z Inserting new log for callSid: 1789812303.717763
+2026-09-19T10:05:11.702Z Inserting into call_events for callLogId: 53
+2026-09-19T10:05:11.713Z Successfully processed webhook.
+2026-09-19T10:05:41.901Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=29&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A35%3A03.000000&EndTime=2026-09-19+15%3A35%3A32.000000&CallSid=1789812303.717763&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812303.717763.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A35%3A03.000000&LegB_Start_time=2026-09-19+15%3A35%3A03.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:05:41.901Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=29&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A35%3A03.000000&EndTime=2026-09-19+15%3A35%3A32.000000&CallSid=1789812303.717763&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812303.717763.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A35%3A03.000000&LegB_Start_time=2026-09-19+15%3A35%3A03.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:05:41.901Z body: {}
+2026-09-19T10:05:41.901Z Extracted: type=call_report, callSid=1789812303.717763
+2026-09-19T10:05:41.901Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:05:41.901Z Assigned userId: 1
+2026-09-19T10:05:41.904Z Updating existing log for callSid: 1789812303.717763
+2026-09-19T10:05:41.928Z Inserting into call_events for callLogId: 53
+2026-09-19T10:05:41.944Z Successfully processed webhook.
+2026-09-19T10:07:02.285Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A37%3A00&EndTime=&CallSid=1789812420.719155&Direction=WEBOBD&call_group=
+2026-09-19T10:07:02.285Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A37%3A00&EndTime=&CallSid=1789812420.719155&Direction=WEBOBD&call_group=
+2026-09-19T10:07:02.285Z body: {}
+2026-09-19T10:07:02.285Z Extracted: type=transferring_call_to_agent, callSid=1789812420.719155
+2026-09-19T10:07:02.285Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T10:07:02.286Z Assigned userId: null
+2026-09-19T10:07:02.286Z Could not find user. Defaulting to user_id=1
+2026-09-19T10:07:02.287Z Inserting new log for callSid: 1789812420.719155
+2026-09-19T10:07:02.298Z Inserting into call_events for callLogId: 54
+2026-09-19T10:07:02.309Z Successfully processed webhook.
+2026-09-19T10:07:11.719Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A37%3A08&EndTime=&CallSid=1789812420.719155&Direction=WEBOBD&call_group=
+2026-09-19T10:07:11.719Z searchParams: type=live_call&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&Status=Picked&StartTime=2026-09-19+15%3A37%3A08&EndTime=&CallSid=1789812420.719155&Direction=WEBOBD&call_group=
+2026-09-19T10:07:11.719Z body: {}
+2026-09-19T10:07:11.719Z Extracted: type=live_call, callSid=1789812420.719155
+2026-09-19T10:07:11.719Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:07:11.719Z Assigned userId: 1
+2026-09-19T10:07:11.719Z Updating existing log for callSid: 1789812420.719155
+2026-09-19T10:07:11.740Z Inserting into call_events for callLogId: 54
+2026-09-19T10:07:11.753Z Successfully processed webhook.
+2026-09-19T10:07:22.029Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=15&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A37%3A00.000000&EndTime=2026-09-19+15%3A37%3A15.000000&CallSid=1789812420.719155&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812420.719155.wav&Direction=WEBOBD&campid=&TalkDuration=7&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A37%3A00.000000&LegB_Start_time=2026-09-19+15%3A37%3A00.000000&LegB_Picked_time=2026-09-19+15%3A37%3A08.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:07:22.030Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=15&coins=1&Status=ANSWER&StartTime=2026-09-19+15%3A37%3A00.000000&EndTime=2026-09-19+15%3A37%3A15.000000&CallSid=1789812420.719155&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812420.719155.wav&Direction=WEBOBD&campid=&TalkDuration=7&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A37%3A00.000000&LegB_Start_time=2026-09-19+15%3A37%3A00.000000&LegB_Picked_time=2026-09-19+15%3A37%3A08.000000&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:07:22.030Z body: {}
+2026-09-19T10:07:22.030Z Extracted: type=call_report, callSid=1789812420.719155
+2026-09-19T10:07:22.030Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:07:22.030Z Assigned userId: 1
+2026-09-19T10:07:22.031Z Updating existing log for callSid: 1789812420.719155
+2026-09-19T10:07:22.047Z Inserting into call_events for callLogId: 54
+2026-09-19T10:07:22.056Z Successfully processed webhook.
+2026-09-19T10:08:51.935Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A38%3A43&EndTime=&CallSid=1789812522.720439&Direction=WEBOBD&call_group=
+2026-09-19T10:08:51.935Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A38%3A43&EndTime=&CallSid=1789812522.720439&Direction=WEBOBD&call_group=
+2026-09-19T10:08:51.935Z body: {}
+2026-09-19T10:08:51.935Z Extracted: type=transferring_call_to_agent, callSid=1789812522.720439
+2026-09-19T10:08:51.935Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T10:08:51.936Z Assigned userId: null
+2026-09-19T10:08:51.936Z Could not find user. Defaulting to user_id=1
+2026-09-19T10:08:51.937Z Inserting new log for callSid: 1789812522.720439
+2026-09-19T10:08:51.945Z Inserting into call_events for callLogId: 55
+2026-09-19T10:08:51.955Z Successfully processed webhook.
+2026-09-19T10:09:27.435Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=31&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A38%3A42.000000&EndTime=2026-09-19+15%3A39%3A13.000000&CallSid=1789812522.720439&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812522.720439.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A38%3A42.000000&LegB_Start_time=2026-09-19+15%3A38%3A43.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:09:27.435Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=31&coins=1&Status=cancel-customer&StartTime=2026-09-19+15%3A38%3A42.000000&EndTime=2026-09-19+15%3A39%3A13.000000&CallSid=1789812522.720439&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812522.720439.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=401&LegA_Picked_time=2026-09-19+15%3A38%3A42.000000&LegB_Start_time=2026-09-19+15%3A38%3A43.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:09:27.435Z body: {}
+2026-09-19T10:09:27.435Z Extracted: type=call_report, callSid=1789812522.720439
+2026-09-19T10:09:27.435Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:09:27.470Z Assigned userId: 1
+2026-09-19T10:09:27.471Z Updating existing log for callSid: 1789812522.720439
+2026-09-19T10:09:27.484Z Inserting into call_events for callLogId: 55
+2026-09-19T10:09:27.512Z Successfully processed webhook.
+2026-09-19T10:10:01.870Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A39%3A51&EndTime=&CallSid=1789812591.721303&Direction=WEBOBD&call_group=
+2026-09-19T10:10:01.870Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A39%3A51&EndTime=&CallSid=1789812591.721303&Direction=WEBOBD&call_group=
+2026-09-19T10:10:01.870Z body: {}
+2026-09-19T10:10:01.870Z Extracted: type=transferring_call_to_agent, callSid=1789812591.721303
+2026-09-19T10:10:01.870Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T10:10:01.871Z Assigned userId: null
+2026-09-19T10:10:01.871Z Could not find user. Defaulting to user_id=1
+2026-09-19T10:10:01.871Z Inserting new log for callSid: 1789812591.721303
+2026-09-19T10:10:01.888Z Inserting into call_events for callLogId: 56
+2026-09-19T10:10:01.900Z Successfully processed webhook.
+2026-09-19T10:10:11.047Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=14&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A39%3A51.000000&EndTime=2026-09-19+15%3A40%3A05.000000&CallSid=1789812591.721303&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812591.721303.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A39%3A51.000000&LegB_Start_time=2026-09-19+15%3A39%3A51.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:10:11.047Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=14&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A39%3A51.000000&EndTime=2026-09-19+15%3A40%3A05.000000&CallSid=1789812591.721303&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812591.721303.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A39%3A51.000000&LegB_Start_time=2026-09-19+15%3A39%3A51.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:10:11.047Z body: {}
+2026-09-19T10:10:11.047Z Extracted: type=call_report, callSid=1789812591.721303
+2026-09-19T10:10:11.047Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:10:11.048Z Assigned userId: 1
+2026-09-19T10:10:11.048Z Updating existing log for callSid: 1789812591.721303
+2026-09-19T10:10:11.065Z Inserting into call_events for callLogId: 56
+2026-09-19T10:10:11.074Z Successfully processed webhook.
+2026-09-19T10:10:30.844Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A40%3A25&EndTime=&CallSid=1789812625.721720&Direction=WEBOBD&call_group=
+2026-09-19T10:10:30.844Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A40%3A25&EndTime=&CallSid=1789812625.721720&Direction=WEBOBD&call_group=
+2026-09-19T10:10:30.844Z body: {}
+2026-09-19T10:10:30.844Z Extracted: type=transferring_call_to_agent, callSid=1789812625.721720
+2026-09-19T10:10:30.844Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T10:10:30.846Z Assigned userId: null
+2026-09-19T10:10:30.846Z Could not find user. Defaulting to user_id=1
+2026-09-19T10:10:30.846Z Inserting new log for callSid: 1789812625.721720
+2026-09-19T10:10:30.868Z Inserting into call_events for callLogId: 57
+2026-09-19T10:10:30.876Z Successfully processed webhook.
+2026-09-19T10:11:01.090Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=27&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A40%3A25.000000&EndTime=2026-09-19+15%3A40%3A52.000000&CallSid=1789812625.721720&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812625.721720.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A40%3A25.000000&LegB_Start_time=2026-09-19+15%3A40%3A25.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:11:01.090Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=27&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A40%3A25.000000&EndTime=2026-09-19+15%3A40%3A52.000000&CallSid=1789812625.721720&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812625.721720.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A40%3A25.000000&LegB_Start_time=2026-09-19+15%3A40%3A25.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:11:01.090Z body: {}
+2026-09-19T10:11:01.090Z Extracted: type=call_report, callSid=1789812625.721720
+2026-09-19T10:11:01.090Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:11:01.098Z Assigned userId: 1
+2026-09-19T10:11:01.099Z Updating existing log for callSid: 1789812625.721720
+2026-09-19T10:11:01.121Z Inserting into call_events for callLogId: 57
+2026-09-19T10:11:01.131Z Successfully processed webhook.
+2026-09-19T10:11:11.107Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A41%3A08&EndTime=&CallSid=1789812668.722225&Direction=WEBOBD&call_group=
+2026-09-19T10:11:11.107Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A41%3A08&EndTime=&CallSid=1789812668.722225&Direction=WEBOBD&call_group=
+2026-09-19T10:11:11.107Z body: {}
+2026-09-19T10:11:11.107Z Extracted: type=transferring_call_to_agent, callSid=1789812668.722225
+2026-09-19T10:11:11.107Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T10:11:11.113Z Assigned userId: null
+2026-09-19T10:11:11.113Z Could not find user. Defaulting to user_id=1
+2026-09-19T10:11:11.116Z Inserting new log for callSid: 1789812668.722225
+2026-09-19T10:11:11.137Z Inserting into call_events for callLogId: 58
+2026-09-19T10:11:11.162Z Successfully processed webhook.
+2026-09-19T10:11:31.059Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=14&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A41%3A08.000000&EndTime=2026-09-19+15%3A41%3A22.000000&CallSid=1789812668.722225&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812668.722225.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A41%3A08.000000&LegB_Start_time=2026-09-19+15%3A41%3A08.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:11:31.059Z searchParams: type=call_report&SourceNumber=08381058482&DestinationNumber=00917316983084&DialWhomNumber=08485835691&CallDuration=14&coins=1&Status=cancel-agent&StartTime=2026-09-19+15%3A41%3A08.000000&EndTime=2026-09-19+15%3A41%3A22.000000&CallSid=1789812668.722225&CallRecordingUrl=https%3A%2F%2Fcallrecords.rpdigitalphone.com%2Foutgoing%2FIndia%2F09_2026%2F19%2F11892%2F5691-3084-1789812668.722225.wav&Direction=WEBOBD&campid=&TalkDuration=0&call_group=&receiver_name=&error_code=&LegA_Picked_time=2026-09-19+15%3A41%3A08.000000&LegB_Start_time=2026-09-19+15%3A41%3A08.000000&LegB_Picked_time=0000%3A00%3A00+00%3A00%3A00&key_press=&hangup_cause=&Uniqueid=&client_id=11892
+2026-09-19T10:11:31.059Z body: {}
+2026-09-19T10:11:31.059Z Extracted: type=call_report, callSid=1789812668.722225
+2026-09-19T10:11:31.059Z Looking up user for DialWhomNumber: 08485835691
+2026-09-19T10:11:31.060Z Assigned userId: 1
+2026-09-19T10:11:31.061Z Updating existing log for callSid: 1789812668.722225
+2026-09-19T10:11:31.080Z Inserting into call_events for callLogId: 58
+2026-09-19T10:11:31.089Z Successfully processed webhook.
+2026-09-19T11:06:08.551Z Received GET request to https://localhost:3000/api/webhooks/cloudtelephony?type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A31%3A05&EndTime=&CallSid=1789812065.714852&Direction=WEBOBD&call_group=
+2026-09-19T11:06:08.552Z searchParams: type=transferring_call_to_agent&SourceNumber=08381058482&DestinationNumber=08485835691&DialWhomNumber=00917316983084&Status=&StartTime=2026-09-19+15%3A31%3A05&EndTime=&CallSid=1789812065.714852&Direction=WEBOBD&call_group=
+2026-09-19T11:06:08.552Z body: {}
+2026-09-19T11:06:08.552Z Extracted: type=transferring_call_to_agent, callSid=1789812065.714852
+2026-09-19T11:06:08.552Z Looking up user for DialWhomNumber: 00917316983084
+2026-09-19T11:06:08.562Z Assigned userId: null
+2026-09-19T11:06:08.563Z Could not find user. Defaulting to user_id=1
+2026-09-19T11:06:08.563Z Updating existing log for callSid: 1789812065.714852
+2026-09-19T11:06:08.582Z Inserting into call_events for callLogId: 47
+2026-09-19T11:06:08.600Z Successfully processed webhook.
