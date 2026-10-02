@@ -99,15 +99,23 @@ export default function WhatsAppWebMessenger() {
 
   // ─── Socket initialisation (runs once) ────────────────────────────────
   useEffect(() => {
-    // Initialize Socket.IO on the server first (works on Hostinger without custom server.js)
-    fetch('/api/socket').finally(() => {
-      const socket = io({
-        path: '/api/socket',
-        transports: ['polling']
-      });
+    // WA_SERVER_URL = your Google Cloud VM IP/domain (e.g. http://34.x.x.x:3001)
+    // Leave empty to use local server.js (dev mode)
+    const waServerUrl = process.env.NEXT_PUBLIC_WA_SERVER_URL || '';
+
+    const connectSocket = () => {
+      const socketOptions = waServerUrl
+        ? { path: '/socket.io' }                   // external GCP server (default path)
+        : { path: '/api/socket', transports: ['polling'] }; // Hostinger local fallback
+
+      const socket = waServerUrl
+        ? io(waServerUrl, socketOptions)
+        : io(socketOptions);
+
       socketRef.current = socket;
 
-    socket.on('connect', () => console.log('[WA-Web] Socket connected'));
+      socket.on('connect', () => console.log('[WA-Web] Socket connected to', waServerUrl || 'local'));
+
 
     socket.on('whatsapp_ready', (d) => { if (d.ready) { setStatus('Connected'); setQrCode(null); socket.emit('get_active_chats'); } });
     socket.on('whatsapp_qr', (qr) => { setStatus('QR Code Required'); setQrCode(qr); });
@@ -172,6 +180,12 @@ export default function WhatsAppWebMessenger() {
 
           const oldMsgs = chat.messages || [];
           const newMsgs = data.messages || [];
+
+          // If the server returns 0 messages, NEVER overwrite whatever we have locally.
+          // The GCP server may not have synced history yet for this chat.
+          if (newMsgs.length === 0) {
+            return chat;
+          }
 
           // 1. Detect if there are any actual changes to prevent useless re-renders
           let changed = false;
@@ -260,14 +274,6 @@ export default function WhatsAppWebMessenger() {
         return nextState;
       });
 
-      // Foolproof fallback: if this message belongs to the active contact, fetch chat again to guarantee sync
-      const current = activeContactRef.current;
-      if (current) {
-        const currentNum = (current.phone || '').replace(/[^0-9]/g, '');
-        if (currentNum.endsWith(targetNum) || targetNum.endsWith(currentNum)) {
-          socket.emit('fetch_chat', { number: current.phone });
-        }
-      }
     });
 
     // Incoming reactions from whatsapp-web.js (own + contact reactions)
@@ -338,7 +344,14 @@ export default function WhatsAppWebMessenger() {
       socket.disconnect();
       socketRef.current = null;
     };
-    }); // end fetch().finally()
+    }; // end connectSocket
+
+    if (waServerUrl) {
+      connectSocket();
+    } else {
+      // Init the API route first (for Hostinger fallback), then connect
+      fetch('/api/socket').finally(connectSocket);
+    }
   }, []);
 
   // ─── Fetch chat history whenever active contact changes ────────────────
@@ -347,7 +360,25 @@ export default function WhatsAppWebMessenger() {
     const socket = socketRef.current;
     if (!socket) return;
 
-    // Fetch immediately
+    // Fetch from local DB immediately to show local history instantly,
+    // which fixes the issue where the GCP server hasn't synced history yet
+    fetch(`/api/whatsapp/sync?phone=${activeContact.phone}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.messages && data.messages.length > 0) {
+           setConversations(prev => prev.map(chat => {
+             if (chat.id !== activeContact.id) return chat;
+             const existingCount = (chat.messages || []).length;
+             if (existingCount === 0) {
+               return { ...chat, messages: data.messages };
+             }
+             return chat;
+           }));
+        }
+      })
+      .catch(e => console.error('Local DB fetch error', e));
+
+    // Fetch immediately from socket to get latest from WA
     socket.emit('fetch_chat', { number: activeContact.phone });
 
     // PROPER FULL FETCH SOLUTION: Background poll active chat every 3 seconds for perfect sync (acks, new messages)

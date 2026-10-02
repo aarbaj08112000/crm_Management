@@ -1,0 +1,18 @@
+--- standalone-whatsapp-server.js
++++ standalone-whatsapp-server.js
+@@ -244,7 +244,13 @@
+     if (!isReady || !client) return;
+     try {
+       const chatId = number.replace(/[^0-9]/g, '') + '@c.us';
+-      const chat = await client.getChatById(chatId);
++      let chat;
++      try {
++        chat = await client.getChatById(chatId);
++      } catch (e) {
++        const chats = await client.getChats();
++        chat = chats.find(c => c.id._serialized === chatId);
++      }
++      if (!chat) throw new Error("Chat not found on WhatsApp server yet");
+       const msgs = await chat.fetchMessages({ limit: 50 });
+       socket.emit('chat_history', { number, messages: await Promise.all(msgs.map(formatMessage)) });
+     } catch (err) { socket.emit('chat_history', { number, error: err.message, messages: [] }); }
