@@ -105,7 +105,7 @@ export default function WhatsAppWebMessenger() {
 
     const connectSocket = () => {
       const socketOptions = waServerUrl
-        ? { path: '/socket.io' }                   // external GCP server (default path)
+        ? { path: '/socket.io', extraHeaders: { 'ngrok-skip-browser-warning': 'true' } }                   // external GCP server (default path)
         : { path: '/api/socket', transports: ['polling'] }; // Hostinger local fallback
 
       const socket = waServerUrl
