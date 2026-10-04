@@ -26,21 +26,30 @@ function formatDateLabel(ts) {
 }
 
 function TextWithLinks({ text }) {
+  if (!text) return null;
+
+  const escapeHtml = (unsafe) => {
+    return String(unsafe)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  };
+
+  let html = escapeHtml(text);
+
+  html = html.replace(/```([^`]+)```/g, '<code class="bg-black/10 px-1 rounded text-[13px] font-mono">$1</code>');
+  html = html.replace(/\*([^\*]+)\*/g, '<strong>$1</strong>');
+  html = html.replace(/_([^_]+)_/g, '<em>$1</em>');
+  html = html.replace(/~([^~]+)~/g, '<del>$1</del>');
+
   const urlRegex = /(https?:\/\/[^\s]+)/g;
-  const parts = text.split(urlRegex);
-  return (
-    <span>
-      {parts.map((part, i) =>
-        urlRegex.test(part) ? (
-          <a key={i} href={part} target="_blank" rel="noopener noreferrer"
-            style={{ color: '#027eb5' }} className="underline break-all"
-            onClick={e => e.stopPropagation()}>
-            {part}
-          </a>
-        ) : part
-      )}
-    </span>
-  );
+  html = html.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: #027eb5" class="underline break-all">$1</a>');
+
+  return <span dangerouslySetInnerHTML={{ __html: html }} onClick={e => {
+    if (e.target.tagName === 'A') e.stopPropagation();
+  }} />;
 }
 
 function QuotedMessage({ quotedMsg, contactName }) {
@@ -121,7 +130,7 @@ function LazyMedia({ msg, contactPhone }) {
           <img src={src} alt="image" className="w-full object-cover block" />
           {msg.body && (
             <p className="text-[14.2px] whitespace-pre-wrap break-words px-2 pt-1 pb-0.5 leading-[1.4]"
-              style={{ color: '#111b21' }}>{msg.body}</p>
+              style={{ color: '#111b21' }}><TextWithLinks text={msg.body} /></p>
           )}
         </div>
       );
@@ -132,14 +141,20 @@ function LazyMedia({ msg, contactPhone }) {
       return <audio controls src={src} className="w-full mb-1" />;
     if (msg.type === 'document') {
       return (
-        <a href={src} download={mediaData.filename || msg.filename || 'document'} target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-2 p-2 rounded-md mb-1"
-          style={{ border: '1px solid #e9edef', background: '#f0f2f5', color: '#111b21' }}>
-          <div className="flex-shrink-0 bg-white rounded-md p-1.5 shadow-sm">
-            {getFileIcon(mediaData.filename || msg.filename, msg.type, mediaData.mimetype || msg.mimetype)}
-          </div>
-          <span className="text-[13px] font-medium truncate">{mediaData.filename || msg.filename || 'Document'}</span>
-        </a>
+        <div className="flex flex-col gap-1 w-full">
+          <a href={src} download={mediaData.filename || msg.filename || 'document'} target="_blank" rel="noopener noreferrer"
+            className="flex items-center gap-2 p-2 rounded-md w-full"
+            style={{ border: '1px solid #e9edef', background: '#f0f2f5', color: '#111b21' }}>
+            <div className="flex-shrink-0 bg-white rounded-md p-1.5 shadow-sm">
+              {getFileIcon(mediaData.filename || msg.filename, msg.type, mediaData.mimetype || msg.mimetype)}
+            </div>
+            <span className="text-[13px] font-medium truncate">{mediaData.filename || msg.filename || 'Document'}</span>
+          </a>
+          {msg.body && (
+            <p className="text-[14.2px] whitespace-pre-wrap break-words px-2 pt-1 pb-0.5 leading-[1.4]"
+              style={{ color: '#111b21' }}><TextWithLinks text={msg.body} /></p>
+          )}
+        </div>
       );
     }
   }
@@ -150,8 +165,8 @@ function LazyMedia({ msg, contactPhone }) {
 
   return (
     <div onClick={loadMedia}
-      className="flex items-center gap-3 py-2 px-3 rounded-md mb-1 cursor-pointer select-none"
-      style={{ background: 'rgba(0,0,0,0.06)', minWidth: 200, maxWidth: 280 }}>
+      className="flex items-center gap-3 py-2 px-3 rounded-md mb-1 cursor-pointer select-none w-full"
+      style={{ background: 'rgba(0,0,0,0.06)', minWidth: 200 }}>
       <div className="flex-shrink-0 bg-white rounded-md p-2 shadow-sm">
         {icon}
       </div>
@@ -412,7 +427,7 @@ function MessageBubble({ msg, isMedia, isMe, contactName, contactPhone, onReact,
             )}
 
             {isMedia ? (
-              <div style={{ padding: 4 }}>
+              <div style={{ padding: 4, width: '100%' }}>
                 <LazyMedia msg={msg} contactPhone={contactPhone} />
                 {msg.body && (
                   <p style={{ color: '#111b21', fontSize: 14.2, lineHeight: 1.4, padding: '2px 8px 4px', whiteSpace: 'pre-wrap', wordBreak: 'break-word', margin: 0 }}>
@@ -426,6 +441,16 @@ function MessageBubble({ msg, isMedia, isMe, contactName, contactPhone, onReact,
                   <TextWithLinks text={msg.body} />
                 </p>
               )
+            )}
+
+            {msg.buttons && msg.buttons.length > 0 && (
+              <div className="border-t border-black/5 flex flex-col mt-1">
+                {msg.buttons.map((b, i) => (
+                  <div key={i} className="w-full py-2 text-center text-[#00a884] font-medium text-[14px] border-b border-black/5 last:border-0 hover:bg-black/5 transition-colors cursor-pointer">
+                    {b.text || (b.type === 'url' ? 'Link' : 'Button')}
+                  </div>
+                ))}
+              </div>
             )}
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 3, padding: isMedia ? '2px 8px 5px' : '0 8px 5px', marginTop: 2 }}>

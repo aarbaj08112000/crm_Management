@@ -37,7 +37,7 @@ const http = require('http');
 const express = require('express');
 const cors = require('cors');
 const { Server } = require('socket.io');
-const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
+const { Client, LocalAuth, MessageMedia, Buttons } = require('whatsapp-web.js');
 const path = require('path');
 
 const PORT = parseInt(process.env.PORT || '3001', 10);
@@ -91,7 +91,7 @@ async function formatMessage(m) {
     try {
       const q = await m.getQuotedMessage();
       quotedMsg = { id: q.id?.id || null, body: q.body, fromMe: q.fromMe, type: q.type, hasMedia: q.hasMedia };
-    } catch (e) {}
+    } catch (e) { }
   }
   let reactions = [];
   if (m.hasReaction) {
@@ -106,7 +106,7 @@ async function formatMessage(m) {
           reactions.push({ emoji, senderId, fromMe });
         });
       });
-    } catch (e) {}
+    } catch (e) { }
   }
   return {
     id: m.id?.id || Date.now().toString(),
@@ -145,7 +145,10 @@ async function createClient() {
         '--disable-accelerated-2d-canvas',
         '--no-first-run',
         '--no-zygote',
-        '--disable-gpu'
+        '--disable-gpu',
+        '--disable-background-timer-throttling',
+        '--disable-backgrounding-occluded-windows',
+        '--disable-renderer-backgrounding'
       ]
     }
   });
@@ -185,22 +188,32 @@ async function createClient() {
   });
 
   client.on('message', async (msg) => {
-    const payload = await formatMessage(msg);
-    io.emit('whatsapp_message', payload);
-    const phoneNumber = (msg.from || '').replace('@c.us', '');
-    await saveMessageToDB(payload, phoneNumber);
+    try {
+      console.log(`[WA] Received incoming message (via message event) from: ${msg.from}, Body: ${msg.body}`);
+      const payload = await formatMessage(msg);
+      io.emit('whatsapp_message', payload);
+      const phoneNumber = (msg.from || '').replace('@c.us', '');
+      await saveMessageToDB(payload, phoneNumber);
+    } catch (err) {
+      console.error('[WA] Error on incoming message:', err);
+    }
   });
 
   client.on('message_create', async (msg) => {
-    if (!msg.fromMe) return;
-    const payload = await formatMessage(msg);
-    io.emit('whatsapp_message', payload);
-    const phoneNumber = (msg.to || '').replace('@c.us', '');
-    await saveMessageToDB(payload, phoneNumber);
+    try {
+      console.log(`[WA] Message Create fired! fromMe: ${msg.fromMe}, Body: ${msg.body}`);
+      if (!msg.fromMe) return; // We still ignore incoming here to prevent duplicates if message event works
+      const payload = await formatMessage(msg);
+      io.emit('whatsapp_message', payload);
+      const phoneNumber = (msg.to || '').replace('@c.us', '');
+      await saveMessageToDB(payload, phoneNumber);
+    } catch (err) {
+      console.error('[WA] Error on message_create:', err);
+    }
   });
 
   client.on('message_ack', (msg, ack) => {
-    if (msg.id?._serialized) io.emit('whatsapp_message_ack', { msgId: msg.id._serialized, ack });
+    if (msg.id) io.emit('whatsapp_message_ack', { msgId: msg.id.id || msg.id._serialized, ack });
   });
 
   client.on('message_reaction', (reaction) => {
@@ -211,20 +224,124 @@ async function createClient() {
       const senderId = reaction.senderId?._serialized || reaction.senderId || 'unknown';
       const fromMe = client?.info ? senderId === client.info.wid._serialized : false;
       if (reactedMsgId) io.emit('whatsapp_reaction', { msgId: reactedMsgId, emoji, senderId, fromMe });
-    } catch (err) {}
+    } catch (err) { }
   });
 
-  client.initialize().catch(console.error);
+  let retryCount = 0;
+  async function startClient() {
+    try {
+      await client.initialize();
+    } catch (err) {
+      console.error('[WA] Initialization error:', err.message);
+      if (err.message.includes('Execution context was destroyed') && retryCount < 3) {
+        retryCount++;
+        console.log(`[WA] Retrying initialization (${retryCount}/3) in 3 seconds...`);
+        setTimeout(startClient, 3000);
+      } else {
+        console.error('[WA] Failed to initialize after retries.');
+      }
+    }
+  }
+  startClient();
 }
 
 // ── Socket.IO Events ──────────────────────────────────────────
 io.on('connection', (socket) => {
   console.log('[Socket.IO] Connected:', socket.id);
 
-  if (isReady)             socket.emit('whatsapp_ready', { ready: true });
-  else if (qrCodeData)     socket.emit('whatsapp_qr', qrCodeData);
+  if (isReady) socket.emit('whatsapp_ready', { ready: true });
+  else if (qrCodeData) socket.emit('whatsapp_qr', qrCodeData);
   else if (isInitializing) socket.emit('whatsapp_initializing');
-  else                     socket.emit('whatsapp_disconnected');
+  else socket.emit('whatsapp_disconnected');
+
+  
+  // Send Template
+  socket.on('send_template', async ({ number, template, tempId }) => {
+    if (!client) return;
+    try {
+      const chatId = number.includes('@') ? number : `${number.replace(/[^0-9]/g, '')}@c.us`;
+      let msgOptions = {};
+      
+      let msgBody = template.body_content;
+      if (template.header_type === 'text' && template.header_content) {
+        msgBody = `*${template.header_content}*\n\n${msgBody}`;
+      }
+      if (template.footer_content) {
+        msgBody += `\n\n_${template.footer_content}_`;
+      }
+
+      let media = null;
+      if ((template.header_type === 'image' || template.header_type === 'document') && template.header_content) {
+          if (template.header_content.startsWith('http')) {
+              try {
+                 media = await MessageMedia.fromUrl(template.header_content);
+              } catch(err) {
+                 console.error('Error fetching media from URL:', err);
+              }
+          } else if (template.header_content.startsWith('/uploads/')) {
+              try {
+                 const path = require('path');
+                 const fs = require('fs');
+                 const localPath = path.join(process.cwd(), 'public', template.header_content);
+                 if (fs.existsSync(localPath)) {
+                     media = MessageMedia.fromFilePath(localPath);
+                 } else {
+                     console.error('Local file not found:', localPath);
+                 }
+              } catch(err) {
+                 console.error('Error loading local media:', err);
+              }
+          }
+      }
+
+      let buttonsText = '';
+      if (template.buttons) {
+        let parsedBtns = template.buttons;
+        if (typeof parsedBtns === 'string') {
+            try { parsedBtns = JSON.parse(parsedBtns); } catch(e) { parsedBtns = []; }
+        }
+        if (parsedBtns && parsedBtns.length > 0) {
+            buttonsText = '\n\n' + parsedBtns.map(b => {
+                if (b.type === 'url') return `🌐 ${b.text}: ${b.url}`;
+                if (b.type === 'phone_number') return `📞 ${b.text}: ${b.phone_number}`;
+                return `▶ ${b.text}`;
+            }).join('\n');
+            msgBody += buttonsText;
+        }
+      }
+
+      console.log(`[WA-Web] Sending template to ${chatId}`);
+      
+      console.log(`[WA-Web] Sending template to ${chatId}`);
+      
+      let sentMsg;
+      if (media) {
+        msgOptions.caption = msgBody;
+        if (template.header_type === 'document') {
+           msgOptions.sendMediaAsDocument = true;
+        }
+        sentMsg = await client.sendMessage(chatId, media, msgOptions);
+      } else {
+        sentMsg = await client.sendMessage(chatId, msgBody, msgOptions);
+      }
+      
+      // Emit the sent message back so it instantly updates the status in the UI
+      try {
+        const payload = await formatMessage(sentMsg);
+        if (tempId) payload.tempId = tempId;
+        if (media && template.header_type === 'document') {
+           payload.type = 'document';
+           payload.hasMedia = true;
+           payload.filename = media.filename || template.header_content.split('/').pop();
+        }
+        socket.emit('whatsapp_message', payload);
+      } catch (e) {
+        console.error('Error formatting sent template message:', e);
+      }
+    } catch(e) {
+      console.error('Error sending template:', e);
+    }
+  });
 
   socket.on('send_message', async ({ number, message, mediaData, replyToId, tempId }) => {
     if (!isReady || !client) return socket.emit('message_error', { error: 'WhatsApp not ready' });
@@ -237,7 +354,7 @@ io.on('connection', (socket) => {
           const msgs = await (await client.getChatById(chatId)).fetchMessages({ limit: 50 });
           const quoted = msgs.find(m => m.id.id === replyToId || m.id._serialized === replyToId);
           if (quoted) opts.quotedMessageId = quoted.id._serialized;
-        } catch (e) {}
+        } catch (e) { }
       }
       if (mediaData) {
         const media = new MessageMedia(mediaData.mimetype, mediaData.data, mediaData.filename);
@@ -316,7 +433,7 @@ io.on('connection', (socket) => {
         timestamp: c.timestamp, lastMessage: c.lastMessage?.body || '', unreadCount: c.unreadCount || 0
       }));
       socket.emit('active_chats_data', formatted.sort((a, b) => b.timestamp - a.timestamp));
-    } catch (err) {}
+    } catch (err) { }
   });
 
   socket.on('get_unread_counts', async () => {
@@ -328,7 +445,7 @@ io.on('connection', (socket) => {
         unreadCount: c.unreadCount, lid: c.id._serialized, name: c.name
       })).filter(c => c.phone);
       socket.emit('unread_counts_data', results);
-    } catch (err) {}
+    } catch (err) { }
   });
 
   socket.on('fetch_media', async ({ messageId, number }) => {
@@ -352,13 +469,13 @@ io.on('connection', (socket) => {
       const msgs = await chat.fetchMessages({ limit: 100 });
       const msg = msgs.find(m => m.id.id === messageId || m.id._serialized === messageId);
       if (msg) await msg.react(emoji);
-    } catch (err) {}
+    } catch (err) { }
   });
 
   socket.on('reset_whatsapp', async () => {
     console.log('[WA] Resetting...');
-    try { if (client) await client.destroy(); } catch (e) {}
-    try { fs.rmSync('./.wwebjs_auth', { recursive: true, force: true }); } catch (e) {}
+    try { if (client) await client.destroy(); } catch (e) { }
+    try { fs.rmSync('./.wwebjs_auth', { recursive: true, force: true }); } catch (e) { }
     client = null; isReady = false; isInitializing = false; qrCodeData = null;
     io.emit('whatsapp_disconnected');
     setTimeout(() => createClient(), 1000);

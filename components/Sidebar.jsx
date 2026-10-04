@@ -18,7 +18,8 @@ import {
   Settings2,
   MessageSquare,
   Mail,
-  Bot
+  Bot,
+  FileText
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -50,6 +51,7 @@ const navigation = [
       { name: 'AI Lead Scraper', href: '/scrape', icon: Bot },
       { name: 'Contacts', href: '/contacts', icon: ClipboardList },
       { name: 'Company Settings', href: '/settings', icon: Settings },
+      { name: 'WhatsApp Templates', href: '/whatsapp-templates', icon: FileText },
       { name: 'Email Accounts', href: '/settings/email', icon: Mail },
     ]
   }

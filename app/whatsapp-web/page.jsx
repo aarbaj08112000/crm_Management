@@ -2,19 +2,24 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
-  Search, Paperclip, Smile, Send, Plus, CheckCheck
+  Search, Paperclip, Smile, Send, Plus, CheckCheck, FileText, X
 } from 'lucide-react';
 import EmojiPicker from 'emoji-picker-react';
 import { io } from 'socket.io-client';
 import ConnectionStatus from '@/components/whatsapp/ConnectionStatus';
 import WhatsAppSetup from '@/components/whatsapp/WhatsAppSetup';
 import MessageList from '@/components/whatsapp/MessageList';
+import { useApp } from '@/context/AppContext';
+import UserDetailsDrawer from '@/components/UserDetailsDrawer';
+import LeadDetailsDrawer from '@/components/LeadDetailsDrawer';
 
 export default function WhatsAppWebMessenger() {
   // ─── Socket & Connection ───────────────────────────────────────────────
   const socketRef = useRef(null);
   const [status, setStatus] = useState('Initializing');
   const [qrCode, setQrCode] = useState(null);
+  const { user } = useApp();
+  const isAdmin = user?.role === 'admin';
 
   // ─── Contacts / Conversations ─────────────────────────────────────────
   const [conversations, setConversations] = useState([]);
@@ -29,6 +34,103 @@ export default function WhatsAppWebMessenger() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [pendingFile, setPendingFile] = useState(null);
+
+  const [showContactInfo, setShowContactInfo] = useState(false);
+  const [showTemplateModal, setShowTemplateModal] = useState(false);
+  const [localTemplates, setLocalTemplates] = useState([]);
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
+
+  // ─── Drawer State ─────────────────────────────────────────────────────
+  const [viewingUserId, setViewingUserId] = useState(null);
+  const [isUserDrawerOpen, setIsUserDrawerOpen] = useState(false);
+  const [viewingEnquiry, setViewingEnquiry] = useState(null);
+  const [isLeadDrawerOpen, setIsLeadDrawerOpen] = useState(false);
+  
+  const handleViewLead = async (rawId) => {
+    if (!rawId) return;
+    const numericId = String(rawId).includes('/')
+      ? String(rawId).split('/').pop().replace(/^0+/, '')
+      : rawId;
+    try {
+      const res = await fetch(`/api/enquiries/${numericId}`);
+      if (res.ok) {
+        const data = await res.json();
+        setViewingEnquiry(data);
+        setIsLeadDrawerOpen(true);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    if (showTemplateModal) {
+      fetch('/api/local-templates')
+        .then(res => res.json())
+        .then(data => { if (data.success) setLocalTemplates(data.templates); })
+        .catch(console.error);
+    } else {
+      setSelectedTemplate(null);
+    }
+  }, [showTemplateModal]);
+  
+  const handleSendTemplate = () => {
+    if (!selectedTemplate || !activeContact || status !== 'Connected' || sendingMessage) return;
+    const socket = socketRef.current;
+    if (!socket) return;
+    
+    setSendingMessage(true);
+    
+    // Create optimistic message
+    const tempId = `temp_${Date.now()}`;
+    let msgBody = selectedTemplate.body_content;
+    if (selectedTemplate.header_type === 'text' && selectedTemplate.header_content) {
+      msgBody = `*${selectedTemplate.header_content}*\n\n${msgBody}`;
+    }
+    if (selectedTemplate.footer_content) {
+      msgBody += `\n\n_${selectedTemplate.footer_content}_`;
+    }
+    
+    // Handle buttons
+    let buttonArray = null;
+    if (selectedTemplate.buttons) {
+      let parsedBtns = selectedTemplate.buttons;
+      if (typeof parsedBtns === 'string') {
+          try { parsedBtns = JSON.parse(parsedBtns); } catch(e) { parsedBtns = []; }
+      }
+      if (parsedBtns && parsedBtns.length > 0) {
+          buttonArray = parsedBtns.map(b => ({
+              text: b.text || (b.type === 'url' ? 'Link' : 'Call'),
+              type: b.type
+          }));
+      }
+    }
+    
+    const newMsg = {
+      id: tempId, 
+      _serialized: tempId, 
+      body: msgBody, 
+      fromMe: true, 
+      timestamp: Math.floor(Date.now() / 1000), 
+      type: (selectedTemplate.header_type === 'image' || selectedTemplate.header_type === 'document' || selectedTemplate.header_type === 'video') ? selectedTemplate.header_type : 'chat', 
+      ack: 0, 
+      hasMedia: selectedTemplate.header_type === 'image' || selectedTemplate.header_type === 'document' || selectedTemplate.header_type === 'video',
+      quotedMsg: null,
+      buttons: buttonArray
+    };
+
+    setConversations(prev => prev.map(c => c.id === activeContact.id ? { ...c, messages: [...(c.messages || []), newMsg] } : c));
+
+    socket.emit('send_template', {
+      number: activeContact.phone,
+      template: selectedTemplate,
+      tempId
+    });
+    
+    setShowTemplateModal(false);
+    setSendingMessage(false);
+  };
+
 
   const fileInputRef = useRef(null);
   const emojiPickerRef = useRef(null);
@@ -547,17 +649,26 @@ export default function WhatsAppWebMessenger() {
           <h1 className="font-semibold text-white text-lg">WhatsApp Web</h1>
           <div className="flex items-center gap-3">
             <ConnectionStatus status={status} />
-            <button
-              onClick={handleResetConnection}
-              className="text-xs px-3 py-1 rounded-full font-medium transition hover:opacity-90"
-              style={{ background: 'rgba(0,0,0,0.15)', color: '#fff' }}
-            >
-              Reset Connection
-            </button>
+            {isAdmin && (
+              <button
+                onClick={handleResetConnection}
+                className="text-xs px-3 py-1 rounded-full font-medium transition hover:opacity-90"
+                style={{ background: 'rgba(0,0,0,0.15)', color: '#fff' }}
+              >
+                Reset Connection
+              </button>
+            )}
           </div>
         </div>
-        <div className="flex-1 flex items-center justify-center p-8 bg-slate-50">
-          <WhatsAppSetup status={status} qrCode={qrCode} onReset={handleResetConnection} />
+        <div className="flex-1 flex flex-col items-center justify-center p-8 bg-slate-50 text-center">
+          {isAdmin ? (
+            <WhatsAppSetup status={status} qrCode={qrCode} onReset={handleResetConnection} />
+          ) : (
+            <div className="bg-white p-8 rounded-2xl shadow-sm border max-w-md">
+              <h2 className="text-xl font-bold text-slate-800 mb-2">WhatsApp Disconnected</h2>
+              <p className="text-slate-600">The WhatsApp server is currently disconnected. Please ask an administrator to log in and scan the QR code.</p>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -581,12 +692,14 @@ export default function WhatsAppWebMessenger() {
               <span className="text-[13px] font-bold text-slate-700 dark:text-slate-200">Connected (Web)</span>
             </div>
           </div>
-          <button
-            onClick={handleResetConnection}
-            className="text-[11px] bg-white text-slate-500 px-3 py-1.5 rounded-lg shadow-sm border border-slate-200 hover:text-rose-500 hover:border-rose-200 transition-colors"
-          >
-            Reset
-          </button>
+          {isAdmin && (
+            <button
+              onClick={handleResetConnection}
+              className="text-[11px] bg-white text-slate-500 px-3 py-1.5 rounded-lg shadow-sm border border-slate-200 hover:text-rose-500 hover:border-rose-200 transition-colors"
+            >
+              Reset
+            </button>
+          )}
         </div>
 
         {/* Count bar */}
@@ -675,19 +788,40 @@ export default function WhatsAppWebMessenger() {
       <div className="flex-1 flex flex-col overflow-hidden">
 
         {/* Chat header */}
-        <div className="bg-white dark:bg-slate-900 px-6 py-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-700 flex-shrink-0 shadow-sm">
+        <div 
+          className="bg-white dark:bg-slate-900 px-6 py-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-700 flex-shrink-0 shadow-sm cursor-pointer hover:bg-slate-50 transition-colors"
+          onClick={() => setShowContactInfo(!showContactInfo)}
+        >
           {activeContact ? (
             <div className="flex items-center gap-4">
               <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-100 to-teal-100 flex items-center justify-center text-emerald-700 font-bold shrink-0 shadow-sm border border-emerald-200/50">
                 {activeContact.initials || (activeContact.name || activeContact.phone).substring(0, 2).toUpperCase()}
               </div>
-              <div>
-                <h2 className="text-[15px] font-bold text-slate-800 dark:text-slate-100 leading-tight">
+              <div className="flex flex-col justify-center">
+                <h2 className="text-[15px] font-bold text-slate-800 dark:text-slate-100 leading-tight mb-0.5">
                   {activeContact.name || activeContact.phone}
                 </h2>
-                <span className="text-[12px] text-slate-500 font-medium">
-                  {activeContact.phone}
-                </span>
+                <div className="flex items-center gap-2 mb-0.5">
+                  <span className="text-[12px] text-slate-500 font-medium">
+                    {activeContact.phone}
+                  </span>
+                  {(user?.role === 'admin' || user?.role === 'manager') && activeContact.addedByName && (
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setViewingUserId(activeContact.addedById); setIsUserDrawerOpen(true); }}
+                      className="text-[9px] bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider shadow-sm border border-indigo-100 hover:bg-indigo-100 transition-colors cursor-pointer"
+                    >
+                      By {activeContact.addedByName}
+                    </button>
+                  )}
+                </div>
+                {(user?.role === 'admin' || user?.role === 'manager') && activeContact.enquiry_id && (
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleViewLead(activeContact.rawEnquiryId || activeContact.enquiry_id); }}
+                    className="text-[12px] font-bold text-indigo-600 mt-0.5 text-left hover:underline transition-all cursor-pointer w-fit"
+                  >
+                    {activeContact.enquiry_id}
+                  </button>
+                )}
               </div>
             </div>
           ) : (
@@ -794,6 +928,16 @@ export default function WhatsAppWebMessenger() {
             )}
           </div>
 
+          
+          <button
+            onClick={() => setShowTemplateModal(true)}
+            disabled={!activeContact || sendingMessage}
+            className="text-slate-400 hover:text-emerald-500 transition-colors p-2 disabled:opacity-50 bg-slate-50 rounded-full hover:bg-emerald-50"
+            title="Send Template"
+          >
+            <FileText className="w-5 h-5" />
+          </button>
+
           {/* Attachment */}
           <input
             type="file"
@@ -834,6 +978,184 @@ export default function WhatsAppWebMessenger() {
           </button>
         </div>
       </div>
+
+      {/* ── CONTACT INFO SIDEBAR ──────────────────────────────────────── */}
+      {showContactInfo && activeContact && (
+        <div className="w-[320px] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-700 flex flex-col flex-shrink-0 overflow-y-auto relative z-10 transition-all">
+          <div className="px-6 py-4 border-b border-slate-200 flex items-center gap-4 bg-slate-50 sticky top-0 z-20">
+            <button onClick={() => setShowContactInfo(false)} className="text-slate-500 hover:text-slate-800 p-1 rounded-full hover:bg-slate-200 transition-colors">
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="font-bold text-slate-800">Contact Info</h3>
+          </div>
+          
+          <div className="p-6 flex flex-col items-center border-b border-slate-200">
+             <div className="w-28 h-28 rounded-full bg-gradient-to-tr from-emerald-100 to-teal-100 flex items-center justify-center text-emerald-700 font-bold text-4xl shadow-sm border border-emerald-200/50 mb-5">
+                {activeContact.initials || (activeContact.name || activeContact.phone).substring(0, 2).toUpperCase()}
+             </div>
+             <h2 className="text-xl font-bold text-slate-800 mb-1 text-center leading-tight">{activeContact.name || activeContact.phone}</h2>
+             <p className="text-slate-500 font-medium text-[15px]">{activeContact.phone}</p>
+          </div>
+
+          <div className="p-6 flex flex-col gap-6 flex-1 bg-slate-50/50">
+            <div>
+              <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">About</label>
+              <p className="text-[15px] text-slate-700 font-medium">Customer</p>
+            </div>
+            
+            {(user?.role === 'admin' || user?.role === 'manager') && activeContact.enquiry_id && (
+              <div>
+                <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Lead Code</label>
+                <div className="text-[14px] font-bold text-indigo-600 bg-indigo-50 inline-block px-3.5 py-1.5 rounded-lg border border-indigo-100 shadow-sm">
+                  {activeContact.enquiry_id}
+                </div>
+              </div>
+            )}
+            
+            {(user?.role === 'admin' || user?.role === 'manager') && activeContact.addedByName && (
+              <div>
+                <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Added By</label>
+                <div className="flex items-center gap-3 text-[15px] font-semibold text-slate-700 bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                  <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-[12px] font-bold text-indigo-600">
+                    {activeContact.addedByName.substring(0, 2).toUpperCase()}
+                  </div>
+                  {activeContact.addedByName}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Template Modal */}
+      {showTemplateModal && (
+        <div className="fixed inset-0 bg-slate-900/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[80vh] flex flex-col">
+            <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+              <h2 className="text-lg font-bold text-slate-800">Select Template</h2>
+              <button onClick={() => setShowTemplateModal(false)} className="text-slate-400 hover:text-slate-600">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="p-6 flex flex-col gap-6 bg-slate-50 overflow-y-auto">
+              {/* Dropdown Selection */}
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">Select a Template</label>
+                {localTemplates.length === 0 ? (
+                  <div className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-500">
+                    No templates found. Please create one first.
+                  </div>
+                ) : (
+                  <select 
+                    className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#00a884]/20 focus:border-[#00a884] outline-none transition-all text-sm font-semibold text-slate-700 cursor-pointer shadow-sm"
+                    value={selectedTemplate?.id || ''}
+                    onChange={(e) => {
+                      const tmpl = localTemplates.find(t => t.id.toString() === e.target.value);
+                      setSelectedTemplate(tmpl || null);
+                    }}
+                  >
+                    <option value="" disabled>-- Choose a Template --</option>
+                    {localTemplates.map(t => (
+                      <option key={t.id} value={t.id}>
+                        {t.name} ({t.category})
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </div>
+              
+              {/* Preview Box */}
+              <div>
+                <div className="text-sm font-bold text-slate-700 mb-2">Preview</div>
+                {selectedTemplate ? (
+                  <div className="bg-[#efeae2] p-6 rounded-xl border border-slate-200 shadow-inner flex justify-center"
+                       style={{
+                         backgroundImage: "url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')",
+                         backgroundRepeat: 'repeat',
+                         backgroundSize: 'contain',
+                         backgroundBlendMode: 'overlay',
+                       }}>
+                    <div className="w-full max-w-[320px] bg-white rounded-xl rounded-tl-none shadow-sm relative text-sm">
+                      {/* Tail */}
+                      <div className="absolute top-0 -left-2 text-white transform -scale-x-100">
+                        <svg viewBox="0 0 8 13" width="8" height="13">
+                          <path opacity="1" fill="currentColor" d="M1.533 3.118L8 12.114V1H2.814C1.042 1 .474 2.026 1.533 3.118z"></path>
+                        </svg>
+                      </div>
+
+                      <div className="p-3">
+                        {selectedTemplate.header_type !== 'none' && (
+                          <div className="font-black mb-2 text-slate-800 text-[11px] tracking-widest">{selectedTemplate.header_type.toUpperCase()} HEADER</div>
+                        )}
+                        <div className="whitespace-pre-wrap text-slate-800 leading-relaxed text-[14px]">{selectedTemplate.body_content}</div>
+                        {selectedTemplate.footer_content && (
+                          <div className="text-[12px] text-slate-500 mt-1">{selectedTemplate.footer_content}</div>
+                        )}
+                        <div className="text-right text-[10px] text-slate-400 mt-1">
+                           {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                        </div>
+                      </div>
+                      
+                      {selectedTemplate.buttons && (
+                        <div className="border-t border-slate-100 flex flex-col mt-1">
+                           {(() => {
+                             let btns = selectedTemplate.buttons;
+                             if (typeof btns === 'string') {
+                               try { btns = JSON.parse(btns); } catch(e) { btns = []; }
+                             }
+                             return btns.map((b, i) => (
+                               <div key={i} className="w-full py-2.5 text-center text-[#00a884] font-medium text-[14px] border-b border-slate-100 last:border-0 hover:bg-slate-50">
+                                 {b.text || (b.type === 'url' ? 'Link' : 'Button')}
+                               </div>
+                             ));
+                           })()}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="h-[200px] flex items-center justify-center text-slate-400 text-sm border-2 border-dashed border-slate-200 rounded-xl bg-slate-50/50">
+                    Select a template to view the preview
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Footer Actions */}
+            <div className="px-6 py-4 border-t border-slate-200 flex items-center justify-end gap-3 bg-white">
+              <button 
+                onClick={() => setShowTemplateModal(false)} 
+                className="px-5 py-2.5 text-sm font-semibold text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleSendTemplate} 
+                disabled={!selectedTemplate}
+                className="px-6 py-2.5 bg-[#00a884] hover:bg-[#008f6f] text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+              >
+                <Send className="w-4 h-4" /> 
+                Send Template
+              </button>
+          </div>
+          </div>
+        </div>
+      )}
+
+      {/* Drawers */}
+      <UserDetailsDrawer
+        isOpen={isUserDrawerOpen}
+        userId={viewingUserId}
+        onClose={() => { setIsUserDrawerOpen(false); setViewingUserId(null); }}
+        onEdit={() => {}}
+      />
+
+      <LeadDetailsDrawer
+        enquiry={viewingEnquiry}
+        onClose={() => { setIsLeadDrawerOpen(false); setViewingEnquiry(null); }}
+      />
+
     </div>
   );
 }
