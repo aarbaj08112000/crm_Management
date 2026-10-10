@@ -21,7 +21,8 @@ export async function middleware(request) {
     pathname.startsWith('/_next') ||
     pathname.startsWith('/socket.io') ||
     pathname.startsWith('/api/socket') ||
-    pathname === '/favicon.ico'
+    pathname === '/favicon.ico' ||
+    pathname.match(/\.(png|jpe?g|gif|svg|webp|ico)$/i)
   ) {
     return NextResponse.next();
   }

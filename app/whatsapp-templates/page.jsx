@@ -9,11 +9,10 @@ import { cn } from '@/lib/utils';
 export default function WhatsAppTemplatesPage() {
   const { showToast, hasPermission } = useApp();
   
-  // Checking generic system permission if explicit whatsapp template perm isn't available
-  // Or just mock them as true for admins
-  const canAdd = true; 
-  const canUpdate = true;
-  const canDelete = true;
+  // Checking system permission for WhatsApp Templates
+  const canAdd = hasPermission('WhatsApp Templates', 'can_add');
+  const canUpdate = hasPermission('WhatsApp Templates', 'can_update');
+  const canDelete = hasPermission('WhatsApp Templates', 'can_delete');
   
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(true);

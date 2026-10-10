@@ -12,11 +12,13 @@ import MessageList from '@/components/whatsapp/MessageList';
 import { useApp } from '@/context/AppContext';
 import UserDetailsDrawer from '@/components/UserDetailsDrawer';
 import LeadDetailsDrawer from '@/components/LeadDetailsDrawer';
+import ConfirmModal from '@/components/ConfirmModal';
 
 export default function WhatsAppWebMessenger() {
   // ─── Socket & Connection ───────────────────────────────────────────────
   const socketRef = useRef(null);
   const [status, setStatus] = useState('Initializing');
+  const [messageToDelete, setMessageToDelete] = useState(null);
   const [qrCode, setQrCode] = useState(null);
   const { user } = useApp();
   const isAdmin = user?.role === 'admin';
@@ -169,11 +171,16 @@ export default function WhatsAppWebMessenger() {
           const existingMap = {};
           prev.forEach(c => { existingMap[c.id] = c; });
           console.log(prev, "existingMap")
-          return data.contacts.map(c => ({
-            ...c,
-            messages: existingMap[c.id]?.messages || [],
-            unreadCount: existingMap[c.id]?.unreadCount || 0
-          }));
+          return data.contacts.map(c => {
+            const existing = existingMap[c.id];
+            return {
+              ...c,
+              messages: existing?.messages || [],
+              unreadCount: existing?.unreadCount || 0,
+              lastMessage: existing?.lastMessage && existing.lastMessage !== 'No messages yet' ? existing.lastMessage : c.lastMessage,
+              timestamp: existing?.timestamp || c.timestamp
+            };
+          });
         });
         setActiveChatId(prev => {
           if (!prev && data.contacts.length > 0) return data.contacts[0].id;
@@ -187,7 +194,7 @@ export default function WhatsAppWebMessenger() {
 
   useEffect(() => { fetchContacts(); }, [fetchContacts]);
 
-  // Poll contact list every 3s to surface new conversations and update snippets
+  // Poll contact list every 2s to surface new conversations and update snippets
   useEffect(() => {
     const interval = setInterval(() => {
       fetchContacts();
@@ -195,7 +202,7 @@ export default function WhatsAppWebMessenger() {
         console.log("Frontend emitting get_unread_counts...");
         socketRef.current.emit('get_unread_counts');
       }
-    }, 3000);
+    }, 2000);
     return () => clearInterval(interval);
   }, [fetchContacts, status]);
 
@@ -239,14 +246,14 @@ export default function WhatsAppWebMessenger() {
           if (c.name && chat.name) {
             const cName = c.name.toLowerCase().replace(/[^a-z0-9]/g, '');
             const chatName = chat.name.toLowerCase().replace(/[^a-z0-9]/g, '');
-            if (cName && chatName && (chatName.includes(cName) || cName.includes(chatName))) return true;
+            if (cName && chatName && (chatName === cName)) return true;
           }
 
           // Fallback 2: Sometimes the WhatsApp pushname matches the 'addedByName' in CRM (e.g. "Gayu")
           if (c.name && chat.addedByName) {
             const cName = c.name.toLowerCase().replace(/[^a-z0-9]/g, '');
             const addedName = chat.addedByName.toLowerCase().replace(/[^a-z0-9]/g, '');
-            if (cName && addedName && (addedName.includes(cName) || cName.includes(addedName))) return true;
+            if (cName && addedName && (addedName === cName)) return true;
           }
 
           // Fallback 3: Map by LID directly if it's available in the database
@@ -256,12 +263,36 @@ export default function WhatsAppWebMessenger() {
         });
 
         if (match) {
-          if (chat.id === currentId) {
-            if (chat.unreadCount !== 0) return { ...chat, unreadCount: 0 };
-            return chat;
+          let updatedChat = { ...chat };
+          let changed = false;
+
+          if (chat.id === currentId && chat.unreadCount !== 0) {
+            updatedChat.unreadCount = 0;
+            changed = true;
+          } else if (chat.id !== currentId && chat.unreadCount !== match.unreadCount) {
+            updatedChat.unreadCount = match.unreadCount;
+            changed = true;
           }
-          if (chat.unreadCount !== match.unreadCount) {
-            return { ...chat, unreadCount: match.unreadCount };
+
+          if (match.lastMessage && chat.lastMessage !== match.lastMessage) {
+            updatedChat.lastMessage = match.lastMessage;
+            changed = true;
+          }
+
+          if (match.timestamp) {
+            const date = new Date(match.timestamp * 1000);
+            const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).toLowerCase();
+            if (chat.timestamp !== timeStr) {
+              updatedChat.timestamp = timeStr;
+              changed = true;
+            }
+          }
+
+          if (changed) return updatedChat;
+          return chat;
+        } else {
+          if (chat.unreadCount !== 0) {
+            return { ...chat, unreadCount: 0 };
           }
         }
         return chat;
@@ -398,6 +429,17 @@ export default function WhatsAppWebMessenger() {
       );
     });
 
+    socket.on('whatsapp_message_revoked', ({ msgId }) => {
+      setConversations(prev =>
+        prev.map(chat => ({
+          ...chat,
+          messages: (chat.messages || []).map(msg =>
+            (msg.id === msgId || msg._serialized === msgId) ? { ...msg, type: 'revoked', body: '', isDeleted: true } : msg
+          ),
+        }))
+      );
+    });
+
     socket.on('whatsapp_message_ack', ({ msgId, ack }) => {
       setConversations(prev =>
         prev.map(chat => ({
@@ -483,10 +525,10 @@ export default function WhatsAppWebMessenger() {
     // Fetch immediately from socket to get latest from WA
     socket.emit('fetch_chat', { number: activeContact.phone });
 
-    // PROPER FULL FETCH SOLUTION: Background poll active chat every 3 seconds for perfect sync (acks, new messages)
+    // PROPER FULL FETCH SOLUTION: Background poll active chat every 2 seconds for perfect sync (acks, new messages)
     const interval = setInterval(() => {
       socket.emit('fetch_chat', { number: activeContact.phone });
-    }, 3000);
+    }, 2000);
 
     return () => clearInterval(interval);
 
@@ -631,6 +673,46 @@ export default function WhatsAppWebMessenger() {
       })
     );
   }, [activeContact, status, setConversations]);
+
+  const handleDelete = useCallback((msg) => {
+    setMessageToDelete(msg);
+  }, []);
+
+  const executeDelete = useCallback(() => {
+    if (!messageToDelete) return;
+    const msg = messageToDelete;
+    const msgId = msg.id?._serialized || msg.id || msg._serialized;
+    const currentContact = activeContactRef.current;
+    if (!currentContact || status !== 'Connected') {
+      console.warn('Delete ignored: No active contact or not connected');
+      setMessageToDelete(null);
+      return;
+    }
+    const socket = socketRef.current;
+    if (!socket) return;
+
+    socket.emit('delete_message', { 
+      messageId: msgId, 
+      number: currentContact.phone,
+      everyone: true 
+    });
+
+    // Optimistic local update
+    setConversations(prev =>
+      prev.map(chat => {
+        if (chat.id !== currentContact.id) return chat;
+        return {
+          ...chat,
+          messages: (chat.messages || []).map(m => {
+            const mId = m.id?._serialized || m.id || m._serialized;
+            return mId === msgId ? { ...m, type: 'revoked', body: '', isDeleted: true } : m;
+          }),
+        };
+      })
+    );
+    
+    setMessageToDelete(null);
+  }, [messageToDelete, status, setConversations]);
 
   // ─── Reset connection ─────────────────────────────────────────────────
   const handleResetConnection = () => {
@@ -860,6 +942,7 @@ export default function WhatsAppWebMessenger() {
             contactPhone={activeContact.phone}
             onReact={handleReact}
             onReply={(msg) => setReplyingTo(msg)}
+            onDelete={handleDelete}
             onLoadMore={handleLoadMore}
             loadingMore={loadingMore}
             hasMore={hasMore}
@@ -1155,6 +1238,17 @@ export default function WhatsAppWebMessenger() {
         enquiry={viewingEnquiry}
         onClose={() => { setIsLeadDrawerOpen(false); setViewingEnquiry(null); }}
       />
+
+      {/* Delete Message Confirmation Modal */}
+      {messageToDelete && (
+        <ConfirmModal
+          title="Delete Message"
+          message="Are you sure you want to delete this message? This action will delete it for everyone."
+          onConfirm={executeDelete}
+          onCancel={() => setMessageToDelete(null)}
+          loading={false}
+        />
+      )}
 
     </div>
   );

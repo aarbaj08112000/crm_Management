@@ -11,10 +11,21 @@ export async function POST(req) {
   try {
     const { email, password } = await req.json();
 
+    // --- DEBUG: DB Connection Test ---
+    try {
+      const debugUser = await query('SELECT * FROM user_master LIMIT 1');
+      console.log('--- DB TEST CONNECTION ---');
+      console.log('Found user in DB:', debugUser);
+    } catch (dbError) {
+      console.error('--- DB TEST CONNECTION FAILED ---', dbError.message);
+    }
+    // ---------------------------------
+
     const users = await query('SELECT * FROM user_master WHERE email = ? OR user_name = ?', [email, email]);
     
     if (users.length === 0) {
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+      console.log('Login failed: User not found for email:', email);
+      return NextResponse.json({ error: 'Invalid credentials (User not found)' }, { status: 401 });
     }
 
     const user = users[0];
@@ -28,7 +39,8 @@ export async function POST(req) {
     }
 
     if (!isMatch) {
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+      console.log('Login failed: Password mismatch for user:', email);
+      return NextResponse.json({ error: 'Invalid credentials (Password incorrect)' }, { status: 401 });
     }
 
     const token = await new SignJWT({ userId: user.user_id, email: user.email, name: user.user_name, role: user.role })
@@ -48,7 +60,7 @@ export async function POST(req) {
     // Set cookie
     response.cookies.set('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: false, // Changed to false for EC2 HTTP login
       sameSite: 'lax',
       maxAge: 60 * 60 * 24, // 1 day
       path: '/',

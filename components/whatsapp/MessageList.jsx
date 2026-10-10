@@ -253,7 +253,7 @@ function ReactionPicker({ isMe, onReact, onClose }) {
 
 
 // ── Emoji Smiley & Reply Side Buttons (WhatsApp-style beside the bubble) ────────────
-function MessageHoverActions({ hovered, isMe, msg, onReact, onReply, setHovered }) {
+function MessageHoverActions({ hovered, isMe, msg, onReact, onReply, onDelete, setHovered }) {
   const [open, setOpen] = React.useState(false);
   const ref = React.useRef(null);
 
@@ -283,7 +283,7 @@ function MessageHoverActions({ hovered, isMe, msg, onReact, onReply, setHovered 
       }}
     >
       {/* Reply button */}
-      {!msg.id?.toString().startsWith('temp_') && (
+      {!msg.id?.toString().startsWith('temp_') && !msg.isDeleted && msg.type !== 'revoked' && (
         <button
           onClick={() => { onReply(msg); setHovered(false); }}
           title="Reply to message"
@@ -302,7 +302,28 @@ function MessageHoverActions({ hovered, isMe, msg, onReact, onReply, setHovered 
         </button>
       )}
 
+      {/* Delete button */}
+      {!msg.id?.toString().startsWith('temp_') && onDelete && !msg.isDeleted && msg.type !== 'revoked' && (
+        <button
+          onClick={() => { onDelete(msg); setHovered(false); }}
+          title="Delete message"
+          style={{
+            width: 30, height: 30, borderRadius: '50%',
+            background: '#fff', border: '1.5px solid #e9edef',
+            cursor: 'pointer', display: 'flex', alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
+            color: '#8696a0', padding: 0,
+          }}
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+          </svg>
+        </button>
+      )}
+
       {/* React button */}
+      {!msg.isDeleted && msg.type !== 'revoked' && (
       <button
         onClick={() => setOpen(p => !p)}
         title="React to message"
@@ -319,6 +340,7 @@ function MessageHoverActions({ hovered, isMe, msg, onReact, onReply, setHovered 
           <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm-3.5-9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm7 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-3.5 7c2.623 0 4.875-1.692 5.701-4H6.299C7.125 15.308 9.377 17 12 17z" />
         </svg>
       </button>
+      )}
 
       {open && (
         <div style={{
@@ -372,7 +394,7 @@ function MessageAck({ msg }) {
 }
 
 // ── Message Bubble ────────────────────────────────────────────────────────────
-function MessageBubble({ msg, isMedia, isMe, contactName, contactPhone, onReact, onReply }) {
+function MessageBubble({ msg, isMedia, isMe, contactName, contactPhone, onReact, onReply, onDelete }) {
   const [hovered, setHovered] = React.useState(false);
 
   const nonChatTypes = ['image', 'video', 'audio', 'ptt', 'document', 'sticker'];
@@ -420,13 +442,20 @@ function MessageBubble({ msg, isMedia, isMe, contactName, contactPhone, onReact,
               </div>
             )}
 
-            {msg.quotedMsg && (
+            {msg.quotedMsg && !msg.isDeleted && msg.type !== 'revoked' && (
               <div style={{ padding: '4px 4px 0 4px' }}>
                 <QuotedMessage quotedMsg={msg.quotedMsg} contactName={contactName} />
               </div>
             )}
 
-            {isMedia ? (
+            {msg.type === 'revoked' || msg.isDeleted ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 12px 2px', color: '#8696a0', fontStyle: 'italic', fontSize: 14.2 }}>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.7 13.3L15.3 16.7 12 13.4l-3.3 3.3-1.4-1.4 3.3-3.3-3.3-3.3 1.4-1.4 3.3 3.3 3.3-3.3 1.4 1.4-3.3 3.3 3.3 3.3z" />
+                </svg>
+                {isMe ? 'You deleted this message' : 'This message was deleted'}
+              </div>
+            ) : isMedia ? (
               <div style={{ padding: 4, width: '100%' }}>
                 <LazyMedia msg={msg} contactPhone={contactPhone} />
                 {msg.body && (
@@ -443,7 +472,7 @@ function MessageBubble({ msg, isMedia, isMe, contactName, contactPhone, onReact,
               )
             )}
 
-            {msg.buttons && msg.buttons.length > 0 && (
+            {msg.buttons && msg.buttons.length > 0 && !msg.isDeleted && msg.type !== 'revoked' && (
               <div className="border-t border-black/5 flex flex-col mt-1">
                 {msg.buttons.map((b, i) => (
                   <div key={i} className="w-full py-2 text-center text-[#00a884] font-medium text-[14px] border-b border-black/5 last:border-0 hover:bg-black/5 transition-colors cursor-pointer">
@@ -477,7 +506,7 @@ function MessageBubble({ msg, isMedia, isMe, contactName, contactPhone, onReact,
         </div>
 
         {/* The smiley & reply buttons are absolutely positioned relative to the outer div */}
-        <MessageHoverActions hovered={hovered} isMe={isMe} msg={msg} onReact={onReact} onReply={onReply} setHovered={setHovered} />
+        <MessageHoverActions hovered={hovered} isMe={isMe} msg={msg} onReact={onReact} onReply={onReply} onDelete={onDelete} setHovered={setHovered} />
       </div>
     </div>
   );
@@ -485,7 +514,7 @@ function MessageBubble({ msg, isMedia, isMe, contactName, contactPhone, onReact,
 
 
 // ── Main MessageList ──────────────────────────────────────────────────────────
-export default function MessageList({ messages, contactName, contactPhone, onReact, onReply, onLoadMore, loadingMore, hasMore }) {
+export default function MessageList({ messages, contactName, contactPhone, onReact, onReply, onDelete, onLoadMore, loadingMore, hasMore }) {
   const containerRef = useRef(null);
   const isNearBottomRef = useRef(true);
   const distFromBottomRef = useRef(null);
@@ -533,7 +562,7 @@ export default function MessageList({ messages, contactName, contactPhone, onRea
   const nonChatTypes = ['image', 'video', 'audio', 'ptt', 'document', 'sticker', 'location'];
   const valid = messages.filter(msg => {
     const isMedia = msg.hasMedia && nonChatTypes.includes(msg.type);
-    return (msg.body && msg.body.trim() !== '') || isMedia;
+    return msg.isDeleted || msg.type === 'revoked' || (msg.body && msg.body.trim() !== '') || isMedia;
   });
   const items = groupByDate(valid);
 
@@ -616,6 +645,7 @@ export default function MessageList({ messages, contactName, contactPhone, onRea
             contactPhone={contactPhone}
             onReact={onReact || (() => { })}
             onReply={onReply || (() => { })}
+            onDelete={onDelete || (() => { })}
           />
         );
       })}
