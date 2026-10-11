@@ -16,7 +16,8 @@ export async function POST(request) {
       );
     }
 
-    const data = await rpSendMessage(to_number, message);
+    const cleanNumber = String(to_number).replace(/\D/g, '');
+    const data = await rpSendMessage(cleanNumber, message);
     return NextResponse.json(data);
   } catch (error) {
     console.error('RP chat/send error:', error);

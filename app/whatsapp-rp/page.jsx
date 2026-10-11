@@ -124,6 +124,11 @@ export default function WhatsAppMessenger() {
               unreadCount: Number(c.unread_count) || 0,
               chatStatus: c.chat_status,
               messages: existing?.messages || [],
+              addedByName: c.sent_by_username || null,
+              addedById: c.sent_by_user_id || null,
+              lead_id: c.lead_id || null,
+              enquiry_id: c.formatted_lead_code || (c.lead_id && c.lead_id > 0 ? `LEAD #${c.lead_id}` : null),
+              rawEnquiryId: c.lead_id || null,
             };
           });
         });
@@ -173,25 +178,32 @@ export default function WhatsAppMessenger() {
       const res = await fetch(url, { cache: 'no-store' });
       const data = await res.json();
 
-      if (data.success && Array.isArray(data.messages) && data.messages.length > 0) {
-        // Update lastUpdated to the timestamp of the most recent message
-        const latest = data.messages[data.messages.length - 1];
-        if (latest?.created_at) {
-          lastUpdatedRef.current[phone] = latest.created_at;
-        }
+      if (data.success && Array.isArray(data.messages)) {
+        if (data.messages.length > 0) {
+          // Update lastUpdated to the timestamp of the most recent message
+          const latest = data.messages[data.messages.length - 1];
+          if (latest?.created_at) {
+            lastUpdatedRef.current[phone] = latest.created_at;
+          }
 
-        if (useIncremental) {
-          // Append ONLY new messages (avoid duplicates by id)
-          setConversations(prev => prev.map(chat => {
-            if (chat.id !== phone) return chat;
-            const existingIds = new Set((chat.messages || []).map(m => m.id));
-            const newMsgs = data.messages.filter(m => !existingIds.has(m.id)).map(normaliseMsg);
-            return newMsgs.length > 0 ? { ...chat, messages: [...(chat.messages || []), ...newMsgs] } : chat;
-          }));
-        } else {
-          // Full replace on initial load
+          if (useIncremental) {
+            // Append ONLY new messages (avoid duplicates by id)
+            setConversations(prev => prev.map(chat => {
+              if (chat.id !== phone) return chat;
+              const existingIds = new Set((chat.messages || []).map(m => m.id));
+              const newMsgs = data.messages.filter(m => !existingIds.has(m.id)).map(normaliseMsg);
+              return newMsgs.length > 0 ? { ...chat, messages: [...(chat.messages || []), ...newMsgs] } : chat;
+            }));
+          } else {
+            // Full replace on initial load
+            setConversations(prev => prev.map(chat =>
+              chat.id === phone ? { ...chat, messages: data.messages.map(normaliseMsg) } : chat
+            ));
+          }
+        } else if (!useIncremental) {
+          // Ensure empty messages array on initial load
           setConversations(prev => prev.map(chat =>
-            chat.id === phone ? { ...chat, messages: data.messages.map(normaliseMsg) } : chat
+            chat.id === phone ? { ...chat, messages: [] } : chat
           ));
         }
       }
