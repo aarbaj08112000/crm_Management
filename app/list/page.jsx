@@ -30,6 +30,7 @@ import EditModal from '@/components/EditModal';
 import AssignModal from '@/components/AssignModal';
 import StatusModal from '@/components/StatusModal';
 import WhatsAppModal from '@/components/WhatsAppModal';
+import WhatsAppRPModal from '@/components/WhatsAppRPModal';
 import EmailThreadModal from '@/components/EmailThreadModal';
 import CallButton from '@/components/calling/CallButton';
 
@@ -80,6 +81,7 @@ export default function ListPage() {
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [showWaModal, setShowWaModal] = useState(false);
   const [showEmailThreadModal, setShowEmailThreadModal] = useState(false);
+  const [showWaRPModal, setShowWaRPModal] = useState(false);
   const { showToast, showLoader, companySettings } = useApp();
   const [openActionId, setOpenActionId] = useState(null);
   const [openStatusId, setOpenStatusId] = useState(null);
@@ -103,6 +105,10 @@ export default function ListPage() {
     window.addEventListener('click', handleClickOutside);
     return () => window.removeEventListener('click', handleClickOutside);
   }, []);
+
+  const hasWaRPAccess = currentUser?.permissions && currentUser.permissions.length > 0 
+    ? currentUser.permissions.some(p => p.menu_name === 'WhatsApp RP' && p.can_view)
+    : (currentUser?.role === 'admin' || currentUser?.role === 'Admin');
 
   const fetchEnquiries = useCallback(async () => {
     setLoading(true);
@@ -161,7 +167,7 @@ export default function ListPage() {
         const response = await fetch('/api/auth/me');
         const data = await response.json();
         if (response.ok) {
-          setCurrentUser(data.user);
+          setCurrentUser({ ...data.user, permissions: data.permissions || [] });
         }
       } catch (err) {
         console.error('ListPage: Me Fetch Error:', err);
@@ -506,6 +512,15 @@ export default function ListPage() {
                                   Call Lead
                                 </CallButton>
                               )}
+                              {/* WhatsApp RP button — dynamic permission check */}
+                              {hasWaRPAccess && (
+                                <button
+                                  onClick={() => { setOpenActionId(null); setSelectedEnquiry(enquiry); setShowWaRPModal(true); }}
+                                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-teal-700 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/30 hover:text-teal-700 dark:hover:text-teal-300 transition-colors font-medium"
+                                >
+                                  <MessageSquare className="w-4 h-4" /> WhatsApp RP
+                                </button>
+                              )}
                               <div className="border-t border-slate-50 dark:border-slate-800 my-1"></div>
                               {currentUser?.role === 'admin' && (
                                 <button
@@ -603,6 +618,16 @@ export default function ListPage() {
           enquiryName={selectedEnquiry.name}
           enquiryEmail={selectedEnquiry.email}
           onClose={() => { setShowEmailThreadModal(false); setSelectedEnquiry(null); }}
+        />
+      )}
+
+      {/* WhatsApp RP Modal */}
+      {showWaRPModal && selectedEnquiry && (
+        <WhatsAppRPModal
+          enquiry={selectedEnquiry}
+          currentUser={currentUser}
+          onClose={() => { setShowWaRPModal(false); setSelectedEnquiry(null); }}
+          onSent={fetchEnquiries}
         />
       )}
 
