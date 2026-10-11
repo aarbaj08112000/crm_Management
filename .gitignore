@@ -45,3 +45,5 @@ next-env.d.ts
 .wwebjs_auth/
 .wwebjs_cache/
 webhook_debug.log
+
+.history/*

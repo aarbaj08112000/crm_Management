@@ -21,3 +21,4 @@ SELECT r.id, m.id, 1, 1, 1, 1
 FROM roles r
 JOIN menus m ON m.name = 'WhatsApp RP'
 WHERE r.name IN ('Admin', 'Manager');
+ 
