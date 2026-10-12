@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Deploy CRM') {
             steps {
-                sh 'bash /var/www/html/sh-script/crm.sh'
+                sh 'sudo /var/www/html/sh-script/crm.sh'
             }
         }
     }
