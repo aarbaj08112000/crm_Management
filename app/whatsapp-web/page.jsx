@@ -336,7 +336,26 @@ export default function WhatsAppWebMessenger() {
             }
           }
 
-          if (!changed) return chat;
+          if (!changed) {
+            // Even if messages haven't changed, we may need to fix the sidebar
+            // timestamp/snippet from the last real message (e.g. on first open)
+            const newest = [...newMsgs].reverse().find(m => !m.id?.toString().startsWith('temp_'));
+            if (!newest) return chat;
+            const newTs = newest.timestamp
+              ? new Date(newest.timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).toLowerCase()
+              : null;
+            const newSnippet = newest.isDeleted || newest.type === 'revoked'
+              ? '🚫 Message deleted'
+              : (newest.body || newest.text || (newest.hasMedia ? '📎 Media' : null));
+            const tsChanged = newTs && chat.timestamp !== newTs;
+            const snipChanged = newSnippet && chat.lastMessage !== newSnippet;
+            if (!tsChanged && !snipChanged) return chat;
+            return {
+              ...chat,
+              ...(tsChanged ? { timestamp: newTs } : {}),
+              ...(snipChanged ? { lastMessage: newSnippet } : {}),
+            };
+          }
 
           // 2. Preserve optimistic messages (temp_xxx) that haven't been confirmed by the server yet
           const tempMsgs = oldMsgs.filter(m => m.id && m.id.toString().startsWith('temp_'));
@@ -359,7 +378,23 @@ export default function WhatsAppWebMessenger() {
             finalMsgs.sort((a, b) => a.timestamp - b.timestamp);
           }
 
-          return { ...chat, messages: finalMsgs };
+          // Update sidebar timestamp + snippet from the newest real (non-temp) message
+          const newestRealMsg = [...finalMsgs].reverse().find(m => !m.id?.toString().startsWith('temp_'));
+          let sidebarUpdates = {};
+          if (newestRealMsg) {
+            if (newestRealMsg.timestamp) {
+              sidebarUpdates.timestamp = new Date(newestRealMsg.timestamp * 1000)
+                .toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                .toLowerCase();
+            }
+            if (newestRealMsg.isDeleted || newestRealMsg.type === 'revoked') {
+              sidebarUpdates.lastMessage = '🚫 Message deleted';
+            } else {
+              sidebarUpdates.lastMessage = newestRealMsg.body || newestRealMsg.text || (newestRealMsg.hasMedia ? '📎 Media' : chat.lastMessage);
+            }
+          }
+
+          return { ...chat, messages: finalMsgs, ...sidebarUpdates };
         })
       );
     });
@@ -386,6 +421,15 @@ export default function WhatsAppWebMessenger() {
             if (tempIdx !== -1) {
               const newMsgs = [...msgs];
               newMsgs[tempIdx] = { ...msg, tempId: undefined };
+              // The replaced msg is the last one — update sidebar snippet too
+              const isLast = tempIdx === msgs.length - 1;
+              if (isLast) {
+                const newTimestamp = msg.timestamp
+                  ? new Date(msg.timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).toLowerCase()
+                  : chat.timestamp;
+                const newLastMessage = msg.body || msg.text || (msg.hasMedia ? '📎 Media' : chat.lastMessage);
+                return { ...chat, messages: newMsgs, timestamp: newTimestamp, lastMessage: newLastMessage };
+              }
               return { ...chat, messages: newMsgs };
             }
           }
@@ -397,7 +441,15 @@ export default function WhatsAppWebMessenger() {
             newUnreadCount += 1;
           }
 
-          return { ...chat, messages: [...msgs, msg], unreadCount: newUnreadCount };
+          // Update timestamp and lastMessage snippet in sidebar immediately
+          const newTimestamp = msg.timestamp
+            ? new Date(msg.timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).toLowerCase()
+            : chat.timestamp;
+          const newLastMessage = msg.isDeleted || msg.type === 'revoked'
+            ? '🚫 Message deleted'
+            : (msg.body || msg.text || (msg.hasMedia ? '📎 Media' : chat.lastMessage));
+
+          return { ...chat, messages: [...msgs, msg], unreadCount: newUnreadCount, timestamp: newTimestamp, lastMessage: newLastMessage };
         });
 
         // If we received a message for a chat that isn't in our list, fetch contacts
@@ -553,7 +605,12 @@ export default function WhatsAppWebMessenger() {
         quotedMsg: replyingTo ? { id: replyingTo.id, body: replyingTo.body, fromMe: replyingTo.fromMe, type: replyingTo.type, hasMedia: replyingTo.hasMedia } : null
       };
 
-      setConversations(prev => prev.map(c => c.id === activeContact.id ? { ...c, messages: [...(c.messages || []), newMsg] } : c));
+      setConversations(prev => prev.map(c => {
+        if (c.id !== activeContact.id) return c;
+        const newTimestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).toLowerCase();
+        const newLastMessage = text || '📎 Media';
+        return { ...c, messages: [...(c.messages || []), newMsg], timestamp: newTimestamp, lastMessage: newLastMessage };
+      }));
 
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -599,7 +656,9 @@ export default function WhatsAppWebMessenger() {
 
     setConversations(prev => prev.map(c => {
       if (c.id !== activeContact.id) return c;
-      return { ...c, messages: [...(c.messages || []), newMsg] };
+      const newTimestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).toLowerCase();
+      const newLastMessage = text || (pendingFile ? '📎 Media' : c.lastMessage);
+      return { ...c, messages: [...(c.messages || []), newMsg], timestamp: newTimestamp, lastMessage: newLastMessage };
     }));
 
     setSendingMessage(true);
@@ -814,9 +873,16 @@ export default function WhatsAppWebMessenger() {
             )
             .map((chat) => {
               const lastMsg = chat.messages?.length > 0 ? chat.messages[chat.messages.length - 1] : null;
-              const dispText = lastMsg
-                ? (lastMsg.body || lastMsg.text || (lastMsg.hasMedia ? '📎 Media' : 'No messages yet'))
-                : (chat.lastMessage && chat.lastMessage !== 'No messages yet' ? chat.lastMessage : 'No messages yet');
+              let dispText;
+              if (lastMsg) {
+                if (lastMsg.isDeleted || lastMsg.type === 'revoked') {
+                  dispText = '🚫 Message deleted';
+                } else {
+                  dispText = lastMsg.body || lastMsg.text || (lastMsg.hasMedia ? '📎 Media' : (chat.lastMessage && chat.lastMessage !== 'No messages yet' ? chat.lastMessage : 'No messages yet'));
+                }
+              } else {
+                dispText = (chat.lastMessage && chat.lastMessage !== 'No messages yet') ? chat.lastMessage : 'No messages yet';
+              }
               const isFromMe = lastMsg ? (lastMsg.fromMe || lastMsg.sender === 'agent') : false;
               console.log(chat, "chat")
               return (

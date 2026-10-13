@@ -8,6 +8,15 @@ import { getBaseUploadDir } from '@/lib/upload';
 // Note: To secure this route in production, you might want to add an authentication token or IP restriction.
 export async function POST(req) {
   try {
+    // Guard: only run if explicitly enabled in environment
+    const isEnabled = (process.env.ENABLE_SCHEDULED_EMAILS || 'false').toLowerCase() === 'true';
+    if (!isEnabled) {
+      return NextResponse.json(
+        { message: 'Scheduled email sending is disabled. Set ENABLE_SCHEDULED_EMAILS=true in .env to enable.' },
+        { status: 503 }
+      );
+    }
+
     // Find all scheduled emails that are pending and their time has passed
     const pendingEmails = await query(
       "SELECT * FROM scheduled_emails WHERE status = 'Pending' AND scheduled_at <= NOW()"

@@ -112,23 +112,27 @@ app.prepare().then(() => {
       });
 
       console.log('> Starting node-cron scheduled emails sender (runs every 1 minute)');
-      
-      cron.schedule('* * * * *', async () => {
-        console.log(`[Cron] [${new Date().toISOString()}] Running scheduled emails sender...`);
-        try {
-          const response = await fetch(`${baseUrl}/api/cron/send-scheduled-emails`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-          });
-          
-          if (!response.ok) {
-            console.error('[Cron] Send scheduled emails failed with status:', response.status);
-          } else {
-            console.log('[Cron] Send scheduled emails completed successfully.');
+      const scheduledEmailsEnabled = (process.env.ENABLE_SCHEDULED_EMAILS || 'false').toLowerCase() === 'true';
+      if (!scheduledEmailsEnabled) {
+        console.log('> [Cron] Scheduled emails sender is DISABLED (ENABLE_SCHEDULED_EMAILS != true). Skipping registration.');
+      } else {
+        console.log('> [Cron] Scheduled emails sender is ENABLED.');
+        cron.schedule('* * * * *', async () => {
+          console.log(`[Cron] [${new Date().toISOString()}] Running scheduled emails sender...`);
+          try {
+            const response = await fetch(`${baseUrl}/api/cron/send-scheduled-emails`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+            });
+            if (!response.ok) {
+              console.error('[Cron] Send scheduled emails failed with status:', response.status);
+            } else {
+              console.log('[Cron] Send scheduled emails completed successfully.');
+            }
+          } catch (error) {
+            console.error('[Cron] Error during send scheduled emails:', error);
           }
-        } catch (error) {
-          console.error('[Cron] Error during send scheduled emails:', error);
-        }
-      });
+        });
+      }
     });
 });
