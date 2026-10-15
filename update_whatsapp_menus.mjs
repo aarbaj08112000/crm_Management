@@ -1,10 +1,10 @@
 import mysql from 'mysql2/promise';
 
 const dbConfig = {
-  host: process.env.MYSQL_HOST || '193.203.184.96', // Defaulting to the true Hostinger IP you discovered
-  user: process.env.MYSQL_USER || 'u875583157_crm',
-  password: process.env.MYSQL_PASSWORD || 'CodeCrafter@032022',
-  database: process.env.MYSQL_DATABASE || 'u875583157_crm',
+  host: process.env.MYSQL_HOST || '', // Defaulting to the true Hostinger IP you discovered
+  user: process.env.MYSQL_USER || '',
+  password: process.env.MYSQL_PASSWORD || '',
+  database: process.env.MYSQL_DATABASE || '',
 };
 
 async function update() {

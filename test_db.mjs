@@ -1,18 +1,14 @@
 import mysql from 'mysql2/promise';
 
 async function testConnection() {
-  console.log('=========================================');
-  console.log('Attempting to connect to Hostinger DB...');
-  console.log('Host: auth-db1493.hstgr.io');
-  console.log('User: u875583157_crm');
-  console.log('=========================================');
+ 
 
   try {
     const connection = await mysql.createConnection({
-      host: '193.203.184.96',
-      user: 'u875583157_crm',
-      password: 'CodeCrafter@032022',
-      database: 'u875583157_crm',
+      host: '',
+      user: '',
+      password: '',
+      database: '',
       connectTimeout: 10000 // 10 seconds timeout
     });
 
