@@ -12,7 +12,7 @@ export async function GET(req) {
     
     await jwtVerify(token, JWT_SECRET);
 
-    const [menus] = await pool.query('SELECT * FROM menus ORDER BY sequence ASC');
+    const [menus] = await pool.query("SELECT * FROM menus ORDER BY FIELD(group_name, 'MAIN', 'MANAGEMENT', 'COMMUNICATION', 'TEMPLATES', 'SYSTEM', 'SETTINGS'), sequence ASC");
     return NextResponse.json({ menus });
   } catch (error) {
     console.error('API Error:', error);

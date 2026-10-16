@@ -20,7 +20,7 @@ export default function SummaryTab({ lead }) {
             <InfoItem label="IP Address" value="-" />
             <InfoItem label="Onsite" value="No" />
             <InfoItem label="Client NDA" value="No" />
-            <InfoItem label="HB NDA" value="No" />
+            <InfoItem label="Company NDA" value="No" />
             <InfoItem label="Website Lead Code" value="-" />
             <InfoItem label="Data Person" value="-" />
             <InfoItem label="LG Owner" value="-" />

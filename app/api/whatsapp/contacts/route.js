@@ -48,11 +48,14 @@ export async function GET(req) {
 
     const contacts = await query(sql, params);
 
+    const [settingsRows] = await query('SELECT company_code, lead_code FROM company_settings LIMIT 1');
+    const settings = settingsRows?.[0] || { company_code: 'CR', lead_code: 'LD' };
+
     const formatted = contacts.map(c => {
       // Generate formatted Lead Code if numeric enquiry_id exists
       let displayEnquiryId = c.enquiry_id;
       if (c.enquiry_id && !isNaN(c.enquiry_id)) {
-         displayEnquiryId = formatLeadCode(c.enquiry_id, c.enquiry_date);
+         displayEnquiryId = formatLeadCode(c.enquiry_id, c.enquiry_date, settings);
       }
 
       return {

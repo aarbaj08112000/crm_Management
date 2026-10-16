@@ -7,18 +7,18 @@ export default function SettingsPage() {
   const { showToast, companySettings, refreshSettings } = useApp();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    company_code: 'HB',
+    company_code: 'CR',
     lead_code: 'LD',
-    project_name: 'EnquiryPro',
+    project_name: 'CRM',
     company_name: ''
   });
 
   useEffect(() => {
     if (companySettings) {
       setFormData({
-        company_code: companySettings.company_code || 'HB',
+        company_code: companySettings.company_code || 'CR',
         lead_code: companySettings.lead_code || 'LD',
-        project_name: companySettings.project_name || 'EnquiryPro',
+        project_name: companySettings.project_name || 'CRM',
         company_name: companySettings.company_name || ''
       });
     }
@@ -74,10 +74,10 @@ export default function SettingsPage() {
                 value={formData.company_code}
                 onChange={handleChange}
                 className="w-full px-5 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 rounded-2xl focus:bg-white dark:bg-slate-900 focus:border-blue-500 outline-none transition-all font-bold text-slate-800 dark:text-slate-100"
-                placeholder="HB"
+                placeholder="CR"
                 required
               />
-              <p className="text-xs text-slate-400">Used as the prefix in the Lead ID (e.g. HB/LD/...)</p>
+              <p className="text-xs text-slate-400">Used as the prefix in the Lead ID (e.g. CR/LD/...)</p>
             </div>
 
             <div className="space-y-2">

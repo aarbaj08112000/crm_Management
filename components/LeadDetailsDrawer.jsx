@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, User, Phone, Mail, MapPin, Briefcase } from 'lucide-react';
 import { cn, formatLeadCode } from '@/lib/utils';
+import { useApp } from '@/context/AppContext';
 import SidePanelHeader from './SidePanelHeader';
 
 export default function LeadDetailsDrawer({ enquiry, onClose }) {
   const [mounted, setMounted] = useState(false);
+  const { companySettings } = useApp();
 
   useEffect(() => {
     setMounted(true);
@@ -29,7 +31,7 @@ export default function LeadDetailsDrawer({ enquiry, onClose }) {
         <SidePanelHeader
           icon={User}
           title="Lead Details"
-          subtitle={enquiry.enquiry_id ? formatLeadCode(enquiry.enquiry_id) : 'VIEW LEAD INFORMATION'}
+          subtitle={enquiry.enquiry_id ? formatLeadCode(enquiry.enquiry_id, enquiry.added_date, companySettings) : 'VIEW LEAD INFORMATION'}
           onClose={onClose}
         />
 

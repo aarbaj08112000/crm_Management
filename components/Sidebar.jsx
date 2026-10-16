@@ -19,15 +19,22 @@ import {
   MessageSquare,
   Mail,
   Bot,
-  FileText
+  FileText,
+  Clock,
+  Mic,
+  CalendarDays,
+  Shield
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
+const GROUP_ORDER = ['MAIN', 'MANAGEMENT', 'COMMUNICATION', 'TEMPLATES', 'SYSTEM', 'SETTINGS'];
 
 const navigation = [
   {
     group: 'MAIN',
     items: [
       { name: 'Dashboard', href: '/', icon: LayoutDashboard },
+      { name: 'Calendar', href: '/calendar', icon: CalendarDays },
     ]
   },
   {
@@ -40,18 +47,27 @@ const navigation = [
   {
     group: 'COMMUNICATION',
     items: [
-      { name: 'WhatsApp Chat', href: '/whatsapp', icon: MessageSquare },
+      { name: 'WhatsApp', href: '/whatsapp', icon: MessageSquare },
       { name: 'Email Logs', href: '/email-logs', icon: Mail },
+      { name: 'Scheduled Emails', href: '/scheduled-emails', icon: Clock },
+      { name: 'Contacts', href: '/contacts', icon: ClipboardList },
+    ]
+  },
+  {
+    group: 'TEMPLATES',
+    items: [
+      { name: 'Call Pitches', href: '/call-pitches', icon: Mic },
+      { name: 'WhatsApp Templates', href: '/whatsapp-templates', icon: MessageSquare },
+      { name: 'Email Templates', href: '/settings/email-templates', icon: Mail },
     ]
   },
   {
     group: 'SYSTEM',
     items: [
+      { name: 'Company Settings', href: '/settings', icon: Settings },
       { name: 'Users', href: '/users', icon: Users },
       { name: 'AI Lead Scraper', href: '/scrape', icon: Bot },
-      { name: 'Contacts', href: '/contacts', icon: ClipboardList },
-      { name: 'Company Settings', href: '/settings', icon: Settings },
-      { name: 'WhatsApp Templates', href: '/whatsapp-templates', icon: FileText },
+      { name: 'Roles & Permissions', href: '/roles', icon: Shield },
       { name: 'Email Accounts', href: '/settings/email', icon: Mail },
     ]
   }
@@ -99,6 +115,15 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, user, permissions
       // Sort items by sequence
       group.items.sort((a, b) => a.sequence - b.sequence);
       return group;
+    });
+
+    // Sort groups according to defined hierarchy
+    filteredNavigation.sort((a, b) => {
+      const indexA = GROUP_ORDER.indexOf((a.group || '').toUpperCase());
+      const indexB = GROUP_ORDER.indexOf((b.group || '').toUpperCase());
+      const orderA = indexA === -1 ? 999 : indexA;
+      const orderB = indexB === -1 ? 999 : indexB;
+      return orderA - orderB;
     });
   } else if (user?.role === 'admin') {
     // Fallback for admin if permissions failed to load

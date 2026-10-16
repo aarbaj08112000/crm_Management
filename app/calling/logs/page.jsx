@@ -4,10 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { Phone, PhoneIncoming, PhoneOutgoing, Clock, Loader2, Play, AlertCircle, Filter, X } from 'lucide-react';
 import { Card, CardContent } from '@/components/Card';
 import { formatLeadCode } from '@/lib/utils';
+import { useApp } from '@/context/AppContext';
 import UserDetailsDrawer from '@/components/UserDetailsDrawer';
 import LeadDetailsDrawer from '@/components/LeadDetailsDrawer';
 
 export default function CallLogsPage() {
+  const { companySettings } = useApp();
   const [logs, setLogs] = useState([]);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -206,7 +208,7 @@ export default function CallLogsPage() {
                               })}
                               className="hover:underline cursor-pointer"
                             >
-                              {formatLeadCode(log.source_id)}
+                              {formatLeadCode(log.source_id, log.created_at, companySettings)}
                             </button>
                           )
                         : '-'}

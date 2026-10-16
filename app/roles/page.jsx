@@ -26,6 +26,7 @@ const getBadgeColor = (group) => {
   if (g === 'MAIN') return 'bg-blue-50 text-[var(--color-blue-600)]';
   if (g === 'MANAGEMENT') return 'bg-sky-50 text-sky-600';
   if (g === 'COMMUNICATION') return 'bg-emerald-50 text-emerald-600';
+  if (g === 'TEMPLATES') return 'bg-purple-50 text-purple-600';
   if (g === 'SYSTEM') return 'bg-orange-50 text-orange-600';
   return 'bg-slate-50 text-slate-600';
 };

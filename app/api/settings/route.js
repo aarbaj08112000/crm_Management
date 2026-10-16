@@ -6,10 +6,10 @@ export async function GET() {
     const [rows] = await pool.query('SELECT * FROM company_settings ORDER BY id ASC LIMIT 1');
     if (rows.length === 0) {
       return NextResponse.json({
-        company_code: 'HB',
+        company_code: 'CR',
         lead_code: 'LD',
-        project_name: 'EnquiryPro',
-        company_name: 'My Company'
+        project_name: 'CRM',
+        company_name: 'Code Crafter Infotech'
       });
     }
     return NextResponse.json(rows[0]);
