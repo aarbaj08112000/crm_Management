@@ -47,3 +47,5 @@ next-env.d.ts
 webhook_debug.log
 
 .history/*
+
+public/uploads/emails/
