@@ -9,10 +9,10 @@ function getBaseUploadDir() {
 
 async function getDb() {
   return await mysql.createConnection({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || 'Root@12345678',
-    database: process.env.DB_NAME || 'enquiry_db'
+    host: process.env.MYSQL_HOST || process.env.DB_HOST || 'localhost',
+    user: process.env.MYSQL_USER || process.env.DB_USER || 'root',
+    password: process.env.MYSQL_PASSWORD || process.env.DB_PASSWORD || 'Root@12345678',
+    database: process.env.MYSQL_DATABASE || process.env.DB_NAME || 'enquiry_db'
   });
 }
 

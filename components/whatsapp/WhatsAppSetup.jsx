@@ -9,6 +9,8 @@ export default function WhatsAppSetup({ status, qrCode, onReset }) {
       QRCode.toDataURL(qrCode, { width: 256, margin: 2 })
         .then(url => setQrImageUrl(url))
         .catch(err => console.error(err));
+    } else {
+      setQrImageUrl('');
     }
   }, [qrCode]);
 

@@ -192,12 +192,12 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, user, permissions
                 </h3>
               )}
               <div className="space-y-1">
-                {group.items.map((item) => {
+                {group.items.map((item, itemIdx) => {
                   const Icon = item.icon;
                   const isActive = pathname === item.href;
                   return (
                     <Link
-                      key={item.name}
+                      key={`${item.href}-${itemIdx}`}
                       href={item.href}
                       className={cn(
                         "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative",
